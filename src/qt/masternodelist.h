@@ -1,8 +1,7 @@
 #ifndef MASTERNODELIST_H
 #define MASTERNODELIST_H
 
-#include "masternode.h"
-#include "platformstyle.h"
+#include "../masternode.h"
 #include "sync.h"
 #include "util.h"
 
@@ -31,7 +30,7 @@ class MasternodeList : public QWidget
     Q_OBJECT
 
 public:
-    explicit MasternodeList(const PlatformStyle *platformStyle, QWidget *parent = 0);
+    explicit MasternodeList(QWidget *parent = 0);
     ~MasternodeList();
 
     void setClientModel(ClientModel *clientModel);
@@ -45,7 +44,7 @@ private:
     bool fFilterUpdated;
 
 public Q_SLOTS:
-    void updateMyMasternodeInfo(QString strAlias, QString strAddr, masternode_info_t& infoMn);
+    void updateMyMasternodeInfo(QString strAlias, QString strAddr, CMasternode *info);
     void updateMyNodeList(bool fForce = false);
     void updateNodeList();
 

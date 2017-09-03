@@ -9,8 +9,9 @@
 #include "guiutil.h"
 
 #include "sync.h"
-#include "utiltime.h"
-
+//#include "utiltime.h"
+#include "../net.h"
+#include <QDateTime>
 #include <QDebug>
 #include <QList>
 
@@ -27,7 +28,7 @@ bool BannedNodeLessThan::operator()(const CCombinedBan& left, const CCombinedBan
     case BanTableModel::Address:
         return pLeft->subnet.ToString().compare(pRight->subnet.ToString()) < 0;
     case BanTableModel::Bantime:
-        return pLeft->banEntry.nBanUntil < pRight->banEntry.nBanUntil;
+        return pLeft->banEntry < pRight->banEntry;
     }
 
     return false;
@@ -47,8 +48,7 @@ public:
     /** Pull a full list of banned nodes from CNode into our cache */
     void refreshBanlist()
     {
-        banmap_t banMap;
-        CNode::GetBanned(banMap);
+        banmap_t banMap=CNode::GetBanned();
 
         cachedBanlist.clear();
 #if QT_VERSION >= 0x040700
@@ -103,7 +103,7 @@ int BanTableModel::rowCount(const QModelIndex &parent) const
 int BanTableModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return columns.length();;
+    return columns.length();
 }
 
 QVariant BanTableModel::data(const QModelIndex &index, int role) const
@@ -120,7 +120,7 @@ QVariant BanTableModel::data(const QModelIndex &index, int role) const
             return QString::fromStdString(rec->subnet.ToString());
         case Bantime:
             QDateTime date = QDateTime::fromMSecsSinceEpoch(0);
-            date = date.addSecs(rec->banEntry.nBanUntil);
+            date = date.addSecs(rec->banEntry);
             return date.toString(Qt::SystemLocaleLongDate);
         }
     }

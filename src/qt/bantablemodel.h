@@ -14,8 +14,8 @@ class ClientModel;
 class BanTablePriv;
 
 struct CCombinedBan {
-    CSubNet subnet;
-    CBanEntry banEntry;
+    CNetAddr subnet;
+    int64_t banEntry;
 };
 
 class BannedNodeLessThan

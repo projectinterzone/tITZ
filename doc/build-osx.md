@@ -1,11 +1,12 @@
 Mac OS X Build Instructions and Notes
 ====================================
-This guide will show you how to build dashd (headless client) for OSX.
+This guide will show you how to build dashd(headless client) for OSX.
 
 Notes
 -----
 
-* Tested on OS X 10.7 through 10.11 on 64-bit Intel processors only.
+* Tested on OS X 10.6 through 10.9 on 64-bit Intel processors only.
+Older OSX releases or 32-bit processors are no longer supported.
 
 * All of the commands should be executed in a Terminal application. The
 built-in one is located in `/Applications/Utilities`.
@@ -13,18 +14,24 @@ built-in one is located in `/Applications/Utilities`.
 Preparation
 -----------
 
-You need to install Xcode with all the options checked so that the compiler
-and everything is available in /usr not just /Developer. Xcode should be
+You need to install XCode with all the options checked so that the compiler
+and everything is available in /usr not just /Developer. XCode should be
 available on your OS X installation media, but if not, you can get the
 current version from https://developer.apple.com/xcode/. If you install
 Xcode 4.3 or later, you'll need to install its command line tools. This can
 be done in `Xcode > Preferences > Downloads > Components` and generally must
 be re-done or updated every time Xcode is updated.
 
-You will also need to install [Homebrew](http://brew.sh) in order to install library
-dependencies.
+There's an assumption that you already have `git` installed, as well. If
+not, it's the path of least resistance to install [Github for Mac](https://mac.github.com/)
+(OS X 10.7+) or
+[Git for OS X](https://code.google.com/p/git-osx-installer/). It is also
+available via Homebrew.
 
-The installation of the actual dependencies is covered in the instructions
+You will also need to install [Homebrew](http://brew.sh)
+in order to install library dependencies.
+
+The installation of the actual dependencies is covered in the Instructions
 sections below.
 
 Instructions: Homebrew
@@ -32,66 +39,78 @@ Instructions: Homebrew
 
 #### Install dependencies using Homebrew
 
-    brew install autoconf automake berkeley-db4 libtool boost miniupnpc openssl pkg-config protobuf libevent
+        brew install autoconf automake libtool boost miniupnpc openssl pkg-config protobuf qt
 
-NOTE: Building with Qt4 is still supported, however, could result in a broken UI. As such, building with Qt5 is recommended. Qt5 5.7 requires C++11 which Dash Core doesn't fully support yet, Qt5 5.6.2 has some other issues, so make sure to install Qt version < 5.6.2 (5.6.1-1 is recommended).
-    brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/e6d954bab88e89c5582498157077756900865070/Formula/qt5.rb
+Note: After you have installed the dependencies, you should check that the Homebrew installed version of OpenSSL is the one available for compilation. You can check this by typing
 
-### Building Dash Core
+        openssl version
 
-1. Clone the GitHub tree to get the source code and go into the directory.
+into Terminal. You should see OpenSSL 1.0.1f 6 Jan 2014.
+
+If not, you can ensure that the Homebrew OpenSSL is correctly linked by running
+
+        brew link openssl --force
+
+Rerunning "openssl version" should now return the correct version. If it
+doesn't, make sure `/usr/local/bin` comes before `/usr/bin` in your
+PATH.
+
+#### Installing berkeley-db4 using Homebrew
+
+The homebrew package for berkeley-db4 has been broken for some time.  It will install without Java though.
+
+Running this command takes you into brew's interactive mode, which allows you to configure, make, and install by hand:
+```
+$ brew install https://raw.github.com/mxcl/homebrew/master/Library/Formula/berkeley-db4.rb -–without-java
+```
+
+These rest of these commands are run inside brew interactive mode:
+```
+/private/tmp/berkeley-db4-UGpd0O/db-4.8.30 $ cd ..
+/private/tmp/berkeley-db4-UGpd0O $ db-4.8.30/dist/configure --prefix=/usr/local/Cellar/berkeley-db4/4.8.30 --mandir=/usr/local/Cellar/berkeley-db4/4.8.30/share/man --enable-cxx
+/private/tmp/berkeley-db4-UGpd0O $ make
+/private/tmp/berkeley-db4-UGpd0O $ make install
+/private/tmp/berkeley-db4-UGpd0O $ exit
+```
+
+After exiting, you'll get a warning that the install is keg-only, which means it wasn't symlinked to `/usr/local`.  You don't need it to link it to build dash, but if you want to, here's how:
+
+    $ brew --force link berkeley-db4
+
+
+### Building `dashd`
+
+1. Clone the github tree to get the source code and go into the directory.
 
         git clone https://github.com/dashpay/dash.git
         cd dash
 
-2.  Build Dash Core:
-    This will configure and build the headless dash binaries as well as the gui (if Qt is found).
-    You can disable the gui build by passing `--without-gui` to configure.
+2.  Build dashd:
 
         ./autogen.sh
         ./configure
         make
 
-3.  It is also a good idea to build and run the unit tests:
+3.  It is a good idea to build and run the unit tests, too:
 
         make check
-
-4.  (Optional) You can also install dashd to your path:
-
-        make install
-
-Use Qt Creator as IDE
-------------------------
-You can use Qt Creator as IDE, for debugging and for manipulating forms, etc.
-Download Qt Creator from https://www.qt.io/download/. Download the "community edition" and only install Qt Creator (uncheck the rest during the installation process).
-
-1. Make sure you installed everything through Homebrew mentioned above
-2. Do a proper ./configure --enable-debug
-3. In Qt Creator do "New Project" -> Import Project -> Import Existing Project
-4. Enter "dash-qt" as project name, enter src/qt as location
-5. Leave the file selection as it is
-6. Confirm the "summary page"
-7. In the "Projects" tab select "Manage Kits..."
-8. Select the default "Desktop" kit and select "Clang (x86 64bit in /usr/bin)" as compiler
-9. Select LLDB as debugger (you might need to set the path to your installation)
-10. Start debugging with Qt Creator
 
 Creating a release build
 ------------------------
 You can ignore this section if you are building `dashd` for your own use.
 
-dashd/dash-cli binaries are not included in the Dash-Qt.app bundle.
+dashd/dash-cli binaries are not included in the Interzone-Qt.app bundle.
 
-If you are building `dashd` or `Dash Core` for others, your build machine should be set up
+If you are building `dashd` or `Interzone-Qt` for others, your build machine should be set up
 as follows for maximum compatibility:
 
 All dependencies should be compiled with these flags:
 
- -mmacosx-version-min=10.7
+ -mmacosx-version-min=10.6
  -arch x86_64
- -isysroot $(xcode-select --print-path)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.7.sdk
+ -isysroot $(xcode-select --print-path)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk
 
-Once dependencies are compiled, see [doc/release-process.md](release-process.md) for how the Dash Core
+Once dependencies are compiled, see release-process.md for how the Interzone-Qt.app
 bundle is packaged and signed to create the .dmg disk image that is distributed.
 
 Running
@@ -103,17 +122,16 @@ directory. We have to first create the RPC configuration file, though.
 Run `./dashd` to get the filename where it should be put, or just try these
 commands:
 
-    echo -e "rpcuser=dashrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/DashCore/dash.conf"
-    chmod 600 "/Users/${USER}/Library/Application Support/DashCore/dash.conf"
+    echo -e "rpcuser=dashrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/Interzone/dash.conf"
+    chmod 600 "/Users/${USER}/Library/Application Support/Interzone/dash.conf"
 
-The next time you run it, it will start downloading the blockchain, but it won't
+When next you run it, it will start downloading the blockchain, but it won't
 output anything while it's doing this. This process may take several hours;
 you can monitor its process by looking at the debug.log file, like this:
 
-    tail -f $HOME/Library/Application\ Support/DashCore/debug.log
+    tail -f $HOME/Library/Application\ Support/Interzone/debug.log
 
 Other commands:
--------
 
     ./dashd -daemon # to start the dash daemon.
     ./dash-cli --help  # for a list of command-line options.
