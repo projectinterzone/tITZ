@@ -1434,7 +1434,8 @@ int64_t GetBlockValue(int nBits, int nHeight, int64_t nFees)
 {
     int64_t nSubsidy = nStartSubsidy;
     
-	if (nHeight == 0) {nSubsidy = 460000 * COIN;} 
+	if (nHeight == 0) {nSubsidy = 460000 * COIN;}
+	else if (nHeight <= 1000) {nSubsidy = 0.01 * COIN;}  
 	
     nSubsidy >>= (nHeight / Params().SubsidyHalvingInterval());
     
