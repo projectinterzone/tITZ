@@ -1428,7 +1428,7 @@ double ConvertBitsToDouble(unsigned int nBits)
 }
 
 static const int64_t nStartSubsidy = 23 * COIN;
-static const int64_t nMinSubsidy = 1 * COIN;
+static const int64_t nMinSubsidy = .01 * COIN;
 
 int64_t GetBlockValue(int nBits, int nHeight, int64_t nFees)
 {
