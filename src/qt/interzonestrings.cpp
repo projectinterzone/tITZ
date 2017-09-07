@@ -1,4 +1,4 @@
-
+Perplexion
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2015 The Dash developers
 
@@ -44,15 +44,15 @@ QT_TRANSLATE_NOOP("interzone-core", ""
 "Continuously rate-limit free transactions to <n>*1000 bytes per minute "
 "(default:15)"),
 QT_TRANSLATE_NOOP("interzone-core", ""
-"Darksend uses exact denominated amounts to send funds, you might simply need "
+"Perplexion uses exact denominated amounts to send funds, you might simply need "
 "to anonymize some more coins."),
 QT_TRANSLATE_NOOP("interzone-core", ""
-"Disable all Masternode and Darksend related functionality (0-1, default: 0)"),
+"Disable all Masternode and Perplexion related functionality (0-1, default: 0)"),
 QT_TRANSLATE_NOOP("interzone-core", ""
 "Enable instantx, show confirmations for locked transactions (bool, default: "
 "true)"),
 QT_TRANSLATE_NOOP("interzone-core", ""
-"Enable use of automated darksend for funds stored in this wallet (0-1, "
+"Enable use of automated Perplexion for funds stored in this wallet (0-1, "
 "default: 0)"),
 QT_TRANSLATE_NOOP("interzone-core", ""
 "Enter regression test mode, which uses a special chain in which blocks can "
@@ -108,7 +108,7 @@ QT_TRANSLATE_NOOP("interzone-core", ""
 QT_TRANSLATE_NOOP("interzone-core", ""
 "Output debugging information (default: 0, supplying <category> is optional)"),
 QT_TRANSLATE_NOOP("interzone-core", ""
-"Provide liquidity to Darksend by infrequently mixing coins on a continual "
+"Provide liquidity to Perplexion by infrequently mixing coins on a continual "
 "basis (0-100, default: 0, 1=very frequent, high fees, 100=very infrequent, "
 "low fees)"),
 QT_TRANSLATE_NOOP("interzone-core", ""
@@ -134,12 +134,12 @@ QT_TRANSLATE_NOOP("interzone-core", ""
 "Unable to bind to %s on this computer. Interzone Core is probably already "
 "running."),
 QT_TRANSLATE_NOOP("interzone-core", ""
-"Unable to locate enough Darksend denominated funds for this transaction."),
+"Unable to locate enough Perplexion denominated funds for this transaction."),
 QT_TRANSLATE_NOOP("interzone-core", ""
-"Unable to locate enough Darksend non-denominated funds for this transaction "
-"that are not equal 1000 CHAINCOIN."),
+"Unable to locate enough Perplexion non-denominated funds for this transaction "
+"that are not equal 1000 Interzone."),
 QT_TRANSLATE_NOOP("interzone-core", ""
-"Unable to locate enough Darksend non-denominated funds for this transaction."),
+"Unable to locate enough Perplexion non-denominated funds for this transaction."),
 QT_TRANSLATE_NOOP("interzone-core", ""
 "Use separate SOCKS5 proxy to reach peers via Tor hidden services (default: -"
 "proxy)"),
@@ -199,8 +199,8 @@ QT_TRANSLATE_NOOP("interzone-core", "Connection options:"),
 QT_TRANSLATE_NOOP("interzone-core", "Corrupted block database detected"),
 QT_TRANSLATE_NOOP("interzone-core", "Interzone Core Daemon"),
 QT_TRANSLATE_NOOP("interzone-core", "Interzone Core RPC client version"),
-QT_TRANSLATE_NOOP("interzone-core", "Darksend is disabled."),
-QT_TRANSLATE_NOOP("interzone-core", "Darksend options:"),
+QT_TRANSLATE_NOOP("interzone-core", "Perplexion is disabled."),
+QT_TRANSLATE_NOOP("interzone-core", "Perplexion options:"),
 QT_TRANSLATE_NOOP("interzone-core", "Debugging/Testing options:"),
 QT_TRANSLATE_NOOP("interzone-core", "Disable safemode, override a real safe mode event (default: 0)"),
 QT_TRANSLATE_NOOP("interzone-core", "Discover own IP address (default: 1 when listening and no -externalip)"),
@@ -223,7 +223,7 @@ QT_TRANSLATE_NOOP("interzone-core", "Error recovering public key."),
 QT_TRANSLATE_NOOP("interzone-core", "Error"),
 QT_TRANSLATE_NOOP("interzone-core", "Error: Disk space is low!"),
 QT_TRANSLATE_NOOP("interzone-core", "Error: Wallet locked, unable to create transaction!"),
-QT_TRANSLATE_NOOP("interzone-core", "Error: You already have pending entries in the Darksend pool"),
+QT_TRANSLATE_NOOP("interzone-core", "Error: You already have pending entries in the Perplexion pool"),
 QT_TRANSLATE_NOOP("interzone-core", "Error: system error: "),
 QT_TRANSLATE_NOOP("interzone-core", "Failed to listen on any port. Use -listen=0 if you want this."),
 QT_TRANSLATE_NOOP("interzone-core", "Failed to read block info"),
@@ -269,8 +269,8 @@ QT_TRANSLATE_NOOP("interzone-core", "KeePassHttp key for AES encrypted communica
 QT_TRANSLATE_NOOP("interzone-core", "Keep N interzone anonymized (default: 0)"),
 QT_TRANSLATE_NOOP("interzone-core", "Keep at most <n> unconnectable blocks in memory (default: %u)"),
 QT_TRANSLATE_NOOP("interzone-core", "Keep at most <n> unconnectable transactions in memory (default: %u)"),
-QT_TRANSLATE_NOOP("interzone-core", "Last Darksend was too recent."),
-QT_TRANSLATE_NOOP("interzone-core", "Last successful darksend action was too recent."),
+QT_TRANSLATE_NOOP("interzone-core", "Last Perplexion was too recent."),
+QT_TRANSLATE_NOOP("interzone-core", "Last successful Perplexion action was too recent."),
 QT_TRANSLATE_NOOP("interzone-core", "Limit size of signature cache to <n> entries (default: 50000)"),
 QT_TRANSLATE_NOOP("interzone-core", "List commands"),
 QT_TRANSLATE_NOOP("interzone-core", "Listen for connections on <port> (default: 9999 or testnet: 19999)"),
@@ -371,7 +371,7 @@ QT_TRANSLATE_NOOP("interzone-core", "Use UPnP to map the listening port (default
 QT_TRANSLATE_NOOP("interzone-core", "Use UPnP to map the listening port (default: 1 when listening)"),
 QT_TRANSLATE_NOOP("interzone-core", "Use the test network"),
 QT_TRANSLATE_NOOP("interzone-core", "Username for JSON-RPC connections"),
-QT_TRANSLATE_NOOP("interzone-core", "Value more than Darksend pool maximum allows."),
+QT_TRANSLATE_NOOP("interzone-core", "Value more than Perplexion pool maximum allows."),
 QT_TRANSLATE_NOOP("interzone-core", "Verifying blocks..."),
 QT_TRANSLATE_NOOP("interzone-core", "Verifying wallet..."),
 QT_TRANSLATE_NOOP("interzone-core", "Wait for RPC server to start"),

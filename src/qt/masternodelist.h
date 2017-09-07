@@ -8,6 +8,7 @@
 #include <QMenu>
 #include <QTimer>
 #include <QWidget>
+#include <QCheckBox>
 
 #define MY_MASTERNODELIST_UPDATE_SECONDS                 60
 #define MASTERNODELIST_UPDATE_SECONDS                    15
@@ -42,6 +43,7 @@ private:
     QMenu *contextMenu;
     int64_t nTimeFilterUpdated;
     bool fFilterUpdated;
+    bool bAutostartMissing = false;
 
 public Q_SLOTS:
     void updateMyMasternodeInfo(QString strAlias, QString strAddr, CMasternode *info);
@@ -72,5 +74,6 @@ private Q_SLOTS:
     void on_startMissingButton_clicked();
     void on_tableWidgetMyMasternodes_itemSelectionChanged();
     void on_UpdateButton_clicked();
+    void on_cbxAutoStartMissingMNs_stateChanged(int arg1);
 };
 #endif // MASTERNODELIST_H

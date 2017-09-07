@@ -16,9 +16,9 @@ BitcoinUnits::BitcoinUnits(QObject *parent):
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(CHAINCOIN);
-    unitlist.append(mCHAINCOIN);
-    unitlist.append(uCHAINCOIN);
+    unitlist.append(Interzone);
+    unitlist.append(mInterzone);
+    unitlist.append(uInterzone);
     unitlist.append(chuffs);
     return unitlist;
 }
@@ -27,9 +27,9 @@ bool BitcoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case CHAINCOIN:
-    case mCHAINCOIN:
-    case uCHAINCOIN:
+    case Interzone:
+    case mInterzone:
+    case uInterzone:
     case chuffs:
         return true;
     default:
@@ -43,9 +43,9 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case CHAINCOIN: return QString("ITZ");
-            case mCHAINCOIN: return QString("mITZ");
-            case uCHAINCOIN: return QString::fromUtf8("μITZ");
+            case Interzone: return QString("ITZ");
+            case mInterzone: return QString("mITZ");
+            case uInterzone: return QString::fromUtf8("μITZ");
             case chuffs: return QString::fromUtf8("chuffs");
             default: return QString("???");
         }
@@ -54,9 +54,9 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case CHAINCOIN: return QString("tITZ");
-            case mCHAINCOIN: return QString("mtITZ");
-            case uCHAINCOIN: return QString::fromUtf8("μtITZ");
+            case Interzone: return QString("tITZ");
+            case mInterzone: return QString("mtITZ");
+            case uInterzone: return QString::fromUtf8("μtITZ");
             case chuffs: return QString::fromUtf8("tchuffs");
             default: return QString("???");
         }
@@ -69,9 +69,9 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case CHAINCOIN: return QString("Interzone");
-            case mCHAINCOIN: return QString("Milli-Interzone (1 / 1,000)");
-            case uCHAINCOIN: return QString("Micro-Interzone (1 / 1,000,000)");
+            case Interzone: return QString("Interzone");
+            case mInterzone: return QString("Milli-Interzone (1 / 1,000)");
+            case uInterzone: return QString("Micro-Interzone (1 / 1,000,000)");
             case chuffs: return QString("Ten Nano-Interzone (1 / 100,000,000)");
             default: return QString("???");
         }
@@ -80,9 +80,9 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case CHAINCOIN: return QString("TestInterzones");
-            case mCHAINCOIN: return QString("Milli-TestInterzone (1 / 1,000)");
-            case uCHAINCOIN: return QString("Micro-TestInterzone (1 / 1,000,000)");
+            case Interzone: return QString("TestInterzones");
+            case mInterzone: return QString("Milli-TestInterzone (1 / 1,000)");
+            case uInterzone: return QString("Micro-TestInterzone (1 / 1,000,000)");
             case chuffs: return QString("Ten Nano-TestInterzone (1 / 100,000,000)");
             default: return QString("???");
         }
@@ -93,9 +93,9 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case CHAINCOIN:  return 100000000;
-    case mCHAINCOIN: return 100000;
-    case uCHAINCOIN: return 100;
+    case Interzone:  return 100000000;
+    case mInterzone: return 100000;
+    case uInterzone: return 100;
     case chuffs: return 1;
     default:   return 100000000;
     }
@@ -105,9 +105,9 @@ qint64 BitcoinUnits::maxAmount(int unit)
 {
     switch(unit)
     {
-    case CHAINCOIN:  return Q_INT64_C(21000000);
-    case mCHAINCOIN: return Q_INT64_C(21000000000);
-    case uCHAINCOIN: return Q_INT64_C(21000000000000);
+    case Interzone:  return Q_INT64_C(21000000);
+    case mInterzone: return Q_INT64_C(21000000000);
+    case uInterzone: return Q_INT64_C(21000000000000);
     case chuffs: return Q_INT64_C(2100000000000000);
     default:   return 0;
     }
@@ -117,9 +117,9 @@ int BitcoinUnits::amountDigits(int unit)
 {
     switch(unit)
     {
-    case CHAINCOIN: return 8; // 21,000,000 (# digits, without commas)
-    case mCHAINCOIN: return 11; // 21,000,000,000
-    case uCHAINCOIN: return 14; // 21,000,000,000,000
+    case Interzone: return 8; // 21,000,000 (# digits, without commas)
+    case mInterzone: return 11; // 21,000,000,000
+    case uInterzone: return 14; // 21,000,000,000,000
     case chuffs: return 16; // 2,100,000,000,000,000
     default: return 0;
     }
@@ -129,9 +129,9 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case CHAINCOIN: return 8;
-    case mCHAINCOIN: return 5;
-    case uCHAINCOIN: return 2;
+    case Interzone: return 8;
+    case mInterzone: return 5;
+    case uInterzone: return 2;
     case chuffs: return 0;
     default: return 0;
     }

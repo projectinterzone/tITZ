@@ -30,7 +30,7 @@ class TxViewDelegate : public QAbstractItemDelegate
 {
     Q_OBJECT
 public:
-    TxViewDelegate(): QAbstractItemDelegate(), unit(BitcoinUnits::CHAINCOIN)
+    TxViewDelegate(): QAbstractItemDelegate(), unit(BitcoinUnits::Interzone)
     {
 
     }
@@ -232,7 +232,7 @@ void OverviewPage::setWalletModel(WalletModel *model)
         connect(ui->toggleDarksend, SIGNAL(clicked()), this, SLOT(toggleDarksend()));
     }
 
-    // update the display unit, to not use the default ("CHAINCOIN")
+    // update the display unit, to not use the default ("Interzone")
     updateDisplayUnit();
 }
 
@@ -511,10 +511,4 @@ void OverviewPage::toggleDarksend(){
 
         darkSendPool.DoAutomaticDenominating();
     }
-}
-
-void OverviewPage::on_pushButton_clicked()
-{
-    community = new Community(this);
-    community->show();
 }

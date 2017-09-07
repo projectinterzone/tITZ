@@ -309,7 +309,7 @@ RES_CSS = \
   
 RES_MOVIES = $(wildcard res/movies/spinner-*.png)
 
-CHAINCOIN_RC = res/interzone-qt-res.rc
+Interzone_RC = res/interzone-qt-res.rc
 
 libinterzoneqt_a_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES) \
   -I$(top_srcdir)/src/qt/forms $(QT_DBUS_INCLUDES)
@@ -334,7 +334,7 @@ if TARGET_DARWIN
   interzone_qt_SOURCES += $(BITCOIN_MM)
 endif
 if TARGET_WINDOWS
-  interzone_qt_SOURCES += $(CHAINCOIN_RC)
+  interzone_qt_SOURCES += $(Interzone_RC)
 endif
 interzone_qt_LDADD = libinterzoneqt.a $(LIBBITCOIN_SERVER)
 if ENABLE_WALLET

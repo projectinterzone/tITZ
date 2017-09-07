@@ -26,9 +26,9 @@ public:
      */
     enum Unit
     {
-        CHAINCOIN,
-        mCHAINCOIN,
-        uCHAINCOIN,
+        Interzone,
+        mInterzone,
+        uInterzone,
         chuffs
     };
 

@@ -55,7 +55,7 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
         CoinControlDialog::coinControl->useDarkSend = false;
         CoinControlDialog::coinControl->useInstantX = false;
     }
-	// CHAINCOIN TEMP
+	// Interzone TEMP
     ui->checkUseDarksend->setChecked(false);
     ui->checkUseDarksend->setVisible(false);
     ui->checkInstantX->setChecked(false);

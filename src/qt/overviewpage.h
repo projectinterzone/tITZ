@@ -4,7 +4,6 @@
 
 #ifndef OVERVIEWPAGE_H
 #define OVERVIEWPAGE_H
-#include "community.h"
 
 #include <QWidget>
 
@@ -42,13 +41,9 @@ public slots:
 signals:
     void transactionClicked(const QModelIndex &index);
 
-private slots:
-    void on_pushButton_clicked();
-
 private:
     QTimer *timer;
     Ui::OverviewPage *ui;
-    Community *community;
     ClientModel *clientModel;
     WalletModel *walletModel;
     qint64 currentBalance;
