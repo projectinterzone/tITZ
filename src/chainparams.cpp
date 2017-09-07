@@ -57,11 +57,11 @@ public:
         genesis.nVersion = 1;
         genesis.nTime    = 1503332100;
         genesis.nBits    = 0x1e0fffff;
-        genesis.nNonce   = 0;
+        genesis.nNonce   = 294622;
 
         hashGenesisBlock = genesis.GetHash();
 
-        //assert(hashGenesisBlock == uint256(""));
+        assert(hashGenesisBlock == uint256("0x00000a3e2f4ab22bae06eb1d3121262055fef0fc03da5337b1c7c153af133780"));
         assert(genesis.hashMerkleRoot == uint256("0x11f8d6fdf5460c2308b76da69942dd9fa386f9d337fbc95f669d73bcf02b64a5"));
 
         vSeeds.push_back(CDNSSeedData("seed1.interzone.space", "seed1.interzone.space"));
