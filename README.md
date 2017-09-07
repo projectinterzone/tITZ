@@ -1,10 +1,10 @@
-CURRENTLY ONLY TESTNET WITH OUT GUI IS AVAILABLE. 
+CURRENTLY ONLY TESTNET IS AVAILABLE. 
 
 TO BUILD:
 
 ./autogen.sh
 
-./configure --without-gui
+./configure
 
 make
 
