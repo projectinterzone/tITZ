@@ -42,7 +42,7 @@ void CActiveMasternode::ManageStatus()
 
         LogPrintf("CActiveMasternode::ManageStatus() - Checking inbound connection to '%s'\n", service.ToString().c_str());
 
-        if (chainActive.Height() >= Params().MasternodePortForkHeight())
+        /*if (chainActive.Height() >= Params().MasternodePortForkHeight())
         {
             if(Params().NetworkID() == CChainParams::MAIN){
                 if(service.GetPort() != 11994) {
@@ -57,7 +57,7 @@ void CActiveMasternode::ManageStatus()
                 LogPrintf("CActiveMasternode::ManageStatus() - not capable: %s\n", notCapableReason.c_str());
                 return;
             }
-        }
+        }*/
 
         if(!ConnectNode((CAddress)service, service.ToString().c_str())){
             notCapableReason = "Could not connect to " + service.ToString();

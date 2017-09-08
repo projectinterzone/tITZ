@@ -619,7 +619,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
             return;
         }
 
-        if(chainActive.Height() >= Params().MasternodePortForkHeight())
+        /*if(chainActive.Height() >= Params().MasternodePortForkHeight())
         {
             if(Params().NetworkID() == CChainParams::MAIN)
             {
@@ -639,7 +639,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
                     return;
                 }
             }
-        }
+        }*/
 
         //search existing Masternode list, this is where we update existing Masternodes with new dsee broadcasts
         CMasternode* pmn = this->Find(vin);
