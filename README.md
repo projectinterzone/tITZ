@@ -1,21 +1,3 @@
-CURRENTLY ONLY TESTNET IS AVAILABLE. 
-
-TO BUILD:
-
-./autogen.sh
-
-./configure
-
-make
-
-then while running, add the --testnet variable:
-
-c:\ITZ\interzoned --testnet 
-
-c:\ITZ\interzone-cli --testnet
-
-
-
 Interzone Core staging tree 1.3
 ===============================
 
