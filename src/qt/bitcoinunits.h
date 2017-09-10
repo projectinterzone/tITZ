@@ -29,7 +29,7 @@ public:
         Interzone,
         mInterzone,
         uInterzone,
-        chuffs
+        burroughs
     };
 
     //! @name Static API

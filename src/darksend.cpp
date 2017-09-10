@@ -563,11 +563,11 @@ void CDarksendPool::Check()
                     txNew.vin.push_back(s);
             }
 
-            // use BIP69 implementation for improved anonymity
-            // https://github.com/bitcoin/bips/blob/master/bip-0069.mediawiki
-            sort(txNew.vin.begin(), txNew.vin.end(),  CompareInputBIP69());
-            sort(txNew.vout.begin(), txNew.vout.end(), CompareOutputBIP69());
-			
+            // shuffle the outputs for improved anonymity
+            std::random_shuffle ( txNew.vin.begin(),  txNew.vin.end(),  randomizeList);
+            std::random_shuffle ( txNew.vout.begin(), txNew.vout.end(), randomizeList);
+
+
             if(fDebug) LogPrintf("Transaction 1: %s\n", txNew.ToString().c_str());
             finalTransaction = txNew;
 
@@ -688,7 +688,8 @@ void CDarksendPool::ChargeFees(){
     if(fMasterNode) {
         //we don't need to charge collateral for every offence.
         int offences = 0;
-        if(GetRandInt(100) > 33) return;
+        int r = rand()%100;
+        if(r > 33) return;
 
         if(state == POOL_STATUS_ACCEPTING_ENTRIES){
             BOOST_FOREACH(const CTransaction& txCollateral, vecSessionCollateral) {
@@ -719,16 +720,20 @@ void CDarksendPool::ChargeFees(){
             }
         }
 
+        r = rand()%100;
         int target = 0;
 
         //mostly offending?
-        if(offences >= POOL_MAX_TRANSACTIONS-1 && GetRandInt(100) > 33) return;
+        if(offences >= POOL_MAX_TRANSACTIONS-1 && r > 33) return;
 
         //everyone is an offender? That's not right
         if(offences >= POOL_MAX_TRANSACTIONS) return;
 
         //charge one of the offenders randomly
         if(offences > 1) target = 50;
+
+        //pick random client to charge
+        r = rand()%100;
 
         if(state == POOL_STATUS_ACCEPTING_ENTRIES){
             BOOST_FOREACH(const CTransaction& txCollateral, vecSessionCollateral) {
@@ -740,7 +745,7 @@ void CDarksendPool::ChargeFees(){
                 }
 
                 // This queue entry didn't send us the promised transaction
-                if(!found && GetRandInt(100) > target){
+                if(!found && r > target){
                     LogPrintf("CDarksendPool::ChargeFees -- found uncooperative node (didn't send transaction). charging fees.\n");
 
                     CWalletTx wtxCollateral = CWalletTx(pwalletMain, txCollateral);
@@ -761,11 +766,11 @@ void CDarksendPool::ChargeFees(){
             // who didn't sign?
             BOOST_FOREACH(const CDarkSendEntry v, entries) {
                 BOOST_FOREACH(const CTxDSIn s, v.sev) {
-                    if(!s.fHasSig && GetRandInt(100) > target){
+                    if(!s.fHasSig && r > target){
                         LogPrintf("CDarksendPool::ChargeFees -- found uncooperative node (didn't sign). charging fees.\n");
 
                         CWalletTx wtxCollateral = CWalletTx(pwalletMain, v.collateral);
-                        LOCK(cs_main);
+
                         // Broadcast
                         if (!wtxCollateral.AcceptToMemoryPool(false))
                         {
@@ -785,13 +790,10 @@ void CDarksendPool::ChargeFees(){
 //  - Darksend is completely free, to pay miners we randomly pay the collateral of users.
 void CDarksendPool::ChargeRandomFees(){
     if(fMasterNode) {
-
-        LOCK(cs_main);
-
         int i = 0;
 
         BOOST_FOREACH(const CTransaction& txCollateral, vecSessionCollateral) {
-            int r = GetRandInt(100);
+            int r = rand()%100;
 
             /*
                 Collateral Fee Charges:
@@ -834,27 +836,23 @@ void CDarksendPool::CheckTimeout(){
         }
     }
 
-    {
-        TRY_LOCK(cs_darksend, lockDS);
-        if(!lockDS) return; // it's ok to fail here, we run this quite frequently
-        // check Darksend queue objects for timeouts
-        int c = 0;
-        vector<CDarksendQueue>::iterator it;
-        for(it=vecDarksendQueue.begin();it<vecDarksendQueue.end();it++){
-            if((*it).IsExpired()){
-                if(fDebug) LogPrintf("CDarksendPool::CheckTimeout() : Removing expired queue entry - %d\n", c);
-                vecDarksendQueue.erase(it);
-                break;
-            }
-            c++;
+    // check Darksend queue objects for timeouts
+    int c = 0;
+    vector<CDarksendQueue>::iterator it;
+    for(it=vecDarksendQueue.begin();it<vecDarksendQueue.end();it++){
+        if((*it).IsExpired()){
+            if(fDebug) LogPrintf("CDarksendPool::CheckTimeout() : Removing expired queue entry - %d\n", c);
+            vecDarksendQueue.erase(it);
+            break;
         }
+        c++;
     }
 
     int addLagTime = 0;
     if(!fMasterNode) addLagTime = 10000; //if we're the client, give the server a few extra seconds before resetting.
 
     if(state == POOL_STATUS_ACCEPTING_ENTRIES || state == POOL_STATUS_QUEUE){
-        int c = 0;
+        c = 0;
 
         // if it's a Masternode, the entries are stored in "entries", otherwise they're stored in myEntries
         std::vector<CDarkSendEntry> *vec = &myEntries;
@@ -1477,7 +1475,7 @@ bool CDarksendPool::DoAutomaticDenominating(bool fDryRun, bool ready)
 
     // initial phase, find a Masternode
     if(!sessionFoundMasternode){
-        int nUseQueue = GetRandInt(100);
+        int nUseQueue = rand()%100;
         UpdateState(POOL_STATUS_ACCEPTING_ENTRIES);
 
         sessionTotalValue = pwalletMain->GetTotalValue(vCoins);
@@ -1663,6 +1661,43 @@ bool CDarksendPool::PrepareDarksendDenominate()
     return false;
 }
 
+bool CDarksendPool::SendRandomPaymentToSelf()
+{
+    int64_t nBalance = pwalletMain->GetBalance();
+    int64_t nPayment = (nBalance*0.35) + (rand() % nBalance);
+
+    if(nPayment > nBalance) nPayment = nBalance-(0.1*COIN);
+
+    // make our change address
+    CReserveKey reservekey(pwalletMain);
+
+    CScript scriptChange;
+    CPubKey vchPubKey;
+    assert(reservekey.GetReservedKey(vchPubKey)); // should never fail, as we just unlocked
+    scriptChange.SetDestination(vchPubKey.GetID());
+
+    CWalletTx wtx;
+    int64_t nFeeRet = 0;
+    std::string strFail = "";
+    vector< pair<CScript, int64_t> > vecSend;
+
+    // ****** Add fees ************ /
+    vecSend.push_back(make_pair(scriptChange, nPayment));
+
+    CCoinControl *coinControl=NULL;
+    bool success = pwalletMain->CreateTransaction(vecSend, wtx, reservekey, nFeeRet, strFail, coinControl, ONLY_DENOMINATED);
+    if(!success){
+        LogPrintf("SendRandomPaymentToSelf: Error - %s\n", strFail.c_str());
+        return false;
+    }
+
+    pwalletMain->CommitTransaction(wtx, reservekey);
+
+    LogPrintf("SendRandomPaymentToSelf Success: tx %s\n", wtx.GetHash().GetHex().c_str());
+
+    return true;
+}
+
 // Split up large inputs or create fee sized inputs
 bool CDarksendPool::MakeCollateralAmounts()
 {
@@ -1806,7 +1841,7 @@ bool CDarksendPool::IsCompatibleWithSession(int64_t nDenom, CTransaction txColla
     if(sessionUsers < 0) sessionUsers = 0;
 
     if(sessionUsers == 0) {
-        sessionID = 1 + (GetRandInt(100) % 999999);
+        sessionID = 1 + (rand() % 999999);
         sessionDenom = nDenom;
         sessionUsers++;
         lastTimeChanged = GetTimeMillis();
@@ -2078,21 +2113,13 @@ bool CDarksendQueue::Sign()
 
 bool CDarksendQueue::Relay()
 {
-    std::vector<CNode*> vNodesCopy;
-    {
-        LOCK(cs_vNodes);
-        vNodesCopy = vNodes;
-        BOOST_FOREACH(CNode* pnode, vNodesCopy)
-            pnode->AddRef();
-    }
-    BOOST_FOREACH(CNode* pnode, vNodesCopy)
-            pnode->PushMessage("dsq", (*this));
 
-    {
-        LOCK(cs_vNodes);
-        BOOST_FOREACH(CNode* pnode, vNodesCopy)
-            pnode->Release();
+    LOCK(cs_vNodes);
+    BOOST_FOREACH(CNode* pnode, vNodes){
+        // always relay to everyone
+        pnode->PushMessage("dsq", (*this));
     }
+
     return true;
 }
 

@@ -42,7 +42,6 @@ namespace Checkpoints
         boost::assign::map_list_of
         (     1, uint256("0x00000b7ff05d5ef83c0b524732ab2c01b0505d3381d7505169d90f061fd47866"))
         (     3, uint256("0x000000c5823bdc4409c6882b39a8be7c113af492fb297818d37ddcf2d4d1e0c8"))
-
         ;
     static const CCheckpointData data = {
         &mapCheckpoints,
@@ -54,24 +53,24 @@ namespace Checkpoints
 
     static MapCheckpoints mapCheckpointsTestnet =
         boost::assign::map_list_of
-        ( 1, uint256("0x00000c8b09569f01c13c877bf349617f0b49ac5a9af53a2dbe7b1a899f457d47"))
+        ( 0, uint256("0x0000082f5939c2154dbcba35f784530d12e9d72472fcfaf29674ea312cdf4c83"))
         ;
     static const CCheckpointData dataTestnet = {
         &mapCheckpointsTestnet,
-        1504585337,
+        1388868139,
         0,
         960
     };
 
     static MapCheckpoints mapCheckpointsRegtest =
         boost::assign::map_list_of
-        ( 0, uint256("0x66e44fbe79e0cf2889b86fb7a24f6774349b6e808311ad54bca4d073a6319c6e"))
+        ( 0, uint256("0x000008ca1832a4baf228eb1553c03d3a2c8e02399550dd6ea8d65cec3ef23d2e"))
         ;
     static const CCheckpointData dataRegtest = {
         &mapCheckpointsRegtest,
-        1503324223,
         0,
-        480
+        0,
+        0
     };
 
     const CCheckpointData &Checkpoints() {

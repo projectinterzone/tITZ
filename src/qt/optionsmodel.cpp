@@ -113,9 +113,7 @@ void OptionsModel::Init()
     if (!SoftSetBoolArg("-spendzeroconfchange", settings.value("bSpendZeroConfChange").toBool()))
         addOverriddenOption("-spendzeroconfchange");
 #endif
-   // Mining
-     if (!settings.contains("nMiningIntensity"))
-         settings.setValue("bMiningIntensity", 1);
+
     // Network
     if (!settings.contains("fUseUPnP"))
 #ifdef USE_UPNP
@@ -146,20 +144,7 @@ void OptionsModel::Init()
         settings.setValue("language", "");
     if (!SoftSetArg("-lang", settings.value("language").toString().toStdString()))
         addOverriddenOption("-lang");
-        
-    // Mining options
-    if (settings.contains("nMiningIntensity"))
-     {
-         int nMiningIntensity = settings.value("nMiningIntensity").toInt();
-         if (nMiningIntensity != 0)
-         {
-             SoftSetArg("-gen", "1");
-             SoftSetArg("-genproclimit", settings.value("nMiningIntensity").toString().toStdString());
-             addOverriddenOption("-gen");
-             addOverriddenOption("-genproclimit");
-         }
-     }
-     
+
     if (settings.contains("nDarksendRounds"))
         SoftSetArg("-darksendrounds", settings.value("nDarksendRounds").toString().toStdString());
     if (settings.contains("nAnonymizeDarkcoinAmount"))
@@ -251,8 +236,6 @@ QVariant OptionsModel::data(const QModelIndex & index, int role) const
             return settings.value("nDatabaseCache");
         case ThreadsScriptVerif:
             return settings.value("nThreadsScriptVerif");
-        case MiningIntensity:
-            return settings.value("nMiningIntensity");
         case DarksendRounds:
             return QVariant(nDarksendRounds);
         case AnonymizeDarkcoinAmount:
@@ -296,13 +279,6 @@ bool OptionsModel::setData(const QModelIndex & index, const QVariant & value, in
                 setRestartRequired(true);
             }
             break;
-            
-       case MiningIntensity:
-             if (settings.value("nMiningIntensity") != value.toInt()) {
-                 settings.setValue("nMiningIntensity", value.toInt());
-                 setRestartRequired(true);
-             }
-            
         case ProxyIP: {
             // contains current IP at index 0 and current port at index 1
             QStringList strlIpPort = settings.value("addrProxy").toString().split(":", QString::SkipEmptyParts);

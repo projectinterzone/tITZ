@@ -47,15 +47,7 @@ namespace GUIUtil
     bool parseBitcoinURI(QString uri, SendCoinsRecipient *out);
     QString formatBitcoinURI(const SendCoinsRecipient &info);
 
-    /* Format CNodeStats.nServices bitmask into a user-readable string */
-    QString formatServicesStr(quint64 mask);
-
-    /* Convert seconds into a QString with days, hours, mins, secs */
-    QString formatDurationStr(int secs);
-    /* Format a CNodeCombinedStats.dPingTime into a user-readable string or display N/A, if 0*/
-    QString formatPingTime(double dPingTime);
     // Returns true if given address+amount meets "dust" definition
-    QString getEntryData(QAbstractItemView *view, int column, int role);
     bool isDust(const QString& address, qint64 amount);
 
     // HTML escaping for rich text controls
@@ -156,7 +148,7 @@ namespace GUIUtil
 
         public:
             TableViewLastColumnResizingFixer(QTableView* table, int lastColMinimumWidth, int allColsMinimumWidth);
-            void stretchColumnWidth(int column);
+            void stretITZolumnWidth(int column);
 
         private:
             QTableView* tableView;

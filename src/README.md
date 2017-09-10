@@ -1,7 +1,7 @@
 Interzone Core staging tree 0.9
 ===============================
 
-http://www.interzone.space
+http://www.interzone.org
 
 Copyright (c) 2009-2015 Bitcoin Core Developers
 
@@ -21,7 +21,7 @@ are carried out collectively by the network. Interzone Core is the name of open
 source software which enables the use of this currency.
 
 For more information, as well as an immediately useable, binary version of
-the Interzone Core software, see http://www.interzone.space/
+the Interzone Core software, see http://www.interzone.org/
 
 
 License

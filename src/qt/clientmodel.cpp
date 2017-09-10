@@ -5,10 +5,7 @@
 
 #include "clientmodel.h"
 
-
-#include "bantablemodel.h"
 #include "guiconstants.h"
-#include "peertablemodel.h"
 
 #include "alert.h"
 #include "chainparams.h"
@@ -30,12 +27,8 @@ ClientModel::ClientModel(OptionsModel *optionsModel, QObject *parent) :
     QObject(parent), optionsModel(optionsModel),
     cachedNumBlocks(0), cachedMasternodeCountString(""),
     cachedReindexing(0), cachedImporting(0),
-    numBlocksAtStartup(-1), pollTimer(0),
-    peerTableModel(0),
-    banTableModel(0)
+    numBlocksAtStartup(-1), pollTimer(0)
 {
-    peerTableModel = new PeerTableModel(this);
-    banTableModel = new BanTableModel(this);
     pollTimer = new QTimer(this);
     connect(pollTimer, SIGNAL(timeout()), this, SLOT(updateTimer()));
     pollTimer->start(MODEL_UPDATE_DELAY);
@@ -209,15 +202,7 @@ OptionsModel *ClientModel::getOptionsModel()
 {
     return optionsModel;
 }
-PeerTableModel *ClientModel::getPeerTableModel()
-{
-    return peerTableModel;
-}
 
-BanTableModel *ClientModel::getBanTableModel()
-{
-    return banTableModel;
-}
 QString ClientModel::formatFullVersion() const
 {
     return QString::fromStdString(FormatFullVersion());

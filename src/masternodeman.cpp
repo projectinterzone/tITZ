@@ -279,12 +279,12 @@ void CMasternodeMan::Clear()
     nDsqCount = 0;
 }
 
-unsigned int CMasternodeMan::CountEnabled()
+int CMasternodeMan::CountEnabled()
 {
-    LOCK(cs);
-    unsigned int i = 0;
-    
+    int i = 0;
+
     BOOST_FOREACH(CMasternode& mn, vMasternodes) {
+        mn.Check();
         if(mn.IsEnabled()) i++;
     }
 
@@ -293,10 +293,10 @@ unsigned int CMasternodeMan::CountEnabled()
 
 int CMasternodeMan::CountMasternodesAboveProtocol(int protocolVersion)
 {
-    LOCK(cs);
     int i = 0;
 
     BOOST_FOREACH(CMasternode& mn, vMasternodes) {
+        mn.Check();
         if(mn.protocolVersion < protocolVersion || !mn.IsEnabled()) continue;
         i++;
     }
@@ -496,7 +496,10 @@ CMasternode* CMasternodeMan::GetMasternodeByRank(int nRank, int64_t nBlockHeight
     BOOST_FOREACH(CMasternode& mn, vMasternodes) {
 
         if(mn.protocolVersion < minProtocol) continue;
-        if(fOnlyActive && !mn.IsEnabled()) continue;
+        if(fOnlyActive) {
+            mn.Check();
+            if(!mn.IsEnabled()) continue;
+        }
 
         uint256 n = mn.CalculateScore(1, nBlockHeight);
         unsigned int n2 = 0;
@@ -619,27 +622,11 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
             return;
         }
 
-        /*if(chainActive.Height() >= Params().MasternodePortForkHeight())
-        {
-            if(Params().NetworkID() == CChainParams::MAIN)
-            {
-                if(addr.GetPort() != 11994)
-                {
-                    LogPrintf("dsee - Got bad Masternode port\n");
-                    Misbehaving(pfrom->GetId(), 100);
-                    return;
-                }
-            }
-            else
-            {
-                if(addr.GetPort() == 11994)
-                {
-                    LogPrintf("dsee - Got bad Masternode port\n");
-                    Misbehaving(pfrom->GetId(), 100);
-                    return;
-                }
-            }
-        }*/
+        /*
+        if(Params().NetworkID() == CChainParams::MAIN){
+            if(addr.GetPort() != 9999) return;
+        } else if(addr.GetPort() == 9999) return;
+        */
 
         //search existing Masternode list, this is where we update existing Masternodes with new dsee broadcasts
         CMasternode* pmn = this->Find(vin);
@@ -673,11 +660,11 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
 
         // make sure the vout that was signed is related to the transaction that spawned the Masternode
         //  - this is expensive, so it's only done once per Masternode
-        if(!darkSendSigner.IsVinAssociatedWithPubkey(vin, pubkey)) {
-            LogPrintf("dsee - Got mismatched pubkey and vin\n");
-            Misbehaving(pfrom->GetId(), 100);
-            return;
-        }
+        //if(!darkSendSigner.IsVinAssociatedWithPubkey(vin, pubkey)) {
+        //    LogPrintf("dsee - Got mismatched pubkey and vin\n");
+        //    Misbehaving(pfrom->GetId(), 100);
+        //    return;
+        //}
 
         if(fDebug) LogPrintf("dsee - Got NEW Masternode entry %s\n", addr.ToString().c_str());
 
@@ -886,7 +873,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
 
         BOOST_FOREACH(CMasternode& mn, vMasternodes) {
 
-            if(mn.addr.IsRFC1918() || mn.addr.IsLocal()) continue; //local network
+            if(mn.addr.IsRFC1918()) continue; //local network
 
             if(mn.IsEnabled())
             {

@@ -153,7 +153,7 @@ public:
 
     bool fFileBacked;
     bool fWalletUnlockAnonymizeOnly;
-    const std::string strWalletFile;
+    std::string strWalletFile;
 
     std::set<int64_t> setKeyPool;
     std::map<CKeyID, CKeyMetadata> mapKeyMetadata;
@@ -166,9 +166,11 @@ public:
     {
         SetNull();
     }
-    CWallet(std::string strWalletFileIn) : strWalletFile(strWalletFileIn)
+    CWallet(std::string strWalletFileIn)
     {
         SetNull();
+
+        strWalletFile = strWalletFileIn;
         fFileBacked = true;
     }
     void SetNull()

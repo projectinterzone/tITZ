@@ -336,7 +336,7 @@
            <item row="2" column="0">
             <widget class="QLabel" name="labelAnonymizedText">
              <property name="text">
-              <string>Perplexion Balance:</string>
+              <string>Darksend Balance:</string>
              </property>
             </widget>
            </item>
@@ -896,7 +896,7 @@
            </sizepolicy>
           </property>
           <property name="toolTip">
-           <string>Try to manually submit a Perplexion.</string>
+           <string>Try to manually submit a Darksend request.</string>
           </property>
           <property name="text">
            <string>Try Mix</string>
@@ -918,7 +918,7 @@
            </sizepolicy>
           </property>
           <property name="toolTip">
-           <string>Reset the current status of Perplexion (can interrupt Perplexion if it's in the process of Mixing, which can cost you money!)</string>
+           <string>Reset the current status of Darksend (can interrupt Darksend if it's in the process of Mixing, which can cost you money!)</string>
           </property>
           <property name="autoFillBackground">
            <bool>false</bool>
@@ -946,7 +946,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Perplexion</string>
+              <string>Darksend</string>
              </property>
             </widget>
            </item>

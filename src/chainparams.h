@@ -48,7 +48,7 @@ public:
         SECRET_KEY,     // BIP16
         EXT_PUBLIC_KEY, // BIP32
         EXT_SECRET_KEY, // BIP32
-        // EXT_COIN_TYPE,  // BIP44
+        EXT_COIN_TYPE,  // BIP44
 
         MAX_BASE58_TYPES
     };
@@ -67,9 +67,6 @@ public:
     const std::vector<unsigned char> &Base58Prefix(Base58Type type) const { return base58Prefixes[type]; }
     virtual const vector<CAddress>& FixedSeeds() const = 0;
     int RPCPort() const { return nRPCPort; }
-    int MasternodePortForkHeight() const { return nMasternodePortForkHeight; }
-    int RewardForkHeight1() const { return nRewardForkHeight1; }
-    int RewardForkHeight2() const { return nRewardForkHeight2; }
 protected:
     CChainParams() {}
 
@@ -84,9 +81,6 @@ protected:
     string strDataDir;
     vector<CDNSSeedData> vSeeds;
     std::vector<unsigned char> base58Prefixes[MAX_BASE58_TYPES];
-    int nMasternodePortForkHeight;
-    int nRewardForkHeight1;
-    int nRewardForkHeight2;
 };
 
 /**

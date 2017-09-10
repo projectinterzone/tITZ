@@ -233,7 +233,7 @@ public:
         }
     }
 
-    std::string Status(){
+    std::string Status() {
         std::string strStatus = "ACTIVE";
 
         if(activeState == CMasternode::MASTERNODE_ENABLED) strStatus   = "ENABLED";

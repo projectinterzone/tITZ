@@ -42,22 +42,21 @@ void CActiveMasternode::ManageStatus()
 
         LogPrintf("CActiveMasternode::ManageStatus() - Checking inbound connection to '%s'\n", service.ToString().c_str());
 
-        /*if (chainActive.Height() >= Params().MasternodePortForkHeight())
-        {
-            if(Params().NetworkID() == CChainParams::MAIN){
-                if(service.GetPort() != 11994) {
-                    notCapableReason = "Invalid port: " + boost::lexical_cast<string>(service.GetPort()) + " - only 11994 is supported on mainnet.";
-                    status = MASTERNODE_NOT_CAPABLE;
-                    LogPrintf("CActiveMasternode::ManageStatus() - not capable: %s\n", notCapableReason.c_str());
-                    return;
-                }
-            } else if(service.GetPort() == 11994) {
-                notCapableReason = "Invalid port: " + boost::lexical_cast<string>(service.GetPort()) + " - 11994 is only supported on mainnet.";
+        /*
+        if(Params().NetworkID() == CChainParams::MAIN){
+            if(service.GetPort() != 9999) {
+                notCapableReason = "Invalid port: " + boost::lexical_cast<string>(service.GetPort()) + " - only 9999 is supported on mainnet.";
                 status = MASTERNODE_NOT_CAPABLE;
                 LogPrintf("CActiveMasternode::ManageStatus() - not capable: %s\n", notCapableReason.c_str());
                 return;
             }
-        }*/
+        } else if(service.GetPort() == 9999) {
+            notCapableReason = "Invalid port: " + boost::lexical_cast<string>(service.GetPort()) + " - 9999 is only supported on mainnet.";
+            status = MASTERNODE_NOT_CAPABLE;
+            LogPrintf("CActiveMasternode::ManageStatus() - not capable: %s\n", notCapableReason.c_str());
+            return;
+        }
+        */
 
         if(!ConnectNode((CAddress)service, service.ToString().c_str())){
             notCapableReason = "Could not connect to " + service.ToString();

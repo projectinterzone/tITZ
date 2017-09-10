@@ -1450,31 +1450,33 @@ int64_t GetBlockValue(int nBits, int nHeight, int64_t nFees)
 int64_t GetMasternodePayment(int nHeight, int64_t blockValue)
 {
     int64_t ret;
-    if (nHeight >= Params().RewardForkHeight2())
+    
+    if (nHeight >= 250000)
     {
         ret = blockValue * 50 / 100; // 50% 
     } else
-    if (nHeight >= Params().RewardForkHeight1())
+    if (nHeight >= 50000)
     {
         ret = blockValue * 25 / 100; // 25%
     } else
     {
-        ret = blockValue/10; // 10%
+        ret = 0;
     }
+
     return ret;
 }
 
-static const int64_t nTargetTimespan = 90; // 3 minutes
-static const int64_t nTargetSpacing = 90; // 3 minutes
-static const int64_t nInterval = 1; // Retarget every block
+static const int64_t nTargetTimespan = 90; // 90 seconds
+static const int64_t nTargetSpacing = 90; // 90 seconds
+static const int64_t nInterval = 1; // Interzone: retarget every block
 
-static const int64_t nAveragingInterval = 24; // 24 blocks
+static const int64_t nAveragingInterval = 24; // 8 blocks
 static const int64_t nAveragingTargetTimespan = nAveragingInterval * nTargetSpacing; // 12 minutes
 
 static const int64_t nMaxAdjustDown = 3; // 3% adjustment down
 static const int64_t nMaxAdjustUp = 3; // 1% adjustment up
 
-// static const int64_t nTargetTimespanAdjDown = nTargetTimespan * (100 + nMaxAdjustDown) / 100;
+static const int64_t nTargetTimespanAdjDown = nTargetTimespan * (100 + nMaxAdjustDown) / 100;
 
 //
 // minimum amount of work that could possibly be required nTime after
@@ -4050,16 +4052,13 @@ void static ProcessGetData(CNode* pfrom)
             {
                 // Send stream from relay memory
                 bool pushed = false;
-                map<CInv, CDataStream>::iterator mi;
                 {
                     LOCK(cs_mapRelay);
-                    mi = mapRelay.find(inv);
+                    map<CInv, CDataStream>::iterator mi = mapRelay.find(inv);
                     if (mi != mapRelay.end()) {
+                        pfrom->PushMessage(inv.GetCommand(), (*mi).second);
                         pushed = true;
                     }
-                }
-                if (pushed) {
-                    pfrom->PushMessage(inv.GetCommand(), (*mi).second);
                 }
 
                 if (!pushed && inv.type == MSG_TX) {
@@ -4182,7 +4181,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         if (pfrom->nVersion != 0)
         {
             pfrom->PushMessage("reject", strCommand, REJECT_DUPLICATE, string("Duplicate version message"));
-            LOCK(cs_main);
             Misbehaving(pfrom->GetId(), 1);
             return false;
         }
@@ -4285,7 +4283,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
     else if (pfrom->nVersion == 0)
     {
         // Must have a version message before anything else
-        LOCK(cs_main);
         Misbehaving(pfrom->GetId(), 1);
         return false;
     }
@@ -4307,7 +4304,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
             return true;
         if (vAddr.size() > 1000)
         {
-            LOCK(cs_main);
             Misbehaving(pfrom->GetId(), 20);
             return error("message addr size() = %u", vAddr.size());
         }
@@ -4371,7 +4367,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         vRecv >> vInv;
         if (vInv.size() > MAX_INV_SZ)
         {
-            LOCK(cs_main);
             Misbehaving(pfrom->GetId(), 20);
             return error("message inv size() = %u", vInv.size());
         }
@@ -4416,7 +4411,6 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         vRecv >> vInv;
         if (vInv.size() > MAX_INV_SZ)
         {
-            LOCK(cs_main);
             Misbehaving(pfrom->GetId(), 20);
             return error("message getdata size() = %u", vInv.size());
         }
@@ -4827,11 +4821,9 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         CBloomFilter filter;
         vRecv >> filter;
 
-        if (!filter.IsWithinSizeConstraints()) {
+        if (!filter.IsWithinSizeConstraints())
             // There is no excuse for sending a too-large filter
-            LOCK(cs_main);
             Misbehaving(pfrom->GetId(), 100);
-        }
         else
         {
             LOCK(pfrom->cs_filter);
@@ -4852,17 +4844,13 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
         // and thus, the maximum size any matched object can have) in a filteradd message
         if (vData.size() > MAX_SCRIPT_ELEMENT_SIZE)
         {
-            LOCK(cs_main);
             Misbehaving(pfrom->GetId(), 100);
         } else {
             LOCK(pfrom->cs_filter);
             if (pfrom->pfilter)
                 pfrom->pfilter->insert(vData);
             else
-            {
-                LOCK(cs_main);
                 Misbehaving(pfrom->GetId(), 100);
-            }
         }
     }
 

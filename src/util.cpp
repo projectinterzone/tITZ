@@ -7,7 +7,6 @@
 #include "util.h"
 
 #include "chainparams.h"
-#include "random.h"
 #include "netbase.h"
 #include "sync.h"
 #include "ui_interface.h"
@@ -16,7 +15,6 @@
 #include "allocators.h"
 
 #include <stdarg.h>
-#include <cassert>
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <openssl/bio.h>
@@ -95,10 +93,6 @@ namespace boost {
 
 using namespace std;
 
-// Log rotation
-#define MAX_ALLOWED_DEGUB_SIZE_IN_BYTES 10000000 // 10MB
-long long debugFileSize = 0;
-
 //Interzone only features
 bool fMasterNode = false;
 string strMasterNodePrivKey = "";
@@ -129,7 +123,6 @@ bool fNoListen = false;
 bool fLogTimestamps = false;
 volatile bool fReopenDebugLog = false;
 CClientUIInterface uiInterface;
-
 
 // Init OpenSSL library multithreading support
 static CCriticalSection** ppmutexOpenSSL;
@@ -257,14 +250,6 @@ static boost::once_flag debugPrintInitFlag = BOOST_ONCE_INIT;
 static FILE* fileout = NULL;
 static boost::mutex* mutexDebugLog = NULL;
 
-long long getFileSize(FILE *fp){
-    long long prev = ftell(fp);
-    fseek(fp, 0L, SEEK_END);
-    long long sz = ftell(fp);
-    fseek(fp,prev,SEEK_SET); //go back to where we were
-    return sz;
-}
-
 static void DebugPrintInit()
 {
     assert(fileout == NULL);
@@ -273,7 +258,7 @@ static void DebugPrintInit()
     boost::filesystem::path pathDebug = GetDataDir() / "debug.log";
     fileout = fopen(pathDebug.string().c_str(), "a");
     if (fileout) setbuf(fileout, NULL); // unbuffered
-    debugFileSize = getFileSize(fileout);
+
     mutexDebugLog = new boost::mutex();
 }
 
@@ -305,42 +290,6 @@ bool LogAcceptCategory(const char* category)
     return true;
 }
 
-void rotateDebugFile() {
-	boost::system::error_code err;
-	boost::filesystem::path oldLogsDir = GetDataDir() / "logs"; 
-    if (fileout != NULL){
-        fclose (fileout);
-    }
-    if(!is_directory(oldLogsDir.parent_path()) || exists(oldLogsDir)) {
-        assert(!create_directory(oldLogsDir, err));
-		
-        if(is_directory(oldLogsDir)) {
-          assert(!err.value());
-        } else {
-          assert(err.value());
-        }
-    }
-    try {
-        if (create_directories(oldLogsDir)) {
-            assert(!create_directory(oldLogsDir));
-        }
-    } catch (std::exception& exc) {
-        std::stringstream ss; 
-        ss << "Could not create directory for rotated logs! Exception info: " << exc.what() << '\n';
-        LogPrintStr(ss.str());
-    }
-    boost::filesystem::path oldPathDebug = GetDataDir() / "debug.log";
-    std::string newName = "debug-" + DateTimeStrFormat("%Y-%m-%d %H:%M:%S", GetTime())  + ".log"; 
-    boost::filesystem::path newPathDebug = oldLogsDir / newName;
-
-    rename (oldPathDebug.string().c_str() , newPathDebug.string().c_str());
-
-    boost::filesystem::path pathDebug = GetDataDir() / "debug.log";
-    fileout = fopen(pathDebug.string().c_str(), "w");
-    if (fileout) setbuf(fileout, NULL); // unbuffered
-    debugFileSize = 0;
-}
-
 int LogPrintStr(const std::string &str)
 {
     int ret = 0; // Returns total number of characters written
@@ -365,7 +314,6 @@ int LogPrintStr(const std::string &str)
             boost::filesystem::path pathDebug = GetDataDir() / "debug.log";
             if (freopen(pathDebug.string().c_str(),"a",fileout) != NULL)
                 setbuf(fileout, NULL); // unbuffered
-            debugFileSize = getFileSize(fileout);
         }
 
         // Debug print useful for profiling
@@ -375,12 +323,8 @@ int LogPrintStr(const std::string &str)
             fStartedNewLine = true;
         else
             fStartedNewLine = false;
-        ret = fwrite(str.data(), 1, str.size(), fileout);
 
-        debugFileSize += str.size();
-        if (debugFileSize>MAX_ALLOWED_DEGUB_SIZE_IN_BYTES) {
-            rotateDebugFile();
-        }
+        ret = fwrite(str.data(), 1, str.size(), fileout);
     }
 
     return ret;
@@ -1441,6 +1385,27 @@ void AddTimeData(const CNetAddr& ip, int64_t nTime)
     }
 }
 
+uint32_t insecure_rand_Rz = 11;
+uint32_t insecure_rand_Rw = 11;
+void seed_insecure_rand(bool fDeterministic)
+{
+    //The seed values have some unlikely fixed points which we avoid.
+    if(fDeterministic)
+    {
+        insecure_rand_Rz = insecure_rand_Rw = 11;
+    } else {
+        uint32_t tmp;
+        do {
+            RAND_bytes((unsigned char*)&tmp, 4);
+        } while(tmp == 0 || tmp == 0x9068ffffU);
+        insecure_rand_Rz = tmp;
+        do {
+            RAND_bytes((unsigned char*)&tmp, 4);
+        } while(tmp == 0 || tmp == 0x464fffffU);
+        insecure_rand_Rw = tmp;
+    }
+}
+
 string FormatVersion(int nVersion)
 {
     if (nVersion%100 == 0)
@@ -1511,20 +1476,7 @@ void runCommand(std::string strCommand)
     if (nErr)
         LogPrintf("runCommand error: system(%s) returned %d\n", strCommand, nErr);
 }
-std::string DurationToDHMS(int64_t nDurationTime)
-{
-    int seconds = nDurationTime % 60;
-    nDurationTime /= 60;
-    int minutes = nDurationTime % 60;
-    nDurationTime /= 60;
-    int hours = nDurationTime % 24;
-    int days = nDurationTime / 24;
-    if(days)
-        return strprintf("%dd %02dh:%02dm:%02ds", days, hours, minutes, seconds);
-    if(hours)
-        return strprintf("%02dh:%02dm:%02ds", hours, minutes, seconds);
-    return strprintf("%02dm:%02ds", minutes, seconds);
-}
+
 void RenameThread(const char* name)
 {
 #if defined(PR_SET_NAME)
@@ -1554,11 +1506,11 @@ void SetupEnvironment()
     #ifndef WIN32
     try
     {
-    #if BOOST_FILESYSTEM_VERSION == 3
+	#if BOOST_FILESYSTEM_VERSION == 3
             boost::filesystem::path::codecvt(); // Raises runtime error if current locale is invalid
-    #else                         // boost filesystem v2
+	#else				          // boost filesystem v2
             std::locale();                      // Raises runtime error if current locale is invalid
-    #endif
+	#endif
     } catch(std::runtime_error &e)
     {
         setenv("LC_ALL", "C", 1); // Force C locale

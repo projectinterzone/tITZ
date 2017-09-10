@@ -13,7 +13,6 @@
 #include "mruset.h"
 #include "netbase.h"
 #include "protocol.h"
-#include "random.h"
 #include "sync.h"
 #include "uint256.h"
 #include "util.h"
@@ -38,7 +37,6 @@ namespace boost {
     class thread_group;
 }
 
-typedef std::map<CNetAddr, uint64_t> banmap_t;
 /** The maximum number of entries in an 'inv' protocol message */
 static const unsigned int MAX_INV_SZ = 50000;
 /** The maximum number of entries in mapAskFor */
@@ -58,14 +56,12 @@ CNode* FindNode(const CService& ip);
 CNode* ConnectNode(CAddress addrConnect, const char *pszDest, bool darkSendMaster=false);
 void MapPort(bool fUseUPnP);
 unsigned short GetListenPort();
-typedef int NodeId;
-CNode* FindNode(const std::string& addrName);
-CNode* FindNode(const NodeId id); //TODO: Remove this
 bool BindListenPort(const CService &bindAddr, std::string& strError=REF(std::string()));
 void StartNode(boost::thread_group& threadGroup);
 bool StopNode();
 void SocketSendData(CNode *pnode);
 
+typedef int NodeId;
 
 // Signals for message handling
 struct CNodeSignals
@@ -98,7 +94,6 @@ bool IsLimited(enum Network net);
 bool IsLimited(const CNetAddr& addr);
 bool AddLocal(const CService& addr, int nScore = LOCAL_NONE);
 bool AddLocal(const CNetAddr& addr, int nScore = LOCAL_NONE);
-bool RemoveLocal(const CService& addr);
 bool SeenLocal(const CService& addr);
 bool IsLocal(const CService& addr);
 bool GetLocal(CService &addr, const CNetAddr *paddrPeer = NULL);
@@ -251,7 +246,7 @@ protected:
 
     // Denial-of-service detection/prevention
     // Key is IP address, value is banned-until-time
-    static banmap_t setBanned;
+    static std::map<CNetAddr, int64_t> setBanned;
     static CCriticalSection cs_setBanned;
 
     std::vector<std::string> vecRequestsFulfilled; //keep track of what client has asked for
@@ -783,10 +778,8 @@ public:
     // between nodes running old code and nodes running
     // new code.
     static void ClearBanned(); // needed for unit testing
-    static banmap_t &GetBanned();
     static bool IsBanned(CNetAddr ip);
-    static bool Ban(const CNetAddr &ip, uint64_t banTime=0);
-    static bool Unban(const CNetAddr &ip);
+    static bool Ban(const CNetAddr &ip);
     void copyStats(CNodeStats &stats);
 
     // Network stats

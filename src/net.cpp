@@ -127,14 +127,14 @@ bool GetLocal(CService& addr, const CNetAddr *paddrPeer)
 // get best local address for a particular peer as a CAddress
 CAddress GetLocalAddress(const CNetAddr *paddrPeer)
 {
-    CAddress ret(CService("0.0.0.0",GetListenPort()),0);
+    CAddress ret(CService("0.0.0.0",0),0);
     CService addr;
     if (GetLocal(addr, paddrPeer))
     {
         ret = CAddress(addr);
+        ret.nServices = nLocalServices;
+        ret.nTime = GetAdjustedTime();
     }
-    ret.nServices = nLocalServices;
-    ret.nTime = GetAdjustedTime();
     return ret;
 }
 
@@ -248,14 +248,6 @@ bool AddLocal(const CService& addr, int nScore)
 bool AddLocal(const CNetAddr &addr, int nScore)
 {
     return AddLocal(CService(addr, GetListenPort()), nScore);
-}
-
-bool RemoveLocal(const CService& addr)
-{
-    LOCK(cs_mapLocalHost);
-    LogPrintf("RemoveLocal(%s)\n", addr.ToString());
-    mapLocalHost.erase(addr);
-    return true;
 }
 
 /** Make a particular network entirely off-limits (no automatic connects to it) */
@@ -430,7 +422,7 @@ CNode* FindNode(const CNetAddr& ip)
     return NULL;
 }
 
-CNode* FindNode(const std::string& addrName)
+CNode* FindNode(std::string addrName)
 {
     LOCK(cs_vNodes);
     BOOST_FOREACH(CNode* pnode, vNodes)
@@ -455,34 +447,21 @@ CNode* FindNode(const CService& addr)
     return NULL;
 }
 
-
-//TODO: This is used in only one place in main, and should be removed
-CNode* FindNode(const NodeId nodeid)
-{
-    LOCK(cs_vNodes);
-    BOOST_FOREACH(CNode* pnode, vNodes)
-        if (pnode->GetId() == nodeid)
-            return (pnode);
-    return NULL;
-}
-
 CNode* ConnectNode(CAddress addrConnect, const char *pszDest, bool darkSendMaster)
 {
     if (pszDest == NULL) {
         if (IsLocal(addrConnect))
             return NULL;
-		
-        LOCK(cs_vNodes);
+
         // Look for an existing connection
         CNode* pnode = FindNode((CService)addrConnect);
         if (pnode)
         {
-            // we have connection to this node but not as masternode
-            // change flag & add reference so we can clear it later
-            if(darkSendMaster && !pnode->fDarkSendMaster) {
-                pnode->AddRef();
+            pnode->AddRef();
+
+            if(darkSendMaster)
                 pnode->fDarkSendMaster = true;
-            }
+
             return pnode;
         }
     }
@@ -573,7 +552,7 @@ void CNode::PushVersion()
 
 
 
-banmap_t CNode::setBanned;
+std::map<CNetAddr, int64_t> CNode::setBanned;
 CCriticalSection CNode::cs_setBanned;
 
 void CNode::ClearBanned()
@@ -581,16 +560,12 @@ void CNode::ClearBanned()
     setBanned.clear();
 }
 
-banmap_t& CNode::GetBanned(){
-    return setBanned;
-}
-
 bool CNode::IsBanned(CNetAddr ip)
 {
     bool fResult = false;
     {
         LOCK(cs_setBanned);
-        banmap_t::iterator i = setBanned.find(ip);
+        std::map<CNetAddr, int64_t>::iterator i = setBanned.find(ip);
         if (i != setBanned.end())
         {
             int64_t t = (*i).second;
@@ -601,19 +576,13 @@ bool CNode::IsBanned(CNetAddr ip)
     return fResult;
 }
 
-bool CNode::Ban(const CNetAddr &addr, uint64_t banTime) {
-    banTime = GetTime()+(!banTime)?GetArg("-bantime", 60*60*24):0;  // Default 24-hour ban
+bool CNode::Ban(const CNetAddr &addr) {
+    int64_t banTime = GetTime()+GetArg("-bantime", 60*60*24);  // Default 24-hour ban
     {
         LOCK(cs_setBanned);
         if (setBanned[addr] < banTime)
             setBanned[addr] = banTime;
     }
-    return true;
-}
-bool CNode::Unban(const CNetAddr &ip) {
-    LOCK(cs_setBanned);
-    if (!setBanned.erase(ip))
-        return false;
     return true;
 }
 
@@ -764,7 +733,7 @@ void SocketSendData(CNode *pnode)
                 if (nErr != WSAEWOULDBLOCK && nErr != WSAEMSGSIZE && nErr != WSAEINTR && nErr != WSAEINPROGRESS)
                 {
                     LogPrintf("socket send error %s\n", NetworkErrorString(nErr));
-                    pnode->fDisconnect = true;
+                    pnode->CloseSocketDisconnect();
                 }
             }
             // couldn't send anything at all
@@ -849,13 +818,8 @@ void ThreadSocketHandler()
                 }
             }
         }
-        size_t vNodesSize;
-        {
-             LOCK(cs_vNodes);
-             vNodesSize = vNodes.size();
-        }
-        if(vNodesSize != nPrevNodeCount) {
-            nPrevNodeCount = vNodesSize;
+        if(vNodes.size() != nPrevNodeCount) {
+            nPrevNodeCount = vNodes.size();
             uiInterface.NotifyNumConnectionsChanged(nPrevNodeCount);
         }
 
@@ -1354,7 +1318,7 @@ void ThreadOpenConnections()
         {
             LOCK(cs_vNodes);
             BOOST_FOREACH(CNode* pnode, vNodes) {
-                if (!pnode->fInbound && !pnode->fDarkSendMaster) {
+                if (!pnode->fInbound) {
                     setConnected.insert(pnode->addr.GetGroup());
                     nOutbound++;
                 }
@@ -1575,7 +1539,7 @@ void ThreadMessageHandler()
                 if (lockRecv)
                 {
                     if (!g_signals.ProcessMessages(pnode))
-                        pnode->fDisconnect = true;
+                        pnode->CloseSocketDisconnect();
 
                     if (pnode->nSendSize < SendBufferSize())
                     {

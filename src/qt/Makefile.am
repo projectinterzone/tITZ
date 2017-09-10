@@ -59,8 +59,7 @@ QT_FORMS_UI = \
   forms/sendcoinsdialog.ui \
   forms/sendcoinsentry.ui \
   forms/signverifymessagedialog.ui \
-  forms/transactiondescdialog.ui \
-  forms/masternodelist.ui 
+  forms/transactiondescdialog.ui
 
 QT_MOC_CPP = \
   moc_addressbookpage.cpp \
@@ -106,10 +105,7 @@ QT_MOC_CPP = \
   moc_utilitydialog.cpp \
   moc_walletframe.cpp \
   moc_walletmodel.cpp \
-  moc_walletview.cpp \
-  moc_masternodelist.cpp \
-  moc_bantablemodel.cpp \
-  moc_peertablemodel.cpp
+  moc_walletview.cpp
 
 BITCOIN_MM = \
   macdockiconhandler.mm \
@@ -177,10 +173,7 @@ BITCOIN_QT_H = \
   walletmodel.h \
   walletmodeltransaction.h \
   walletview.h \
-  winshutdownmonitor.h \
-  masternodelist.h \
-  bantablemodel.h \
-  peertablemodel.h
+  winshutdownmonitor.h
 
 RES_ICONS = \
   res/icons/add.png \
@@ -284,10 +277,7 @@ BITCOIN_QT_CPP += \
   walletframe.cpp \
   walletmodel.cpp \
   walletmodeltransaction.cpp \
-  walletview.cpp \
-  masternodelist.cpp \
-  bantablemodel.cpp \
-  peertablemodel.cpp
+  walletview.cpp
 endif
 
 RES_IMAGES = \
@@ -341,7 +331,7 @@ if ENABLE_WALLET
 interzone_qt_LDADD += $(LIBBITCOIN_WALLET)
 endif
 interzone_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBLEVELDB) $(LIBMEMENV) \
-  $(BOOST_LIBS) $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(PROTOBUF_LIBS) $(BDB_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS)
+  $(BOOST_LIBS) $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(PROTOBUF_LIBS) $(BDB_LIBS)
 interzone_qt_LDFLAGS = $(QT_LDFLAGS)
 
 # forms/foo.h -> forms/ui_foo.h

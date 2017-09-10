@@ -7,13 +7,10 @@
 #define CLIENTMODEL_H
 
 #include <QObject>
+
 class AddressTableModel;
 class OptionsModel;
-class BanTableModel;
-class PeerTableModel;
 class TransactionTableModel;
-class BanTableModel;
-class PeerTableModel;
 
 class CWallet;
 
@@ -47,8 +44,6 @@ public:
 
     OptionsModel *getOptionsModel();
 
-    PeerTableModel *getPeerTableModel();
-    BanTableModel *getBanTableModel();
     //! Return number of connections, default is in- and outbound (total)
     int getNumConnections(unsigned int flags = CONNECTIONS_ALL) const;
     QString getMasternodeCountString() const;
@@ -79,8 +74,6 @@ public:
 private:
     OptionsModel *optionsModel;
 
-    PeerTableModel *peerTableModel;
-    BanTableModel *banTableModel;
     int cachedNumBlocks;
     QString cachedMasternodeCountString;
     bool cachedReindexing;

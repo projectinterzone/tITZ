@@ -34,14 +34,12 @@ public:
         pchMessageStart[1] = 0x02;
         pchMessageStart[2] = 0x01;
         pchMessageStart[3] = 0x17;
-        vAlertPubKey = ParseHex("");
+        vAlertPubKey = ParseHex("04c5788ca1e268a7474763fa965210b6fa6b04a45f52d21056c62fb19a2de991aa15aa1d1c516f34d2a0016f51a87959c89f51a148db30c839f71bc525dde8c480");
         nDefaultPort = 55675;
         nRPCPort = 55680;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20);
-        nSubsidyHalvingInterval = 500000; 
-        nMasternodePortForkHeight = 100; 
-        nRewardForkHeight1 = 10000; 
-        nRewardForkHeight2 = 250000; 
+        nSubsidyHalvingInterval = 500000;
+        nSubsidyHalvingInterval = 700800; // 2 years
 
         // Genesis block
         const char* pszTimestamp = "The rulers of this most insecure of all worlds are rulers by accident.";
@@ -72,9 +70,10 @@ public:
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,0);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
-        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,28 + 128);
-        base58Prefixes[EXT_PUBLIC_KEY] = {0x02, 0xFE, 0x52, 0xF8};
-        base58Prefixes[EXT_SECRET_KEY] = {0x02, 0xFE, 0x52, 0xCC};
+        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,28 + 128);            // Interzone private keys start with '7' or 'X'
+        base58Prefixes[EXT_PUBLIC_KEY] = list_of(0x02)(0xFE)(0x52)(0xF8); // Interzone BIP32 pubkeys start with 'drkv'
+        base58Prefixes[EXT_SECRET_KEY] = list_of(0x02)(0xFE)(0x52)(0xCC); // Interzone BIP32 prvkeys start with 'drkp'
+        base58Prefixes[EXT_COIN_TYPE]  = list_of(0x80000005);             // Interzone BIP44 coin type is '5'
 
         // Convert the pnSeeds array into usable address objects.
         for (unsigned int i = 0; i < ARRAYLEN(pnSeed); i++)
@@ -123,11 +122,7 @@ public:
 
         nDefaultPort = 21817;
         nRPCPort = 21818;
-        strDataDir = "secretnetwork";
-
-        nMasternodePortForkHeight = 100;
-        nRewardForkHeight1 = 250;
-        nRewardForkHeight2 =500;
+        strDataDir = "testnet";
 
         // Modify the testnet genesis block so the timestamp is valid for a later start.
         genesis.nTime = 1503324223;
@@ -144,8 +139,7 @@ public:
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,102);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,44);
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,88 + 128);
-        base58Prefixes[EXT_PUBLIC_KEY] = {0x3a, 0x80, 0x61, 0xa0};
-        base58Prefixes[EXT_SECRET_KEY] = {0x3a, 0x80, 0x58, 0x37};
+
     }
     virtual Network NetworkID() const { return CChainParams::TESTNET; }
 };
@@ -163,27 +157,15 @@ public:
         pchMessageStart[2] = 0xc3;
         pchMessageStart[3] = 0x56;
         nSubsidyHalvingInterval = 150;
-        bnProofOfWorkLimit = CBigNum(~uint256(0) >> 1);
-        genesis.nTime = 1503324223;
+        bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20);
+        genesis.nTime = 1296688602;
         genesis.nBits = 0x207fffff;
-        genesis.nNonce = 1;
-        nDefaultPort = 21819;
-        strDataDir = "regression";
+        genesis.nNonce = 3;
+        nDefaultPort = 18444;
+        strDataDir = "regtest";
 
         hashGenesisBlock = genesis.GetHash();
-
-        /*while (hashGenesisBlock > bnProofOfWorkLimit.getuint256()){
-            if (++genesis.nNonce==0) break;
-            hashGenesisBlock = genesis.GetHash();
-        }
-
-        printf("%s\n", hashGenesisBlock.ToString().c_str());
-        printf("%s\n", genesis.hashMerkleRoot.ToString().c_str());
-        printf("genesis.nNonce = %u \n", genesis.nNonce);
-        printf("%x\n", bnProofOfWorkLimit.GetCompact());
-        genesis.print();*/
-        
-        assert(hashGenesisBlock == uint256("0x52feedd3478a1a013a565d1598798343c97431da5df9f95cf4b67d9a9779aba0"));
+        // assert(hashGenesisBlock == uint256("0x000008ca1832a4baf228eb1553c03d3a2c8e02399550dd6ea8d65cec3ef23d2e"));
 
         vSeeds.clear();  // Regtest mode doesn't have any DNS seeds.
     }

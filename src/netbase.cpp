@@ -163,14 +163,6 @@ bool LookupNumeric(const char *pszName, CService& addr, int portDefault)
     return Lookup(pszName, addr, portDefault, false);
 }
 
-struct timeval MillisToTimeval(int64_t nTimeout)
-{
-    struct timeval timeout;
-    timeout.tv_sec  = nTimeout / 1000;
-    timeout.tv_usec = (nTimeout % 1000) * 1000;
-    return timeout;
-}
-
 bool static Socks4(const CService &addrDest, SOCKET& hSocket)
 {
     LogPrintf("SOCKS4 connecting %s\n", addrDest.ToString());

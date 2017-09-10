@@ -43,7 +43,6 @@ public:
         ThreadsScriptVerif,     // int
         DatabaseCache,          // int
         SpendZeroConfChange,    // bool
-        MiningIntensity,        // int
         DarksendRounds,    // int
         AnonymizeDarkcoinAmount, //int
         OptionIDRowCount,
@@ -64,8 +63,6 @@ public:
     QString getThirdPartyTxUrls() { return strThirdPartyTxUrls; }
     bool getProxySettings(QNetworkProxy& proxy) const;
     bool getCoinControlFeatures() { return fCoinControlFeatures; }
-    bool bMiningEnabled;
-    int nMiningIntensity;
     const QString& getOverriddenByCommandLine() { return strOverriddenByCommandLine; }
 
     /* Restart flag helper */

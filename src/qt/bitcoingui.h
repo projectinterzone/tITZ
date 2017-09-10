@@ -100,7 +100,6 @@ private:
     QAction *showBackupsAction;
     QAction *openAction;
     QAction *showHelpMessageAction;
-    QAction *masternodeList;
 
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
@@ -163,8 +162,6 @@ public slots:
 
 private slots:
 #ifdef ENABLE_WALLET
-    /** Switch to master node list Page */
-    void gotomasternodeList();
     /** Switch to overview (home) page */
     void gotoOverviewPage();
     /** Switch to history (transactions) page */

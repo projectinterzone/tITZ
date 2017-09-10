@@ -103,25 +103,7 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
     widget->setValidator(new BitcoinAddressEntryValidator(parent));
     widget->setCheckValidator(new BitcoinAddressCheckValidator(parent));
 }
-QString formatDurationStr(int secs)
-{
-    QStringList strList;
-    int days = secs / 86400;
-    int hours = (secs % 86400) / 3600;
-    int mins = (secs % 3600) / 60;
-    int seconds = secs % 60;
 
-    if (days)
-        strList.append(QString(QObject::tr("%1 d")).arg(days));
-    if (hours)
-        strList.append(QString(QObject::tr("%1 h")).arg(hours));
-    if (mins)
-        strList.append(QString(QObject::tr("%1 m")).arg(mins));
-    if (seconds || (!days && !hours && !mins))
-        strList.append(QString(QObject::tr("%1 s")).arg(seconds));
-
-    return strList.join(" ");
-}
 void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 {
     QDoubleValidator *amountValidator = new QDoubleValidator(parent);
@@ -523,45 +505,9 @@ void TableViewLastColumnResizingFixer::adjustTableColumnsWidth()
         resizeColumn(secondToLastColumnIndex,getAvailableWidthForColumn(secondToLastColumnIndex));
     }
 }
-QString formatPingTime(double dPingTime)
-{
-    return dPingTime == 0 ? QObject::tr("N/A") : QString(QObject::tr("%1 ms")).arg(QString::number((int)(dPingTime * 1000), 10));
-}
-QString formatServicesStr(quint64 mask)
-{
-    QStringList strList;
 
-    // Just scan the last 8 bits for now.
-    for (int i = 0; i < 8; i++) {
-        uint64_t check = 1 << i;
-        if (mask & check)
-        {
-
-                strList.append(QString("%1[%2]").arg("UNKNOWN").arg(check));
-
-        }
-    }
-
-    if (strList.size())
-        return strList.join(" & ");
-    else
-        return QObject::tr("None");
-}
-
-QString getEntryData(QAbstractItemView *view, int column, int role)
-{
-    if(!view || !view->selectionModel())
-        return QString();
-    QModelIndexList selection = view->selectionModel()->selectedRows(column);
-
-    if(!selection.isEmpty()) {
-        // Return first item
-        return (selection.at(0).data(role).toString());
-    }
-    return QString();
-}
 // Make column use all the space available, useful during window resizing.
-void TableViewLastColumnResizingFixer::stretchColumnWidth(int column)
+void TableViewLastColumnResizingFixer::stretITZolumnWidth(int column)
 {
     disconnectViewHeadersSignals();
     resizeColumn(column, getAvailableWidthForColumn(column));

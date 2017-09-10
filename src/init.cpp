@@ -10,8 +10,6 @@
 
 #include "init.h"
 
-#include "torcontrol.h"
-
 #include "addrman.h"
 #include "checkpoints.h"
 #include "key.h"
@@ -144,7 +142,6 @@ void Shutdown()
 
     RenameThread("interzone-shutoff");
     mempool.AddTransactionsUpdated(1);
-    InterruptTorControl();
     StopRPCThreads();
     ShutdownRPCMining();
 #ifdef ENABLE_WALLET
@@ -154,7 +151,6 @@ void Shutdown()
 #endif
     StopNode();
     DumpMasternodes();
-    StopTorControl();
     UnregisterNodeSignals(GetNodeSignals());
     {
         LOCK(cs_main);
@@ -269,7 +265,6 @@ std::string HelpMessage(HelpMessageMode hmm)
     strUsage += "  -seednode=<ip>         " + _("Connect to a node to retrieve peer addresses, and disconnect") + "\n";
     strUsage += "  -socks=<n>             " + _("Select SOCKS version for -proxy (4 or 5, default: 5)") + "\n";
     strUsage += "  -timeout=<n>           " + _("Specify connection timeout in milliseconds (default: 5000)") + "\n";
-    strUsage += "  -torcontrol=<ip>:<port>" + _("Tor control port to use if onion listening enabled (default: 1)") + "\n";
 #ifdef USE_UPNP
 #if USE_UPNP
     strUsage += "  -upnp                  " + _("Use UPnP to map the listening port (default: 1 when listening)") + "\n";
@@ -1381,9 +1376,6 @@ bool AppInit2(boost::thread_group& threadGroup)
     LogPrintf("mapWallet.size() = %u\n",       pwalletMain ? pwalletMain->mapWallet.size() : 0);
     LogPrintf("mapAddressBook.size() = %u\n",  pwalletMain ? pwalletMain->mapAddressBook.size() : 0);
 #endif
-
-    if (GetBoolArg("-listenonion", DEFAULT_LISTEN_ONION))
-        StartTorControl(threadGroup);
 
     StartNode(threadGroup);
     // InitRPCMining is needed here so getwork/getblocktemplate in the GUI debug console works properly.
