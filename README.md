@@ -1,4 +1,4 @@
-Interzone Core staging tree 1.3
+Interzone Core staging tree 1.4
 ===============================
 
 http://www.interzone.org
@@ -14,11 +14,11 @@ Copyright (c) 2017-2018 Interzone Core Developers
 What is Interzone?
 -----------------
 
-Interzone is an experimental new digital currency that enables anonymous, instant
-payments to anyone, anywhere in the world. Interzone uses peer-to-peer technology
+Interzone is an experimental new digital token that enables anonymous, instant
+transfers to anyone, anywhere in the world. Interzone uses peer-to-peer technology
 to operate with no central authority: managing transactions and issuing money
 are carried out collectively by the network. Interzone Core is the name of open
-source software which enables the use of this currency.
+source software which enables the use of this token.
 
 For more information, as well as an immediately useable, binary version of
 the Interzone Core software, see http://www.interzone.org/
