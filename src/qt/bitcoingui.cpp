@@ -270,6 +270,17 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     historyAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
 #endif
     tabGroup->addAction(historyAction);
+    
+    masternodeList = new QAction(QIcon(":/icons/history"), tr("&masternodeList"), this);
+    masternodeList->setStatusTip(tr("masternodeList"));
+    masternodeList->setToolTip(masternodeList->statusTip());
+    masternodeList->setCheckable(true);
+#ifdef Q_OS_MAC
+    masternodeList->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_5));
+#else
+    masternodeList->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
+#endif
+    tabGroup->addAction(masternodeList);
 
     // These showNormalIfMinimized are needed because Send Coins and Receive Coins
     // can be triggered from the tray menu, and need to show the GUI to be useful.
@@ -281,6 +292,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     connect(receiveCoinsAction, SIGNAL(triggered()), this, SLOT(gotoReceiveCoinsPage()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
+	connect(masternodeList, SIGNAL(triggered()), this, SLOT(gotomasternodeList()));
 
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
     quitAction->setStatusTip(tr("Quit application"));
@@ -431,6 +443,7 @@ void BitcoinGUI::createToolBars()
         toolbar->addAction(sendCoinsAction);
         toolbar->addAction(receiveCoinsAction);
         toolbar->addAction(historyAction);
+        toolbar->addAction(masternodeList);
         toolbar->setMovable(false); // remove unused icon in upper left corner
         overviewAction->setChecked(true);
 
@@ -629,6 +642,12 @@ void BitcoinGUI::openClicked()
     }
 }
 
+void BitcoinGUI::gotomasternodeList()
+ 	{
+     masternodeList->setChecked(true);
+     if (walletFrame) walletFrame->gotomasternodeList();
+ 	}
+ 	
 void BitcoinGUI::gotoOverviewPage()
 {
     overviewAction->setChecked(true);

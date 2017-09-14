@@ -221,7 +221,7 @@ std::string FormatSubVersion(const std::string& name, int nClientVersion, const 
 void AddTimeData(const CNetAddr& ip, int64_t nTime);
 void runCommand(std::string strCommand);
 
-
+std::string DurationToDHMS(int64_t nDurationTime);
 
 
 
@@ -393,6 +393,8 @@ bool GetBoolArg(const std::string& strArg, bool fDefault);
  * @return true if argument gets set, false if it already had a value
  */
 bool SoftSetArg(const std::string& strArg, const std::string& strValue);
+void SetArg(const std::string& strArg, const std::string& strValue);
+void SetBoolArg(const std::string& strArg, const bool boolValue);
 
 /**
  * Set a boolean argument if it doesn't already have a value

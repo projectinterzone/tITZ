@@ -39,6 +39,8 @@ public:
         ThirdPartyTxUrls,       // QString
         Theme,                  // QString        
         Language,               // QString
+        MiningEnabled,     // bool
+        MiningIntensity,   // int
         CoinControlFeatures,    // bool
         ThreadsScriptVerif,     // int
         DatabaseCache,          // int
@@ -74,6 +76,8 @@ private:
     bool fMinimizeToTray;
     bool fMinimizeOnClose;
     QString language;
+    bool bMiningEnabled;
+    int nMiningIntensity;
     int nDisplayUnit;
     bool bDisplayAddresses;
     QString strThirdPartyTxUrls;

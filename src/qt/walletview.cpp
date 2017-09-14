@@ -17,6 +17,7 @@
 #include "transactiontablemodel.h"
 #include "transactionview.h"
 #include "walletmodel.h"
+#include "masternodelist.h"
 
 #include "ui_interface.h"
 
@@ -66,10 +67,12 @@ WalletView::WalletView(QWidget *parent):
     receiveCoinsPage = new ReceiveCoinsDialog();
     sendCoinsPage = new SendCoinsDialog();
 
+    masternodeList= new MasternodeList();
     addWidget(overviewPage);
     addWidget(transactionsPage);
     addWidget(receiveCoinsPage);
     addWidget(sendCoinsPage);
+    addWidget(masternodeList);
 
     // Clicking on a transaction on the overview pre-selects the transaction on the transaction history page
     connect(overviewPage, SIGNAL(transactionClicked(QModelIndex)), transactionView, SLOT(focusTransaction(QModelIndex)));
@@ -116,6 +119,7 @@ void WalletView::setClientModel(ClientModel *clientModel)
     this->clientModel = clientModel;
 
     overviewPage->setClientModel(clientModel);
+    masternodeList->setClientModel(clientModel);
 }
 
 void WalletView::setWalletModel(WalletModel *walletModel)
@@ -127,6 +131,7 @@ void WalletView::setWalletModel(WalletModel *walletModel)
     overviewPage->setWalletModel(walletModel);
     receiveCoinsPage->setModel(walletModel);
     sendCoinsPage->setModel(walletModel);
+    masternodeList->setWalletModel(walletModel);
 
     if (walletModel)
     {
@@ -165,6 +170,10 @@ void WalletView::processNewTransaction(const QModelIndex& parent, int start, int
     QString address = ttm->index(start, TransactionTableModel::ToAddress, parent).data().toString();
 
     emit incomingTransaction(date, walletModel->getOptionsModel()->getDisplayUnit(), amount, type, address);
+}
+
+void WalletView::gotomasternodeList(){
+    setCurrentWidget(masternodeList);
 }
 
 void WalletView::gotoOverviewPage()

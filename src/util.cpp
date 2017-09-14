@@ -560,6 +560,20 @@ bool SoftSetArg(const std::string& strArg, const std::string& strValue)
     return true;
 }
 
+void SetArg(const std::string& strArg, const std::string& strValue)
+ {
+     mapArgs[strArg].clear();
+     mapArgs[strArg] = strValue;
+ }
+ 
+ void SetBoolArg(const std::string& strArg, const bool boolValue)
+ {
+     if (boolValue)
+         SetArg(strArg, std::string("1"));
+     else
+         SetArg(strArg, std::string("0"));
+ }
+
 bool SoftSetBoolArg(const std::string& strArg, bool fValue)
 {
     if (fValue)
@@ -1475,6 +1489,21 @@ void runCommand(std::string strCommand)
     int nErr = ::system(strCommand.c_str());
     if (nErr)
         LogPrintf("runCommand error: system(%s) returned %d\n", strCommand, nErr);
+}
+
+std::string DurationToDHMS(int64_t nDurationTime)
+{
+     int seconds = nDurationTime % 60;
+     nDurationTime /= 60;
+     int minutes = nDurationTime % 60;
+     nDurationTime /= 60;
+     int hours = nDurationTime % 24;
+     int days = nDurationTime / 24;
+     if(days)
+         return strprintf("%dd %02dh:%02dm:%02ds", days, hours, minutes, seconds);
+     if(hours)
+         return strprintf("%02dh:%02dm:%02ds", hours, minutes, seconds);
+     return strprintf("%02dm:%02ds", minutes, seconds);
 }
 
 void RenameThread(const char* name)
