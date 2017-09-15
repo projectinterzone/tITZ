@@ -38,8 +38,7 @@ public:
         nDefaultPort = 55675;
         nRPCPort = 55680;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20);
-        nSubsidyHalvingInterval = 500000;
-        nSubsidyHalvingInterval = 700800; // 2 years
+        nSubsidyHalvingInterval = 500000; 
 
         // Genesis block
         const char* pszTimestamp = "The rulers of this most insecure of all worlds are rulers by accident.";
