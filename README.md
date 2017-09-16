@@ -1,4 +1,4 @@
-Interzone Core staging tree 1.4
+Interzone Core staging tree 1.5
 ===============================
 
 http://www.interzone.org
