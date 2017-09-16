@@ -30,7 +30,7 @@
        <item row="9" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>Masternode Count</string>
+          <string>NetworkNode Count</string>
          </property>
         </widget>
        </item>
@@ -331,7 +331,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Block chain</string>
+          <string>Blockchain</string>
          </property>
         </widget>
        </item>

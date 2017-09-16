@@ -57,7 +57,7 @@ QString BitcoinUnits::name(int unit)
             case Interzone: return QString("tITZ");
             case mInterzone: return QString("mtITZ");
             case uInterzone: return QString::fromUtf8("μtITZ");
-            case burroughs: return QString::fromUtf8("tburroughs");
+            case burroughs: return QString::fromUtf8("lees");
             default: return QString("???");
         }
     }
@@ -70,9 +70,9 @@ QString BitcoinUnits::description(int unit)
         switch(unit)
         {
             case Interzone: return QString("Interzone");
-            case mInterzone: return QString("Milli-Interzone (1 / 1,000)");
-            case uInterzone: return QString("Micro-Interzone (1 / 1,000,000)");
-            case burroughs: return QString("Ten Nano-Interzone (1 / 100,000,000)");
+            case mInterzone: return QString("milliInterzone (1 / 1,000)");
+            case uInterzone: return QString("microInterzone (1 / 1,000,000)");
+            case burroughs: return QString("Burroughs (1 / 100,000,000)");
             default: return QString("???");
         }
     }
@@ -80,10 +80,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case Interzone: return QString("TestInterzones");
-            case mInterzone: return QString("Milli-TestInterzone (1 / 1,000)");
-            case uInterzone: return QString("Micro-TestInterzone (1 / 1,000,000)");
-            case burroughs: return QString("Ten Nano-TestInterzone (1 / 100,000,000)");
+            case Interzone: return QString("TestInterzone");
+            case mInterzone: return QString("millitestInterzone (1 / 1,000)");
+            case uInterzone: return QString("microtestInterzone (1 / 1,000,000)");
+            case burroughs: return QString("Lees (1 / 100,000,000)");
             default: return QString("???");
         }
     }

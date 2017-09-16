@@ -227,7 +227,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
 {
     QActionGroup *tabGroup = new QActionGroup(this);
 
-    overviewAction = new QAction(QIcon(":/icons/overview"), tr("&Overview"), this);
+    overviewAction = new QAction(QIcon(":/icons/overview"), tr("&Home"), this);
     overviewAction->setStatusTip(tr("Show general overview of wallet"));
     overviewAction->setToolTip(overviewAction->statusTip());
     overviewAction->setCheckable(true);
@@ -239,7 +239,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     tabGroup->addAction(overviewAction);
 
     sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send"), this);
-    sendCoinsAction->setStatusTip(tr("Send coins to a Interzone address"));
+    sendCoinsAction->setStatusTip(tr("Send tokens to a Interzone address"));
     sendCoinsAction->setToolTip(sendCoinsAction->statusTip());
     sendCoinsAction->setCheckable(true);
 #ifdef Q_OS_MAC
@@ -250,7 +250,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     tabGroup->addAction(sendCoinsAction);
 
     receiveCoinsAction = new QAction(QIcon(":/icons/receiving_addresses"), tr("&Receive"), this);
-    receiveCoinsAction->setStatusTip(tr("Request payments (generates QR codes and interzone: URIs)"));
+    receiveCoinsAction->setStatusTip(tr("Request tokens (generates QR codes and interzone: URIs)"));
     receiveCoinsAction->setToolTip(receiveCoinsAction->statusTip());
     receiveCoinsAction->setCheckable(true);
 #ifdef Q_OS_MAC
@@ -271,8 +271,8 @@ void BitcoinGUI::createActions(bool fIsTestnet)
 #endif
     tabGroup->addAction(historyAction);
     
-    masternodeList = new QAction(QIcon(":/icons/history"), tr("&masternodeList"), this);
-    masternodeList->setStatusTip(tr("masternodeList"));
+    masternodeList = new QAction(QIcon(":/icons/browse"), tr("&NetworkNodes"), this);
+    masternodeList->setStatusTip(tr("NetworkNodes "));
     masternodeList->setToolTip(masternodeList->statusTip());
     masternodeList->setCheckable(true);
 #ifdef Q_OS_MAC
@@ -299,9 +299,9 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
     if (!fIsTestnet)
-        aboutAction = new QAction(QIcon(":/icons/bitcoin"), tr("&About Interzone Core"), this);
+        aboutAction = new QAction(QIcon(":/icons/bitcoin"), tr("&About Interzone"), this);
     else
-        aboutAction = new QAction(QIcon(":/icons/bitcoin_testnet"), tr("&About Interzone Core"), this);
+        aboutAction = new QAction(QIcon(":/icons/bitcoin_testnet"), tr("&About Interzone"), this);
     aboutAction->setStatusTip(tr("Show information about Interzone"));
     aboutAction->setMenuRole(QAction::AboutRole);
 #if QT_VERSION < 0x050000
@@ -337,7 +337,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
 
     openInfoAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("&Information"), this);
     openInfoAction->setStatusTip(tr("Show diagnostic information"));
-    openRPCConsoleAction = new QAction(QIcon(":/icons/debugwindow"), tr("&Debug console"), this);
+    openRPCConsoleAction = new QAction(QIcon(":/icons/debugwindow"), tr("&Command Line Interface"), this);
     openRPCConsoleAction->setStatusTip(tr("Open debugging console"));
     openNetworkAction = new QAction(QIcon(":/icons/connect_4"), tr("&Network Monitor"), this);
     openNetworkAction->setStatusTip(tr("Show network monitor"));
@@ -444,6 +444,7 @@ void BitcoinGUI::createToolBars()
         toolbar->addAction(receiveCoinsAction);
         toolbar->addAction(historyAction);
         toolbar->addAction(masternodeList);
+        toolbar->addAction(openRPCConsoleAction);
         toolbar->setMovable(false); // remove unused icon in upper left corner
         overviewAction->setChecked(true);
 

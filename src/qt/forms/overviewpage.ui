@@ -188,10 +188,10 @@
                  </font>
                 </property>
                 <property name="toolTip">
-                 <string>Mined balance that has not yet matured</string>
+                 <string>Minted balance that has not yet matured</string>
                 </property>
                 <property name="text">
-                 <string notr="true">0 DASH</string>
+                 <string notr="true">0 ITZ</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -336,7 +336,7 @@
            <item row="2" column="0">
             <widget class="QLabel" name="labelAnonymizedText">
              <property name="text">
-              <string>Darksend Balance:</string>
+              <string>Perplexion Balance:</string>
              </property>
             </widget>
            </item>
@@ -896,7 +896,7 @@
            </sizepolicy>
           </property>
           <property name="toolTip">
-           <string>Try to manually submit a Darksend request.</string>
+           <string>Try to manually submit a Perplexion request.</string>
           </property>
           <property name="text">
            <string>Try Mix</string>
@@ -918,7 +918,7 @@
            </sizepolicy>
           </property>
           <property name="toolTip">
-           <string>Reset the current status of Darksend (can interrupt Darksend if it's in the process of Mixing, which can cost you money!)</string>
+           <string>Reset the current status of Perplexion (can interrupt Perplexion if it's in the process of Flux Capacating, which could release your coins to the ether!)</string>
           </property>
           <property name="autoFillBackground">
            <bool>false</bool>
@@ -946,7 +946,7 @@
               </font>
              </property>
              <property name="text">
-              <string>Darksend</string>
+              <string>Perplexion</string>
              </property>
             </widget>
            </item>

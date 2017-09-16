@@ -147,9 +147,9 @@ OverviewPage::OverviewPage(QWidget *parent) :
         ui->darksendReset->setText("(" + tr("Disabled") + ")");
         ui->frameDarksend->setEnabled(false);
     }else if(!fEnableDarksend){
-        ui->toggleDarksend->setText(tr("Start Darksend Mixing"));
+        ui->toggleDarksend->setText(tr("Begin Perplexion"));
     } else {
-        ui->toggleDarksend->setText(tr("Stop Darksend Mixing"));
+        ui->toggleDarksend->setText(tr("Cease Perplexion"));
     }
 
     // start with displaying the "out of sync" warnings
@@ -354,7 +354,7 @@ void OverviewPage::darkSendStatus()
 
             ui->darksendEnabled->setText(tr("Disabled"));
             ui->darksendStatus->setText("");
-            ui->toggleDarksend->setText(tr("Start Darksend Mixing"));
+            ui->toggleDarksend->setText(tr("Begin Perplexion"));
         }
 
         return;
@@ -497,9 +497,9 @@ void OverviewPage::toggleDarksend(){
     fEnableDarksend = !fEnableDarksend;
 
     if(!fEnableDarksend){
-        ui->toggleDarksend->setText(tr("Start Darksend Mixing"));
+        ui->toggleDarksend->setText(tr("Begin Perplexion"));
     } else {
-        ui->toggleDarksend->setText(tr("Stop Darksend Mixing"));
+        ui->toggleDarksend->setText(tr("Cease Perplexion"));
 
         /* show darksend configuration if client has defaults set */
 

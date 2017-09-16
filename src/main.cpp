@@ -1449,19 +1449,21 @@ int64_t GetBlockValue(int nBits, int nHeight, int64_t nFees)
 
 int64_t GetMasternodePayment(int nHeight, int64_t blockValue)
 {
-    int64_t ret;
+    int64_t ret = 0;
     
-    if (nHeight >= 250000)
-    {
-        ret = blockValue * 50 / 100; // 50% 
-    } else
-    if (nHeight >= 20000)
-    {
-        ret = blockValue * 25 / 100; // 25%
-    } else
-    {
-        ret = 0;
-    }
+    if(TestNet()) {
+    	if(nHeight >= 480) ret = blockValue * 50 / 100;
+    	else if(nHeight >= 475) ret = blockValue * 25 / 100;
+    	else if(nHeight >= 460) ret += blockValue / 50;
+    	else if(nHeight >= 435) ret += blockValue / 25;
+        else if(nHeight >= 410) ret += blockValue / 50; 
+        else if(nHeight >= 400) ret += blockValue / 25; 
+		return ret;
+	}
+            
+    if (nHeight >= 250000){ret = blockValue * 50 / 100;} 
+    else if (nHeight >= 20000){ ret = blockValue * 25 / 100;} 
+    else{ret = 0;}
 
     return ret;
 }
@@ -1475,8 +1477,6 @@ static const int64_t nAveragingTargetTimespan = nAveragingInterval * nTargetSpac
 
 static const int64_t nMaxAdjustDown = 3; // 3% adjustment down
 static const int64_t nMaxAdjustUp = 3; // 1% adjustment up
-
-static const int64_t nTargetTimespanAdjDown = nTargetTimespan * (100 + nMaxAdjustDown) / 100;
 
 //
 // minimum amount of work that could possibly be required nTime after
