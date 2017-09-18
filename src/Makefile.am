@@ -3,27 +3,27 @@ include Makefile.include
 AM_CPPFLAGS += -I$(builddir)
 
 noinst_LIBRARIES = \
-  libinterzone_server.a \
-  libinterzone_common.a \
-  libinterzone_cli.a
+  libtestinterzone_server.a \
+  libtestinterzone_common.a \
+  libtestinterzone_cli.a
 if ENABLE_WALLET
-noinst_LIBRARIES += libinterzone_wallet.a
+noinst_LIBRARIES += libtestinterzone_wallet.a
 endif
 
 bin_PROGRAMS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += interzoned
+  bin_PROGRAMS += testinterzoned
 endif
 
 if BUILD_BITCOIN_CLI
-  bin_PROGRAMS += interzone-cli
+  bin_PROGRAMS += testinterzone-cli
 endif
 
 SUBDIRS = . $(BUILD_QT) $(BUILD_TEST)
 DIST_SUBDIRS = . qt test
 .PHONY: FORCE
-# interzone core #
+# testinterzone core #
 BITCOIN_CORE_H = \
   activemasternode.h \
   addrman.h \
@@ -109,7 +109,7 @@ obj/build.h: FORCE
 	  $(abs_top_srcdir)
 version.o: obj/build.h
 
-libinterzone_server_a_SOURCES = \
+libtestinterzone_server_a_SOURCES = \
   activemasternode.cpp \
   addrman.cpp \
   alert.cpp \
@@ -135,7 +135,7 @@ libinterzone_server_a_SOURCES = \
   $(JSON_H) \
   $(BITCOIN_CORE_H)
 
-libinterzone_wallet_a_SOURCES = \
+libtestinterzone_wallet_a_SOURCES = \
   activemasternode.cpp \
   db.cpp \
   crypter.cpp \
@@ -146,7 +146,7 @@ libinterzone_wallet_a_SOURCES = \
   keepass.cpp \
   $(BITCOIN_CORE_H)
 
-libinterzone_common_a_SOURCES = \
+libtestinterzone_common_a_SOURCES = \
   activemasternode.cpp \
   base58.cpp \
   allocators.cpp \
@@ -184,47 +184,47 @@ libinterzone_common_a_SOURCES = \
   $(BITCOIN_CORE_H)
 
 if GLIBC_BACK_COMPAT
-libinterzone_common_a_SOURCES += compat/glibc_compat.cpp
-libinterzone_common_a_SOURCES += compat/glibcxx_compat.cpp
+libtestinterzone_common_a_SOURCES += compat/glibc_compat.cpp
+libtestinterzone_common_a_SOURCES += compat/glibcxx_compat.cpp
 endif
 
-libinterzone_cli_a_SOURCES = \
+libtestinterzone_cli_a_SOURCES = \
   rpcclient.cpp \
   $(BITCOIN_CORE_H)
 
-nodist_libinterzone_common_a_SOURCES = $(top_srcdir)/src/obj/build.h
+nodist_libtestinterzone_common_a_SOURCES = $(top_srcdir)/src/obj/build.h
 #
 
-# interzoned binary #
-interzoned_LDADD = \
-  libinterzone_server.a \
-  libinterzone_cli.a \
-  libinterzone_common.a \
+# testinterzoned binary #
+testinterzoned_LDADD = \
+  libtestinterzone_server.a \
+  libtestinterzone_cli.a \
+  libtestinterzone_common.a \
   $(LIBLEVELDB) \
   $(LIBMEMENV)
 if ENABLE_WALLET
-interzoned_LDADD += libinterzone_wallet.a
+testinterzoned_LDADD += libtestinterzone_wallet.a
 endif
-interzoned_SOURCES = interzoned.cpp
+testinterzoned_SOURCES = testinterzoned.cpp
 #
 
 if TARGET_WINDOWS
-interzoned_SOURCES += interzoned-res.rc
+testinterzoned_SOURCES += testinterzoned-res.rc
 endif
 
 AM_CPPFLAGS += $(BDB_CPPFLAGS)
-interzoned_LDADD += $(BOOST_LIBS) $(BDB_LIBS)
+testinterzoned_LDADD += $(BOOST_LIBS) $(BDB_LIBS)
 
-# interzone-cli binary #
-interzone_cli_LDADD = \
-  libinterzone_cli.a \
-  libinterzone_common.a \
+# testinterzone-cli binary #
+testinterzone_cli_LDADD = \
+  libtestinterzone_cli.a \
+  libtestinterzone_common.a \
   $(BOOST_LIBS)
-interzone_cli_SOURCES = interzone-cli.cpp
+testinterzone_cli_SOURCES = testinterzone-cli.cpp
 #
 
 if TARGET_WINDOWS
-interzone_cli_SOURCES += interzone-cli-res.rc
+testinterzone_cli_SOURCES += testinterzone-cli-res.rc
 endif
 
 # NOTE: This dependency is not strictly necessary, but without it make may try to build both in parallel, which breaks the LevelDB build system in a race
@@ -235,7 +235,7 @@ leveldb/%.a:
 	  CC="$(CC)" PLATFORM=$(TARGET_OS) AR="$(AR)" $(LEVELDB_TARGET_FLAGS) \
 	  OPT="$(CXXFLAGS) $(CPPFLAGS)"
 
-qt/interzonestrings.cpp: $(libinterzone_server_a_SOURCES) $(libinterzone_common_a_SOURCES) $(libinterzone_cli_a_SOURCES)
+qt/testinterzonestrings.cpp: $(libtestinterzone_server_a_SOURCES) $(libtestinterzone_common_a_SOURCES) $(libtestinterzone_cli_a_SOURCES)
 	@test -n $(XGETTEXT) || echo "xgettext is required for updating translations"
 	@cd $(top_srcdir); XGETTEXT=$(XGETTEXT) share/qt/extract_strings_qt.py
 

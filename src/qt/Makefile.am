@@ -5,12 +5,12 @@ AM_CPPFLAGS += -I$(top_srcdir)/src \
   -I$(top_builddir)/src/qt/forms \
   $(PROTOBUF_CFLAGS) \
   $(QR_CFLAGS)
-bin_PROGRAMS = interzone-qt
-noinst_LIBRARIES = libinterzoneqt.a
+bin_PROGRAMS = testinterzone-qt
+noinst_LIBRARIES = libtestinterzoneqt.a
 SUBDIRS = . $(BUILD_TEST_QT)
 DIST_SUBDIRS = . test
 
-# interzone qt core #
+# testinterzone qt core #
 QT_TS = \
   locale/dash_bar.ts \
   locale/dash_bg.ts \
@@ -115,13 +115,13 @@ BITCOIN_MM = \
   macnotificationhandler.mm
 
 QT_MOC = \
-  interzone.moc \
+  testinterzone.moc \
   intro.moc \
   overviewpage.moc \
   rpcconsole.moc
 
-QT_QRC_CPP = qrc_interzone.cpp
-QT_QRC = interzone.qrc
+QT_QRC_CPP = qrc_testinterzone.cpp
+QT_QRC = testinterzone.qrc
 
 PROTOBUF_CC = paymentrequest.pb.cc
 PROTOBUF_H = paymentrequest.pb.h
@@ -230,7 +230,7 @@ RES_ICONS = \
 
 
 BITCOIN_QT_CPP = \
-  interzone.cpp \
+  testinterzone.cpp \
   bitcoinaddressvalidator.cpp \
   bitcoinamountfield.cpp \
   bitcoingui.cpp \
@@ -303,40 +303,40 @@ RES_CSS = \
   
 RES_MOVIES = $(wildcard res/movies/spinner-*.png)
 
-Interzone_RC = res/interzone-qt-res.rc
+testInterzone_RC = res/testinterzone-qt-res.rc
 
-libinterzoneqt_a_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES) \
+libtestinterzoneqt_a_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES) \
   -I$(top_srcdir)/src/qt/forms $(QT_DBUS_INCLUDES)
-libinterzoneqt_a_SOURCES = $(BITCOIN_QT_CPP) $(BITCOIN_QT_H) $(QT_FORMS_UI) \
+libtestinterzoneqt_a_SOURCES = $(BITCOIN_QT_CPP) $(BITCOIN_QT_H) $(QT_FORMS_UI) \
   $(QT_QRC) $(QT_TS) $(PROTOBUF_PROTO) $(RES_ICONS) $(RES_IMAGES) $(RES_MOVIES) $(RES_CSS)
 
-nodist_libinterzoneqt_a_SOURCES = $(QT_MOC_CPP) $(QT_MOC) $(PROTOBUF_CC) \
+nodist_libtestinterzoneqt_a_SOURCES = $(QT_MOC_CPP) $(QT_MOC) $(PROTOBUF_CC) \
   $(PROTOBUF_H) $(QT_QRC_CPP)
 
-BUILT_SOURCES = $(nodist_libinterzoneqt_a_SOURCES)
+BUILT_SOURCES = $(nodist_libtestinterzoneqt_a_SOURCES)
 
 #Generating these with a half-written protobuf header leads to wacky results.
 #This makes sure it's done.
 $(QT_MOC): $(PROTOBUF_H)
 $(QT_MOC_CPP): $(PROTOBUF_H)
 
-# interzone-qt binary #
-interzone_qt_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES) \
+# testinterzone-qt binary #
+testinterzone_qt_CPPFLAGS = $(AM_CPPFLAGS) $(QT_INCLUDES) \
   -I$(top_srcdir)/src/qt/forms
-interzone_qt_SOURCES = interzone.cpp
+testinterzone_qt_SOURCES = testinterzone.cpp
 if TARGET_DARWIN
-  interzone_qt_SOURCES += $(BITCOIN_MM)
+  testinterzone_qt_SOURCES += $(BITCOIN_MM)
 endif
 if TARGET_WINDOWS
-  interzone_qt_SOURCES += $(Interzone_RC)
+  testinterzone_qt_SOURCES += $(testInterzone_RC)
 endif
-interzone_qt_LDADD = libinterzoneqt.a $(LIBBITCOIN_SERVER)
+testinterzone_qt_LDADD = libtestinterzoneqt.a $(LIBBITCOIN_SERVER)
 if ENABLE_WALLET
-interzone_qt_LDADD += $(LIBBITCOIN_WALLET)
+testinterzone_qt_LDADD += $(LIBBITCOIN_WALLET)
 endif
-interzone_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBLEVELDB) $(LIBMEMENV) \
+testinterzone_qt_LDADD += $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBLEVELDB) $(LIBMEMENV) \
   $(BOOST_LIBS) $(QT_LIBS) $(QT_DBUS_LIBS) $(QR_LIBS) $(PROTOBUF_LIBS) $(BDB_LIBS)
-interzone_qt_LDFLAGS = $(QT_LDFLAGS)
+testinterzone_qt_LDFLAGS = $(QT_LDFLAGS)
 
 # forms/foo.h -> forms/ui_foo.h
 QT_FORMS_H=$(join $(dir $(QT_FORMS_UI)),$(addprefix ui_, $(notdir $(QT_FORMS_UI:.ui=.h))))
@@ -347,10 +347,10 @@ QT_QM=$(QT_TS:.ts=.qm)
 .PHONY: FORCE
 .SECONDARY: $(QT_QM)
 
-interzonestrings.cpp: FORCE
-	$(MAKE) -C $(top_srcdir)/src qt/interzonestrings.cpp
+testinterzonestrings.cpp: FORCE
+	$(MAKE) -C $(top_srcdir)/src qt/testinterzonestrings.cpp
 
-translate: interzonestrings.cpp $(QT_FORMS_UI) $(QT_FORMS_UI) $(BITCOIN_QT_CPP) $(BITCOIN_QT_H) $(BITCOIN_MM)
+translate: testinterzonestrings.cpp $(QT_FORMS_UI) $(QT_FORMS_UI) $(BITCOIN_QT_CPP) $(BITCOIN_QT_H) $(BITCOIN_MM)
 	@test -n $(LUPDATE) || echo "lupdate is required for updating translations"
 	@QT_SELECT=$(QT_SELECT) $(LUPDATE) $^ -locations relative -no-obsolete -ts locale/dash_en.ts
 

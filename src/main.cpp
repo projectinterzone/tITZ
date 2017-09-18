@@ -33,7 +33,7 @@ using namespace std;
 using namespace boost;
 
 #if defined(NDEBUG)
-# error "Interzone cannot be compiled without assertions."
+# error "testInterzone cannot be compiled without assertions."
 #endif
 
 //
@@ -1451,7 +1451,6 @@ int64_t GetMasternodePayment(int nHeight, int64_t blockValue)
 {
     int64_t ret = 0;
     
-    if(TestNet()) {
     	if(nHeight >= 480) ret = blockValue * 50 / 100;
     	else if(nHeight >= 475) ret = blockValue * 25 / 100;
     	else if(nHeight >= 460) ret += blockValue / 50;
@@ -1459,18 +1458,12 @@ int64_t GetMasternodePayment(int nHeight, int64_t blockValue)
         else if(nHeight >= 410) ret += blockValue / 50; 
         else if(nHeight >= 400) ret += blockValue / 25; 
 		return ret;
-	}
-            
-    if (nHeight >= 250000){ret = blockValue * 50 / 100;} 
-    else if (nHeight >= 20000){ ret = blockValue * 25 / 100;} 
-    else{ret = 0;}
 
-    return ret;
 }
 
 static const int64_t nTargetTimespan = 90; // 90 seconds
 static const int64_t nTargetSpacing = 90; // 90 seconds
-static const int64_t nInterval = 1; // Interzone: retarget every block
+static const int64_t nInterval = 1; // testInterzone: retarget every block
 
 static const int64_t nAveragingInterval = 24; // 8 blocks
 static const int64_t nAveragingTargetTimespan = nAveragingInterval * nTargetSpacing; // 12 minutes
@@ -1562,7 +1555,7 @@ unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBloc
 
 /*
 unsigned int static DarkGravityWave(const CBlockIndex* pindexLast, const CBlockHeader *pblock) {
-    // current difficulty formula, interzone - DarkGravity v3, written by Evan Duffield - evan@interzonepay.io 
+    // current difficulty formula, testinterzone - DarkGravity v3, written by Evan Duffield - evan@testinterzonepay.io 
     const CBlockIndex *BlockLastSolved = pindexLast;
     const CBlockIndex *BlockReading = pindexLast;
     int64_t nActualTimespan = 0;
@@ -1663,7 +1656,7 @@ unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHead
                 return pindexLast->nBits;
             }
 
-            // Interzone: This fixes an issue where a 51% attack can change difficulty at will.
+            // testInterzone: This fixes an issue where a 51% attack can change difficulty at will.
             // Go back the full period unless it's the first retarget after genesis.
             // Code courtesy of Art Forz.
             int blockstogoback = nInterval-1;
@@ -2209,7 +2202,7 @@ bool FindUndoPos(CValidationState &state, int nFile, CDiskBlockPos &pos, unsigne
 static CCheckQueue<CScriptCheck> scriptcheckqueue(128);
 
 void ThreadScriptCheck() {
-    RenameThread("interzone-scriptch");
+    RenameThread("testinterzone-scriptch");
     scriptcheckqueue.Thread();
 }
 

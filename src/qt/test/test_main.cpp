@@ -1,6 +1,6 @@
-#include "interzone-config.h"
+#include "testinterzone-config.h"
 #if defined(HAVE_CONFIG_H)
-#include "interzone-config.h"
+#include "testinterzone-config.h"
 #endif
 
 #ifdef ENABLE_WALLET

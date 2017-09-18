@@ -42,9 +42,9 @@ static const int MAX_PAYMENT_REQUEST_SIZE = 50000; // bytes
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 35
 
-#define QAPP_ORG_NAME "Interzone"
-#define QAPP_ORG_DOMAIN "interzonepay.io"
-#define QAPP_APP_NAME_DEFAULT "Interzone-Qt"
-#define QAPP_APP_NAME_TESTNET "Interzone-Qt-testnet"
+#define QAPP_ORG_NAME "testInterzone"
+#define QAPP_ORG_DOMAIN "testinterzonepay.io"
+#define QAPP_APP_NAME_DEFAULT "testInterzone-Qt"
+#define QAPP_APP_NAME_TESTNET "testInterzone-Qt-testnet"
 
 #endif // GUICONSTANTS_H

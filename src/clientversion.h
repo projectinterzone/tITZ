@@ -2,16 +2,16 @@
 #define CLIENTVERSION_H
 
 #if defined(HAVE_CONFIG_H)
-#include "interzone-config.h"
+#include "testinterzone-config.h"
 #else
 //
 // client versioning and copyright year
 //
 
-// These need to be macros, as version.cpp's and interzone-qt.rc's voodoo requires it
+// These need to be macros, as version.cpp's and testinterzone-qt.rc's voodoo requires it
 #define CLIENT_VERSION_MAJOR       1
 #define CLIENT_VERSION_MINOR       5
-#define CLIENT_VERSION_REVISION    0
+#define CLIENT_VERSION_REVISION    2
 #define CLIENT_VERSION_BUILD       0
 
 

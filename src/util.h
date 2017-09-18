@@ -8,7 +8,7 @@
 #define BITCOIN_UTIL_H
 
 #if defined(HAVE_CONFIG_H)
-#include "interzone-config.h"
+#include "testinterzone-config.h"
 #endif
 
 #include "compat.h"
@@ -92,7 +92,7 @@ inline void MilliSleep(int64_t n)
 #endif
 }
 
-//Interzone only features
+//testInterzone only features
 
 extern bool fMasterNode;
 extern bool fLiteMode;
@@ -543,7 +543,7 @@ inline uint32_t ByteReverse(uint32_t value)
 //    threadGroup.create_thread(boost::bind(&LoopForever<boost::function<void()> >, "nothing", f, milliseconds));
 template <typename Callable> void LoopForever(const char* name,  Callable func, int64_t msecs)
 {
-    std::string s = strprintf("interzone-%s", name);
+    std::string s = strprintf("testinterzone-%s", name);
     RenameThread(s.c_str());
     LogPrintf("%s thread start\n", name);
     try
@@ -571,7 +571,7 @@ template <typename Callable> void LoopForever(const char* name,  Callable func, 
 // .. and a wrapper that just calls func once
 template <typename Callable> void TraceThread(const char* name,  Callable func)
 {
-    std::string s = strprintf("interzone-%s", name);
+    std::string s = strprintf("testinterzone-%s", name);
     RenameThread(s.c_str());
     try
     {

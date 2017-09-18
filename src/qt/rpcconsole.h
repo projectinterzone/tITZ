@@ -65,7 +65,7 @@ public slots:
     void showConsole();
     /** Switch to network tab and show */
     void showNetwork();
-    /** Open external (default) editor with interzone.conf */
+    /** Open external (default) editor with testinterzone.conf */
     void showConfEditor();	
     /** Show folder with wallet backups in default browser */
     void showBackups();

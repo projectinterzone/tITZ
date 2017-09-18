@@ -104,7 +104,7 @@ namespace GUIUtil
     // Open debug.log
     void openDebugLogfile();
 	
-    // Open interzone.conf
+    // Open testinterzone.conf
     void openConfigfile();	
     
     // Browse backup folder
@@ -148,7 +148,7 @@ namespace GUIUtil
 
         public:
             TableViewLastColumnResizingFixer(QTableView* table, int lastColMinimumWidth, int allColsMinimumWidth);
-            void stretITZolumnWidth(int column);
+            void strettITZolumnWidth(int column);
 
         private:
             QTableView* tableView;

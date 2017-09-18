@@ -1,8 +1,8 @@
-Interzone 0.9 BETA
+testInterzone 0.9 BETA
 
 Copyright (c) 2009-2015 Bitcoin Core Developers
 Copyright (c) 2014-2015 Dash Core Developers
-Copyright (c) 2014-2015 Interzone Core Developers
+Copyright (c) 2014-2015 testInterzone Core Developers
 
 Distributed under the MIT/X11 software license, see the accompanying
 file COPYING or http://www.opensource.org/licenses/mit-license.php.

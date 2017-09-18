@@ -8,12 +8,12 @@
 #include <string>
 
 // Name of client reported in the 'version' message. Report the same name
-// for both interzoned and interzone-qt, to make it harder for attackers to
+// for both testinterzoned and testinterzone-qt, to make it harder for attackers to
 // target servers or GUI users specifically.
 const std::string CLIENT_NAME("Client");
 
 // Client version number
-#define CLIENT_VERSION_SUFFIX   "-RedNight"
+#define CLIENT_VERSION_SUFFIX   "-alpha"
 
 
 // The following part of the code determines the CLIENT_BUILD variable.

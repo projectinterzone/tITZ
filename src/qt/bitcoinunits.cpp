@@ -16,9 +16,9 @@ BitcoinUnits::BitcoinUnits(QObject *parent):
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(Interzone);
-    unitlist.append(mInterzone);
-    unitlist.append(uInterzone);
+    unitlist.append(testInterzone);
+    unitlist.append(mtestInterzone);
+    unitlist.append(utestInterzone);
     unitlist.append(burroughs);
     return unitlist;
 }
@@ -27,9 +27,9 @@ bool BitcoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case Interzone:
-    case mInterzone:
-    case uInterzone:
+    case testInterzone:
+    case mtestInterzone:
+    case utestInterzone:
     case burroughs:
         return true;
     default:
@@ -43,10 +43,10 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case Interzone: return QString("ITZ");
-            case mInterzone: return QString("mITZ");
-            case uInterzone: return QString::fromUtf8("μITZ");
-            case burroughs: return QString::fromUtf8("burroughs");
+            case testInterzone: return QString("ttITZ");
+            case mtestInterzone: return QString("mttITZ");
+            case utestInterzone: return QString::fromUtf8("μttITZ");
+            case burroughs: return QString::fromUtf8("lees");
             default: return QString("???");
         }
     }
@@ -54,9 +54,9 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case Interzone: return QString("tITZ");
-            case mInterzone: return QString("mtITZ");
-            case uInterzone: return QString::fromUtf8("μtITZ");
+            case testInterzone: return QString("ttITZ");
+            case mtestInterzone: return QString("mttITZ");
+            case utestInterzone: return QString::fromUtf8("μttITZ");
             case burroughs: return QString::fromUtf8("lees");
             default: return QString("???");
         }
@@ -69,9 +69,9 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case Interzone: return QString("Interzone");
-            case mInterzone: return QString("milliInterzone (1 / 1,000)");
-            case uInterzone: return QString("microInterzone (1 / 1,000,000)");
+            case testInterzone: return QString("testInterzone");
+            case mtestInterzone: return QString("millitestInterzone (1 / 1,000)");
+            case utestInterzone: return QString("microtestInterzone (1 / 1,000,000)");
             case burroughs: return QString("Burroughs (1 / 100,000,000)");
             default: return QString("???");
         }
@@ -80,9 +80,9 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case Interzone: return QString("TestInterzone");
-            case mInterzone: return QString("millitestInterzone (1 / 1,000)");
-            case uInterzone: return QString("microtestInterzone (1 / 1,000,000)");
+            case testInterzone: return QString("TesttestInterzone");
+            case mtestInterzone: return QString("millitesttestInterzone (1 / 1,000)");
+            case utestInterzone: return QString("microtesttestInterzone (1 / 1,000,000)");
             case burroughs: return QString("Lees (1 / 100,000,000)");
             default: return QString("???");
         }
@@ -93,9 +93,9 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case Interzone:  return 100000000;
-    case mInterzone: return 100000;
-    case uInterzone: return 100;
+    case testInterzone:  return 100000000;
+    case mtestInterzone: return 100000;
+    case utestInterzone: return 100;
     case burroughs: return 1;
     default:   return 100000000;
     }
@@ -105,9 +105,9 @@ qint64 BitcoinUnits::maxAmount(int unit)
 {
     switch(unit)
     {
-    case Interzone:  return Q_INT64_C(21000000);
-    case mInterzone: return Q_INT64_C(21000000000);
-    case uInterzone: return Q_INT64_C(21000000000000);
+    case testInterzone:  return Q_INT64_C(21000000);
+    case mtestInterzone: return Q_INT64_C(21000000000);
+    case utestInterzone: return Q_INT64_C(21000000000000);
     case burroughs: return Q_INT64_C(2100000000000000);
     default:   return 0;
     }
@@ -117,9 +117,9 @@ int BitcoinUnits::amountDigits(int unit)
 {
     switch(unit)
     {
-    case Interzone: return 8; // 21,000,000 (# digits, without commas)
-    case mInterzone: return 11; // 21,000,000,000
-    case uInterzone: return 14; // 21,000,000,000,000
+    case testInterzone: return 8; // 21,000,000 (# digits, without commas)
+    case mtestInterzone: return 11; // 21,000,000,000
+    case utestInterzone: return 14; // 21,000,000,000,000
     case burroughs: return 16; // 2,100,000,000,000,000
     default: return 0;
     }
@@ -129,9 +129,9 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case Interzone: return 8;
-    case mInterzone: return 5;
-    case uInterzone: return 2;
+    case testInterzone: return 8;
+    case mtestInterzone: return 5;
+    case utestInterzone: return 2;
     case burroughs: return 0;
     default: return 0;
     }

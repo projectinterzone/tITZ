@@ -72,7 +72,7 @@ MSYS shell:
 	mkdir miniupnpc
 	cp *.h miniupnpc/
 
-Interzone
+testInterzone
 -------
 MSYS shell:
 

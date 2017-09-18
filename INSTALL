@@ -1,4 +1,4 @@
-Building Interzone
+Building testInterzone
 
 Use the autogen script to prepare the build environment.
 
@@ -6,6 +6,6 @@ Use the autogen script to prepare the build environment.
     ./configure
     make
 
-See doc/build-*.md for instructions on building interzoned,
+See doc/build-*.md for instructions on building testinterzoned,
 the intended-for-services, no-graphical-interface, reference
-implementation of Interzone.
+implementation of testInterzone.

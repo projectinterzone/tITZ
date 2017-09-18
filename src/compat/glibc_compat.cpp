@@ -1,4 +1,4 @@
-#include "interzone-config.h"
+#include "testinterzone-config.h"
 #include <cstddef>
 #include <sys/select.h>
 

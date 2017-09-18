@@ -6,7 +6,7 @@
 #define NOTIFICATOR_H
 
 #if defined(HAVE_CONFIG_H)
-#include "interzone-config.h"
+#include "testinterzone-config.h"
 #endif
 
 #include <QIcon>

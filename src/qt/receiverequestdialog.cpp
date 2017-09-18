@@ -22,7 +22,7 @@
 #endif
 
 #if defined(HAVE_CONFIG_H)
-#include "interzone-config.h" /* for USE_QRCODE */
+#include "testinterzone-config.h" /* for USE_QRCODE */
 #endif
 
 #ifdef USE_QRCODE

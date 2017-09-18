@@ -2,9 +2,9 @@ include $(top_srcdir)/src/Makefile.include
 
 AM_CPPFLAGS += -I$(top_srcdir)/src
 
-bin_PROGRAMS = test_interzone
+bin_PROGRAMS = test_testinterzone
 
-TESTS = test_interzone
+TESTS = test_testinterzone
 
 JSON_TEST_FILES = \
   data/script_valid.json \
@@ -22,16 +22,16 @@ RAW_TEST_FILES = data/alertTests.raw
 
 BUILT_SOURCES = $(JSON_TEST_FILES:.json=.json.h) $(RAW_TEST_FILES:.raw=.raw.h)
 
-# test_interzone binary #
-test_interzone_CPPFLAGS = $(AM_CPPFLAGS) $(TESTDEFS)
-test_interzone_LDADD = $(LIBBITCOIN_SERVER) $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBLEVELDB) $(LIBMEMENV) \
+# test_testinterzone binary #
+test_testinterzone_CPPFLAGS = $(AM_CPPFLAGS) $(TESTDEFS)
+test_testinterzone_LDADD = $(LIBBITCOIN_SERVER) $(LIBBITCOIN_CLI) $(LIBBITCOIN_COMMON) $(LIBLEVELDB) $(LIBMEMENV) \
   $(BOOST_LIBS) $(BOOST_UNIT_TEST_FRAMEWORK_LIB)
 if ENABLE_WALLET
-test_interzone_LDADD += $(LIBBITCOIN_WALLET)
+test_testinterzone_LDADD += $(LIBBITCOIN_WALLET)
 endif
-test_interzone_LDADD += $(BDB_LIBS)
+test_testinterzone_LDADD += $(BDB_LIBS)
 
-test_interzone_SOURCES = \
+test_testinterzone_SOURCES = \
   alert_tests.cpp \
   allocator_tests.cpp \
   base32_tests.cpp \
@@ -57,7 +57,7 @@ test_interzone_SOURCES = \
   script_tests.cpp \
   serialize_tests.cpp \
   sigopcount_tests.cpp \
-  test_interzone.cpp \
+  test_testinterzone.cpp \
   transaction_tests.cpp \
   uint256_tests.cpp \
   util_tests.cpp \
@@ -66,12 +66,12 @@ test_interzone_SOURCES = \
   $(JSON_TEST_FILES) $(RAW_TEST_FILES)
 
 if ENABLE_WALLET
-test_interzone_SOURCES += \
+test_testinterzone_SOURCES += \
    accounting_tests.cpp \
    wallet_tests.cpp \
    rpc_wallet_tests.cpp
 endif
 
-nodist_test_interzone_SOURCES = $(BUILT_SOURCES)
+nodist_test_testinterzone_SOURCES = $(BUILT_SOURCES)
 
 CLEANFILES = *.gcda *.gcno $(BUILT_SOURCES)

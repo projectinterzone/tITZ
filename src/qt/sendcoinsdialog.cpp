@@ -47,7 +47,7 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
     connect(ui->checkBoxCoinControlChange, SIGNAL(stateChanged(int)), this, SLOT(coinControlChangeChecked(int)));
     connect(ui->lineEditCoinControlChange, SIGNAL(textEdited(const QString &)), this, SLOT(coinControlChangeEdited(const QString &)));
 
-    // Interzone specific
+    // testInterzone specific
     if(fLiteMode) {
         ui->checkUseDarksend->setChecked(false);
         ui->checkUseDarksend->setVisible(false);
@@ -55,7 +55,7 @@ SendCoinsDialog::SendCoinsDialog(QWidget *parent) :
         CoinControlDialog::coinControl->useDarkSend = false;
         CoinControlDialog::coinControl->useInstantX = false;
     }
-	// Interzone TEMP
+	// testInterzone TEMP
     ui->checkUseDarksend->setChecked(false);
     ui->checkUseDarksend->setVisible(false);
     ui->checkInstantX->setChecked(false);
@@ -647,7 +647,7 @@ void SendCoinsDialog::coinControlChangeEdited(const QString& text)
         }
         else if (!addr.IsValid()) // Invalid address
         {
-            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid Interzone address"));
+            ui->labelCoinControlChangeLabel->setText(tr("Warning: Invalid testInterzone address"));
         }
         else // Valid address
         {

@@ -76,7 +76,7 @@ BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent) :
 
     GUIUtil::restoreWindowGeometry("nWindow", QSize(850, 550), this);
 
-    QString windowTitle = tr("Interzone Core") + " - ";
+    QString windowTitle = tr("testtestInterzone") + " - ";
 #ifdef ENABLE_WALLET
     /* if compiled with wallet support, -disablewallet can still disable the wallet */
     bool enableWallet = !GetBoolArg("-disablewallet", false);
@@ -239,7 +239,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     tabGroup->addAction(overviewAction);
 
     sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send"), this);
-    sendCoinsAction->setStatusTip(tr("Send tokens to a Interzone address"));
+    sendCoinsAction->setStatusTip(tr("Send tokens to a testInterzone address"));
     sendCoinsAction->setToolTip(sendCoinsAction->statusTip());
     sendCoinsAction->setCheckable(true);
 #ifdef Q_OS_MAC
@@ -250,7 +250,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     tabGroup->addAction(sendCoinsAction);
 
     receiveCoinsAction = new QAction(QIcon(":/icons/receiving_addresses"), tr("&Receive"), this);
-    receiveCoinsAction->setStatusTip(tr("Request tokens (generates QR codes and interzone: URIs)"));
+    receiveCoinsAction->setStatusTip(tr("Request tokens (generates QR codes and testinterzone: URIs)"));
     receiveCoinsAction->setToolTip(receiveCoinsAction->statusTip());
     receiveCoinsAction->setCheckable(true);
 #ifdef Q_OS_MAC
@@ -299,10 +299,10 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
     if (!fIsTestnet)
-        aboutAction = new QAction(QIcon(":/icons/bitcoin"), tr("&About Interzone"), this);
+        aboutAction = new QAction(QIcon(":/icons/bitcoin"), tr("&About testInterzone"), this);
     else
-        aboutAction = new QAction(QIcon(":/icons/bitcoin_testnet"), tr("&About Interzone"), this);
-    aboutAction->setStatusTip(tr("Show information about Interzone"));
+        aboutAction = new QAction(QIcon(":/icons/bitcoin_testnet"), tr("&About testInterzone"), this);
+    aboutAction->setStatusTip(tr("Show information about testInterzone"));
     aboutAction->setMenuRole(QAction::AboutRole);
 #if QT_VERSION < 0x050000
     aboutQtAction = new QAction(QIcon(":/trolltech/qmessagebox/images/qtlogo-64.png"), tr("About &Qt"), this);
@@ -312,7 +312,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     aboutQtAction->setStatusTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     optionsAction = new QAction(QIcon(":/icons/options"), tr("&Options..."), this);
-    optionsAction->setStatusTip(tr("Modify configuration options for Interzone"));
+    optionsAction->setStatusTip(tr("Modify configuration options for testInterzone"));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     if (!fIsTestnet)
         toggleHideAction = new QAction(QIcon(":/icons/bitcoin"), tr("&Show / Hide"), this);
@@ -331,9 +331,9 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     unlockWalletAction->setToolTip(tr("Unlock wallet"));
     lockWalletAction = new QAction(tr("&Lock Wallet"), this);
     signMessageAction = new QAction(QIcon(":/icons/edit"), tr("Sign &message..."), this);
-    signMessageAction->setStatusTip(tr("Sign messages with your Interzone addresses to prove you own them"));
+    signMessageAction->setStatusTip(tr("Sign messages with your testInterzone addresses to prove you own them"));
     verifyMessageAction = new QAction(QIcon(":/icons/transaction_0"), tr("&Verify message..."), this);
-    verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified Interzone addresses"));
+    verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified testInterzone addresses"));
 
     openInfoAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("&Information"), this);
     openInfoAction->setStatusTip(tr("Show diagnostic information"));
@@ -352,10 +352,10 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     usedReceivingAddressesAction->setStatusTip(tr("Show the list of used receiving addresses and labels"));
 
     openAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_FileIcon), tr("Open &URI..."), this);
-    openAction->setStatusTip(tr("Open a interzone: URI or payment request"));
+    openAction->setStatusTip(tr("Open a testinterzone: URI or payment request"));
 
     showHelpMessageAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation), tr("&Command-line options"), this);
-    showHelpMessageAction->setStatusTip(tr("Show the Interzone Core help message to get a list with possible Interzone command-line options"));
+    showHelpMessageAction->setStatusTip(tr("Show the testInterzone Core help message to get a list with possible testInterzone command-line options"));
 
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
     connect(aboutAction, SIGNAL(triggered()), this, SLOT(aboutClicked()));
@@ -539,12 +539,12 @@ void BitcoinGUI::createTrayIcon(bool fIsTestnet)
 
     if (!fIsTestnet)
     {
-        trayIcon->setToolTip(tr("Interzone client"));
+        trayIcon->setToolTip(tr("testInterzone client"));
         trayIcon->setIcon(QIcon(":/icons/toolbar"));
     }
     else
     {
-        trayIcon->setToolTip(tr("Interzone client") + " " + tr("[testnet]"));
+        trayIcon->setToolTip(tr("testInterzone client") + " " + tr("[testnet]"));
         trayIcon->setIcon(QIcon(":/icons/toolbar_testnet"));
     }
 
@@ -696,7 +696,7 @@ void BitcoinGUI::setNumConnections(int count)
     default: icon = ":/icons/connect_4"; break;
     }
     labelConnectionsIcon->setPixmap(QIcon(icon).pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to Interzone network", "", count));
+    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to testInterzone network", "", count));
 }
 
 void BitcoinGUI::setNumBlocks(int count)
@@ -811,7 +811,7 @@ void BitcoinGUI::setNumBlocks(int count)
 
 void BitcoinGUI::message(const QString &title, const QString &message, unsigned int style, bool *ret)
 {
-    QString strTitle = tr("Interzone"); // default title
+    QString strTitle = tr("testInterzone"); // default title
     // Default to information icon
     int nMBoxIcon = QMessageBox::Information;
     int nNotifyIcon = Notificator::Information;
@@ -837,7 +837,7 @@ void BitcoinGUI::message(const QString &title, const QString &message, unsigned 
             break;
         }
     }
-    // Append title to "Interzone - "
+    // Append title to "testInterzone - "
     if (!msgType.isEmpty())
         strTitle += " - " + msgType;
 

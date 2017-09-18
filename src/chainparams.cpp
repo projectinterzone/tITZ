@@ -30,13 +30,13 @@ public:
         // The message start string is designed to be unlikely to occur in normal data.
         // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
         // a large 4-byte int at any alignment.
-        pchMessageStart[0] = 0x08;
-        pchMessageStart[1] = 0x02;
-        pchMessageStart[2] = 0x01;
-        pchMessageStart[3] = 0x17;
-        vAlertPubKey = ParseHex("04c5788ca1e268a7474763fa965210b6fa6b04a45f52d21056c62fb19a2de991aa15aa1d1c516f34d2a0016f51a87959c89f51a148db30c839f71bc525dde8c480");
-        nDefaultPort = 55675;
-        nRPCPort = 55680;
+        pchMessageStart[0] = 0xfb;
+        pchMessageStart[1] = 0xc2;
+        pchMessageStart[2] = 0x11;
+        pchMessageStart[3] = 0x02;
+        vAlertPubKey = ParseHex("04c4d925d462a89054155314a7068bb8cf6d7c030d76491e6cc97fefcc4ab8c3665bfb34c3aba0e12b9fb4fab47502a00938dd93e0e675c4713ee47200046de2e3");
+        nDefaultPort = 21817;
+        nRPCPort = 21818;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20);
         nSubsidyHalvingInterval = 500000; 
 
@@ -52,27 +52,24 @@ public:
         genesis.hashPrevBlock = 0;
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
         genesis.nVersion = 1;
-        genesis.nTime    = 1503332100;
+        genesis.nTime    = 1503324223;
         genesis.nBits    = 0x1e0fffff;
-        genesis.nNonce   = 294622;
+        genesis.nNonce   = 1088722;
 
         hashGenesisBlock = genesis.GetHash();
 
-        assert(hashGenesisBlock == uint256("0x00000a3e2f4ab22bae06eb1d3121262055fef0fc03da5337b1c7c153af133780"));
+        assert(hashGenesisBlock == uint256("0x0000016920f7856a2a4f342db39b70591c00a699f1fe865ebc687fd9b66aa586"));
         assert(genesis.hashMerkleRoot == uint256("0x11f8d6fdf5460c2308b76da69942dd9fa386f9d337fbc95f669d73bcf02b64a5"));
 
-        vSeeds.push_back(CDNSSeedData("seed1.interzone.space", "seed1.interzone.space"));
-        vSeeds.push_back(CDNSSeedData("seed2.interzone.space", "seed2.interzone.space"));
-        vSeeds.push_back(CDNSSeedData("seed3.interzone.space", "seed3.interzone.space"));
-        vSeeds.push_back(CDNSSeedData("seed4.interzone.space", "seed4.interzone.space"));
-        vSeeds.push_back(CDNSSeedData("seed5.interzone.space", "seed5.interzone.space"));
+        vSeeds.push_back(CDNSSeedData("seed1.testinterzone.space", "seed1.testinterzone.space"));
+        vSeeds.push_back(CDNSSeedData("seed2.testinterzone.space", "seed2.testinterzone.space"));
+        vSeeds.push_back(CDNSSeedData("seed3.testinterzone.space", "seed3.testinterzone.space"));
+        vSeeds.push_back(CDNSSeedData("seed4.testinterzone.space", "seed4.testinterzone.space"));
+        vSeeds.push_back(CDNSSeedData("seed5.testinterzone.space", "seed5.testinterzone.space"));
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,0);
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);
-        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,28 + 128);            // Interzone private keys start with '7' or 'X'
-        //base58Prefixes[EXT_PUBLIC_KEY] = list_of(0x02)(0xFE)(0x52)(0xF8); // Interzone BIP32 pubkeys start with 'drkv'
-        //base58Prefixes[EXT_SECRET_KEY] = list_of(0x02)(0xFE)(0x52)(0xCC); // Interzone BIP32 prvkeys start with 'drkp'
-        //base58Prefixes[EXT_COIN_TYPE]  = list_of(0x80000005);             // Interzone BIP44 coin type is '5'
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,102);
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,44);
+        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,88 + 128);            // testInterzone private keys start with '7' or 'X'
 
         // Convert the pnSeeds array into usable address objects.
         for (unsigned int i = 0; i < ARRAYLEN(pnSeed); i++)
@@ -121,7 +118,7 @@ public:
 
         nDefaultPort = 21817;
         nRPCPort = 21818;
-        strDataDir = "testnet";
+        strDataDir = "";
 
         // Modify the testnet genesis block so the timestamp is valid for a later start.
         genesis.nTime = 1503324223;
@@ -133,7 +130,7 @@ public:
 
         vFixedSeeds.clear();
         vSeeds.clear();
-        vSeeds.push_back(CDNSSeedData("seed1.interzone.space", "seed1.interzone.space"));
+        vSeeds.push_back(CDNSSeedData("seed1.testinterzone.space", "seed1.testinterzone.space"));
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,102);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,44);

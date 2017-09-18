@@ -29,10 +29,10 @@
   <string>????</string>
 
   <key>CFBundleExecutable</key>
-  <string>Interzone-Qt</string>
+  <string>testInterzone-Qt</string>
 
   <key>CFBundleIdentifier</key>
-  <string>org.interzone.Interzone-Qt</string>
+  <string>org.testinterzone.testInterzone-Qt</string>
 
   <key>CFBundleURLTypes</key>
   <array>
@@ -40,10 +40,10 @@
       <key>CFBundleTypeRole</key>
       <string>Editor</string>
       <key>CFBundleURLName</key>
-      <string>io.interzone.DarkcoinPayment</string>
+      <string>io.testinterzone.DarkcoinPayment</string>
       <key>CFBundleURLSchemes</key>
       <array>
-        <string>interzone</string>
+        <string>testinterzone</string>
       </array>
     </dict>
   </array>
@@ -52,9 +52,9 @@
   <array>
     <dict>
       <key>UTTypeIdentifier</key>
-      <string>io.interzone.paymentrequest</string>
+      <string>io.testinterzone.paymentrequest</string>
       <key>UTTypeDescription</key>
-      <string>Interzone payment request</string>
+      <string>testInterzone payment request</string>
       <key>UTTypeConformsTo</key>
       <array>
         <string>public.data</string>
@@ -62,10 +62,10 @@
       <key>UTTypeTagSpecification</key>
       <dict>
         <key>public.mime-type</key>
-        <string>application/x-interzone-payment-request</string>
+        <string>application/x-testinterzone-payment-request</string>
         <key>public.filename-extension</key>
         <array>
-          <string>interzonepaymentrequest</string>
+          <string>testinterzonepaymentrequest</string>
         </array>
       </dict>
     </dict>
@@ -78,7 +78,7 @@
       <string>Editor</string>
       <key>LSItemContentTypes</key>
       <array>
-        <string>io.interzone.paymentrequest</string>
+        <string>io.testinterzone.paymentrequest</string>
       </array>
       <key>LSHandlerRank</key>
       <string>Owner</string>

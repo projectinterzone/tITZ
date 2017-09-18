@@ -30,10 +30,10 @@
        <item>
         <widget class="QCheckBox" name="bitcoinAtStartup">
          <property name="toolTip">
-          <string>Automatically start Interzone after logging in to the system.</string>
+          <string>Automatically start testInterzone after logging in to the system.</string>
          </property>
          <property name="text">
-          <string>&amp;Start Interzone on system login</string>
+          <string>&amp;Start testInterzone on system login</string>
          </property>
         </widget>
        </item>
@@ -177,7 +177,7 @@
             <string notr="true"/>
            </property>
            <property name="text">
-            <string>Amount of Interzone to keep anonymized</string>
+            <string>Amount of testInterzone to keep anonymized</string>
            </property>
           </widget>
          </item>
@@ -348,7 +348,7 @@
        <item>
         <widget class="QCheckBox" name="mapPortUpnp">
          <property name="toolTip">
-          <string>Automatically open the Interzone client port on the router. This only works when your router supports UPnP and it is enabled.</string>
+          <string>Automatically open the testInterzone client port on the router. This only works when your router supports UPnP and it is enabled.</string>
          </property>
          <property name="text">
           <string>Map port using &amp;UPnP</string>
@@ -358,7 +358,7 @@
        <item>
         <widget class="QCheckBox" name="connectSocks">
          <property name="toolTip">
-          <string>Connect to the Interzone network through a SOCKS proxy.</string>
+          <string>Connect to the testInterzone network through a SOCKS proxy.</string>
          </property>
          <property name="text">
           <string>&amp;Connect through SOCKS proxy (default proxy):</string>
@@ -544,7 +544,7 @@
          <item>
           <widget class="QValueComboBox" name="lang">
            <property name="toolTip">
-            <string>The user interface language can be set here. This setting will take effect after restarting Interzone.</string>
+            <string>The user interface language can be set here. This setting will take effect after restarting testInterzone.</string>
            </property>
           </widget>
          </item>
@@ -566,7 +566,7 @@
          </property>
          <property name="text">
           <string>Language missing or translation incomplete? Help contributing translations here:
-https://www.transifex.com/projects/p/interzone/</string>
+https://www.transifex.com/projects/p/testinterzone/</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -627,7 +627,7 @@ https://www.transifex.com/projects/p/interzone/</string>
        <item>
         <widget class="QCheckBox" name="displayAddresses">
          <property name="toolTip">
-          <string>Whether to show Interzone addresses in the transaction list or not.</string>
+          <string>Whether to show testInterzone addresses in the transaction list or not.</string>
          </property>
          <property name="text">
           <string>&amp;Display addresses in transaction list</string>

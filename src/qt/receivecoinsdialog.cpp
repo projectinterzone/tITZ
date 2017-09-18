@@ -202,7 +202,7 @@ void ReceiveCoinsDialog::on_removeRequestButton_clicked()
 void ReceiveCoinsDialog::resizeEvent(QResizeEvent *event)
 {
     QWidget::resizeEvent(event);
-    columnResizingFixer->stretITZolumnWidth(RecentRequestsTableModel::Message);
+    columnResizingFixer->strettITZolumnWidth(RecentRequestsTableModel::Message);
 }
 
 void ReceiveCoinsDialog::keyPressEvent(QKeyEvent *event)

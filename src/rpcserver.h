@@ -63,7 +63,7 @@ public:
 };
 
 /**
- * Interzone RPC command dispatcher.
+ * testInterzone RPC command dispatcher.
  */
 class CRPCTable
 {

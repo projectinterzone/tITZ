@@ -212,7 +212,7 @@ Value getaddednodeinfo(const Array& params, bool fHelp)
             "    \"connected\" : true|false,          (boolean) If connected\n"
             "    \"addresses\" : [\n"
             "       {\n"
-            "         \"address\" : \"192.168.0.201:9999\",  (string) The interzone server host and port\n"
+            "         \"address\" : \"192.168.0.201:9999\",  (string) The testinterzone server host and port\n"
             "         \"connected\" : \"outbound\"           (string) connection, inbound or outbound\n"
             "       }\n"
             "       ,...\n"

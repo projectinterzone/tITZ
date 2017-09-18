@@ -28,7 +28,7 @@ SignVerifyMessageDialog::SignVerifyMessageDialog(QWidget *parent) :
 
 #if QT_VERSION >= 0x040700
     ui->signatureOut_SM->setPlaceholderText(tr("Click \"Sign Message\" to generate signature"));
-    ui->addressIn_VM->setPlaceholderText(tr("Enter a Interzone address (e.g. XwnLY9Tf7Zsef8gMGL2fhWA9ZmMjt4KPwg)"));
+    ui->addressIn_VM->setPlaceholderText(tr("Enter a testInterzone address (e.g. XwnLY9Tf7Zsef8gMGL2fhWA9ZmMjt4KPwg)"));
 #endif
 
     GUIUtil::setupAddressWidget(ui->addressIn_SM, this);

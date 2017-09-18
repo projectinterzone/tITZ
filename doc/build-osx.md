@@ -99,9 +99,9 @@ Creating a release build
 ------------------------
 You can ignore this section if you are building `dashd` for your own use.
 
-dashd/dash-cli binaries are not included in the Interzone-Qt.app bundle.
+dashd/dash-cli binaries are not included in the testInterzone-Qt.app bundle.
 
-If you are building `dashd` or `Interzone-Qt` for others, your build machine should be set up
+If you are building `dashd` or `testInterzone-Qt` for others, your build machine should be set up
 as follows for maximum compatibility:
 
 All dependencies should be compiled with these flags:
@@ -110,7 +110,7 @@ All dependencies should be compiled with these flags:
  -arch x86_64
  -isysroot $(xcode-select --print-path)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.6.sdk
 
-Once dependencies are compiled, see release-process.md for how the Interzone-Qt.app
+Once dependencies are compiled, see release-process.md for how the testInterzone-Qt.app
 bundle is packaged and signed to create the .dmg disk image that is distributed.
 
 Running
@@ -122,14 +122,14 @@ directory. We have to first create the RPC configuration file, though.
 Run `./dashd` to get the filename where it should be put, or just try these
 commands:
 
-    echo -e "rpcuser=dashrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/Interzone/dash.conf"
-    chmod 600 "/Users/${USER}/Library/Application Support/Interzone/dash.conf"
+    echo -e "rpcuser=dashrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/testInterzone/dash.conf"
+    chmod 600 "/Users/${USER}/Library/Application Support/testInterzone/dash.conf"
 
 When next you run it, it will start downloading the blockchain, but it won't
 output anything while it's doing this. This process may take several hours;
 you can monitor its process by looking at the debug.log file, like this:
 
-    tail -f $HOME/Library/Application\ Support/Interzone/debug.log
+    tail -f $HOME/Library/Application\ Support/testInterzone/debug.log
 
 Other commands:
 

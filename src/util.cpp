@@ -93,7 +93,7 @@ namespace boost {
 
 using namespace std;
 
-//Interzone only features
+//testInterzone only features
 bool fMasterNode = false;
 string strMasterNodePrivKey = "";
 string strMasterNodeAddr = "";
@@ -103,7 +103,7 @@ int nDarksendRounds = 2;
 int nAnonymizeDarkcoinAmount = 1000;
 int nLiquidityProvider = 0;
 /** Spork enforcement enabled time */
-//int64_t enforceMasternodePaymentsTime = 4085657524; // Interzone
+//int64_t enforceMasternodePaymentsTime = 4085657524; // testInterzone
 int64_t enforceMasternodePaymentsTime = 9085657524;
 int nMasternodeMinProtocol = 0;
 bool fSucessfullyLoaded = false;
@@ -516,10 +516,10 @@ void ParseParameters(int argc, const char* const argv[])
         //  interpret --foo as -foo (as long as both are not set)
         if (name.find("--") == 0)
         {
-            std::string singleInterzone(name.begin()+1, name.end());
-            if (mapArgs.count(singleInterzone) == 0)
-                mapArgs[singleInterzone] = entry.second;
-            name = singleInterzone;
+            std::string singletestInterzone(name.begin()+1, name.end());
+            if (mapArgs.count(singletestInterzone) == 0)
+                mapArgs[singletestInterzone] = entry.second;
+            name = singletestInterzone;
         }
 
         // interpret -nofoo as -foo=0 (and -nofoo=0 as -foo=1) as long as -foo not set
@@ -1008,7 +1008,7 @@ static std::string FormatException(std::exception* pex, const char* pszThread)
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "interzone";
+    const char* pszModule = "testinterzone";
 #endif
     if (pex)
         return strprintf(
@@ -1035,13 +1035,13 @@ void PrintExceptionContinue(std::exception* pex, const char* pszThread)
 boost::filesystem::path GetDefaultDataDir()
 {
     namespace fs = boost::filesystem;
-    // Windows < Vista: C:\Documents and Settings\Username\Application Data\Interzone
-    // Windows >= Vista: C:\Users\Username\AppData\Roaming\Interzone
-    // Mac: ~/Library/Application Support/Interzone
-    // Unix: ~/.interzone
+    // Windows < Vista: C:\Documents and Settings\Username\Application Data\testInterzone
+    // Windows >= Vista: C:\Users\Username\AppData\Roaming\testInterzone
+    // Mac: ~/Library/Application Support/testInterzone
+    // Unix: ~/.testinterzone
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Interzone";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "testtestInterzone";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -1053,10 +1053,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectory(pathRet);
-    return pathRet / "Interzone";
+    return pathRet / "testtestInterzone";
 #else
     // Unix
-    return pathRet / ".interzone";
+    return pathRet / ".testtestinterzone";
 #endif
 #endif
 }
@@ -1105,7 +1105,7 @@ void ClearDatadirCache()
 
 boost::filesystem::path GetConfigFile()
 {
-    boost::filesystem::path pathConfigFile(GetArg("-conf", "interzone.conf"));
+    boost::filesystem::path pathConfigFile(GetArg("-conf", "testinterzone.conf"));
     if (!pathConfigFile.is_complete()) pathConfigFile = GetDataDir(false) / pathConfigFile;
     return pathConfigFile;
 }
@@ -1122,7 +1122,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile());
     if (!streamConfig.good()){
-        // Create empty interzone.conf if it does not excist
+        // Create empty testinterzone.conf if it does not excist
         FILE* configFile = fopen(GetConfigFile().string().c_str(), "a");
         if (configFile != NULL)
             fclose(configFile);
@@ -1134,7 +1134,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
     for (boost::program_options::detail::config_file_iterator it(streamConfig, setOptions), end; it != end; ++it)
     {
-        // Don't overwrite existing settings so command line settings override interzone.conf
+        // Don't overwrite existing settings so command line settings override testinterzone.conf
         string strKey = string("-") + it->string_key;
         if (mapSettingsRet.count(strKey) == 0)
         {
@@ -1150,7 +1150,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 
 boost::filesystem::path GetPidFile()
 {
-    boost::filesystem::path pathPidFile(GetArg("-pid", "interzoned.pid"));
+    boost::filesystem::path pathPidFile(GetArg("-pid", "testinterzoned.pid"));
     if (!pathPidFile.is_complete()) pathPidFile = GetDataDir() / pathPidFile;
     return pathPidFile;
 }
@@ -1383,7 +1383,7 @@ void AddTimeData(const CNetAddr& ip, int64_t nTime)
                 if (!fMatch)
                 {
                     fDone = true;
-                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong Interzone will not work properly.");
+                    string strMessage = _("Warning: Please check that your computer's date and time are correct! If your clock is wrong testInterzone will not work properly.");
                     strMiscWarning = strMessage;
                     LogPrintf("*** %s\n", strMessage);
                     uiInterface.ThreadSafeMessageBox(strMessage, "", CClientUIInterface::MSG_WARNING);

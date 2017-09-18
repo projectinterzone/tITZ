@@ -1,40 +1,40 @@
-Interzone Core staging tree 1.5
+testInterzone Core staging tree 1.5
 ===============================
 
-http://www.interzone.org
+http://www.testinterzone.org
 
 Copyright (c) 2009-2015 Bitcoin Core Developers
 
 Copyright (c) 2014-2015 Dash Core Developers
 
-Copyright (c) 2017-2018 Interzone Core Developers
+Copyright (c) 2017-2018 testInterzone Core Developers
 
 
 
-What is Interzone?
+What is testInterzone?
 -----------------
 
-Interzone is an experimental new digital token that enables anonymous, instant
-transfers to anyone, anywhere in the world. Interzone uses peer-to-peer technology
+testInterzone is an experimental new digital token that enables anonymous, instant
+transfers to anyone, anywhere in the world. testInterzone uses peer-to-peer technology
 to operate with no central authority: managing transactions and issuing money
-are carried out collectively by the network. Interzone Core is the name of open
+are carried out collectively by the network. testInterzone Core is the name of open
 source software which enables the use of this token.
 
 For more information, as well as an immediately useable, binary version of
-the Interzone Core software, see http://www.interzone.org/
+the testInterzone Core software, see http://www.testinterzone.org/
 
 
 License
 -------
 
-Interzone Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
+testInterzone Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
 information or see http://opensource.org/licenses/MIT.
 
 
 Building process
 -----------------
 
-**compiling Interzone from git**
+**compiling testInterzone from git**
 
 Use the autogen script to prepare the build environment.
 
@@ -64,7 +64,7 @@ to see it.
 
 **testnet and regtest modes**
 
-Run with the -testnet option to run with "play interzones" on the test network, if you
+Run with the -testnet option to run with "play testinterzones" on the test network, if you
 are testing multi-machine code that needs to operate across the internet.
 
 If you are testing something that can run on one machine, run with the -regtest option.
@@ -73,7 +73,7 @@ that run in -regtest mode.
 
 **DEBUG_LOCKORDER**
 
-Interzone Core is a multithreaded application, and deadlocks or other multithreading bugs
+testInterzone Core is a multithreaded application, and deadlocks or other multithreading bugs
 can be very difficult to track down. Compiling with -DDEBUG_LOCKORDER (configure
 CXXFLAGS="-DDEBUG_LOCKORDER -g") inserts run-time checks to keep track of what locks
 are held, and adds warning to the debug.log file if inconsistencies are detected.

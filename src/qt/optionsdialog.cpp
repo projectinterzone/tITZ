@@ -3,7 +3,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "interzone-config.h"
+#include "testinterzone-config.h"
 #endif
 
 #include "optionsdialog.h"
@@ -71,8 +71,8 @@ OptionsDialog::OptionsDialog(QWidget *parent) :
     /* Display elements init */
     
     /* Theme selector */
-    ui->theme->addItem(QString("Interzone-green"), QVariant("drkblue"));
-    ui->theme->addItem(QString("Interzone-traditional"), QVariant("trad"));
+    ui->theme->addItem(QString("testInterzone-green"), QVariant("drkblue"));
+    ui->theme->addItem(QString("testInterzone-traditional"), QVariant("trad"));
 
     
     /* Language selector */

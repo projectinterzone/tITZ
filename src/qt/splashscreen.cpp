@@ -30,11 +30,11 @@ SplashScreen::SplashScreen(const QPixmap &pixmap, Qt::WindowFlags f, bool isTest
     float fontFactor            = 1.0;
 
     // define text to place
-    QString titleText       = tr("Interzone Core");
+    QString titleText       = tr("testInterzone Core");
     QString versionText     = QString(tr("Version %1")).arg(QString::fromStdString(FormatFullVersion()));
     QString copyrightTextBtc   = QChar(0xA9)+QString(" 2009-2015 ").arg(COPYRIGHT_YEAR) + QString(tr("The Bitcoin Core developers"));
     QString copyrightTextDrk   = QChar(0xA9)+QString(" 2014-2015 ").arg(COPYRIGHT_YEAR) + QString(tr("The Dash Core developers"));
-    QString copyrightTextITZ   = QChar(0xA9)+QString(" 2014-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The Interzone Core developers"));
+    QString copyrightTexttITZ   = QChar(0xA9)+QString(" 2014-%1 ").arg(COPYRIGHT_YEAR) + QString(tr("The testInterzone Core developers"));
     QString testnetAddText  = QString(tr("[testnet]")); // define text to place as single text object
 
     QString font            = "Arial";
@@ -72,7 +72,7 @@ SplashScreen::SplashScreen(const QPixmap &pixmap, Qt::WindowFlags f, bool isTest
     pixPaint.setFont(QFont(font, 10*fontFactor));
     pixPaint.drawText(paddingLeft,paddingTop+titleCopyrightVSpace,copyrightTextBtc);
     pixPaint.drawText(paddingLeft,paddingTop+titleCopyrightVSpace+12,copyrightTextDrk);
-    pixPaint.drawText(paddingLeft,paddingTop+titleCopyrightVSpace+24,copyrightTextITZ);
+    pixPaint.drawText(paddingLeft,paddingTop+titleCopyrightVSpace+24,copyrightTexttITZ);
 
     // draw testnet string if testnet is on
     if(isTestNet) {

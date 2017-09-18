@@ -22,8 +22,8 @@
  *
  * \section intro_sec Introduction
  *
- * This is the developer documentation of the reference client for an experimental new digital currency called Interzone (http://www.interzonepay.io/),
- * which enables instant payments to anyone, anywhere in the world. Interzone uses peer-to-peer technology to operate
+ * This is the developer documentation of the reference client for an experimental new digital currency called testInterzone (http://www.testinterzonepay.io/),
+ * which enables instant payments to anyone, anywhere in the world. testInterzone uses peer-to-peer technology to operate
  * with no central authority: managing transactions and issuing money are carried out collectively by the network.
  *
  * The software is a community-driven open source project, released under the MIT license.
@@ -65,7 +65,7 @@ bool AppInit(int argc, char* argv[])
         //
         // Parameters
         //
-        // If Qt is used, parameters/interzone.conf are parsed in qt/interzone.cpp's main()
+        // If Qt is used, parameters/testinterzone.conf are parsed in qt/testinterzone.cpp's main()
         ParseParameters(argc, argv);
         if (!boost::filesystem::is_directory(GetDataDir(false)))
         {
@@ -95,14 +95,14 @@ bool AppInit(int argc, char* argv[])
 
         if (mapArgs.count("-?") || mapArgs.count("--help"))
         {
-            // First part of help message is specific to interzoned / RPC client
-            std::string strUsage = _("Interzone Core Daemon") + " " + _("version") + " " + FormatFullVersion() + "\n\n" +
+            // First part of help message is specific to testinterzoned / RPC client
+            std::string strUsage = _("testInterzone Core Daemon") + " " + _("version") + " " + FormatFullVersion() + "\n\n" +
                 _("Usage:") + "\n" +
-                  "  interzoned [options]                     " + _("Start Interzone Core Daemon") + "\n" +
-                _("Usage (deprecated, use interzone-cli):") + "\n" +
-                  "  interzoned [options] <command> [params]  " + _("Send command to Interzone Core") + "\n" +
-                  "  interzoned [options] help                " + _("List commands") + "\n" +
-                  "  interzoned [options] help <command>      " + _("Get help for a command") + "\n";
+                  "  testinterzoned [options]                     " + _("Start testInterzone Core Daemon") + "\n" +
+                _("Usage (deprecated, use testinterzone-cli):") + "\n" +
+                  "  testinterzoned [options] <command> [params]  " + _("Send command to testInterzone Core") + "\n" +
+                  "  testinterzoned [options] help                " + _("List commands") + "\n" +
+                  "  testinterzoned [options] help <command>      " + _("Get help for a command") + "\n";
 
             strUsage += "\n" + HelpMessage(HMM_BITCOIND);
             strUsage += "\n" + HelpMessageCli(false);
@@ -114,7 +114,7 @@ bool AppInit(int argc, char* argv[])
         // Command-line RPC
         bool fCommandLine = false;
         for (int i = 1; i < argc; i++)
-            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "interzone:"))
+            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "testinterzone:"))
                 fCommandLine = true;
 
         if (fCommandLine)
@@ -126,7 +126,7 @@ bool AppInit(int argc, char* argv[])
         fDaemon = GetBoolArg("-daemon", false);
         if (fDaemon)
         {
-            fprintf(stdout, "Interzone server starting\n");
+            fprintf(stdout, "testInterzone server starting\n");
 
             // Daemonize
             pid_t pid = fork();
@@ -186,7 +186,7 @@ int main(int argc, char* argv[])
 
     bool fRet = false;
 
-    // Connect interzoned signal handlers
+    // Connect testinterzoned signal handlers
     noui_connect();
 
     fRet = AppInit(argc, argv);

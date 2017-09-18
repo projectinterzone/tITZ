@@ -67,7 +67,7 @@
             <item>
              <widget class="QLabel" name="labelWalletStatus">
               <property name="toolTip">
-               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the Interzone network after a connection is established, but this process has not completed yet.</string>
+               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the testInterzone network after a connection is established, but this process has not completed yet.</string>
               </property>
               <property name="styleSheet">
                <string notr="true">QLabel { color: red; }</string>
@@ -191,7 +191,7 @@
                  <string>Minted balance that has not yet matured</string>
                 </property>
                 <property name="text">
-                 <string notr="true">0 ITZ</string>
+                 <string notr="true">0 tITZ</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -953,7 +953,7 @@
            <item>
             <widget class="QLabel" name="labelDarksendSyncStatus">
              <property name="toolTip">
-              <string>The displayed information may be out of date. Your wallet automatically synchronizes with the Interzone network after a connection is established, but this process has not completed yet.</string>
+              <string>The displayed information may be out of date. Your wallet automatically synchronizes with the testInterzone network after a connection is established, but this process has not completed yet.</string>
              </property>
              <property name="styleSheet">
               <string notr="true">QLabel { color: red; }</string>
@@ -1021,7 +1021,7 @@
             <item>
              <widget class="QLabel" name="labelTransactionsStatus">
               <property name="toolTip">
-               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the Interzone network after a connection is established, but this process has not completed yet.</string>
+               <string>The displayed information may be out of date. Your wallet automatically synchronizes with the testInterzone network after a connection is established, but this process has not completed yet.</string>
               </property>
               <property name="styleSheet">
                <string notr="true">QLabel { color: red; }</string>

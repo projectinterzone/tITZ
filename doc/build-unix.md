@@ -1,6 +1,6 @@
 UNIX BUILD NOTES
 ====================
-Some notes on how to build Interzone in Unix. 
+Some notes on how to build testInterzone in Unix. 
 
 To Build
 ---------------------
@@ -44,7 +44,7 @@ System requirements
 --------------------
 
 C++ compilers are memory-hungry. It is recommended to have at least 1 GB of
-memory available when compiling Interzone Core. With 512MB of memory or less
+memory available when compiling testInterzone Core. With 512MB of memory or less
 compilation will take much longer due to swap thrashing.
 
 Dependency Build Instructions: Ubuntu & Debian
@@ -91,7 +91,7 @@ Optional:
 Dependencies for the GUI: Ubuntu & Debian (QT compilation)
 ----------------------------------------------------------
 
-If you want to build Interzone-Qt, make sure that the required packages for Qt development
+If you want to build testInterzone-Qt, make sure that the required packages for Qt development
 are installed. Either Qt 4 or Qt 5 are necessary to build the GUI.
 If both Qt 4 and Qt 5 are installed, Qt 4 will be used. Pass `--with-gui=qt5` to configure to choose Qt5.
 To build without GUI pass `--without-gui`.
@@ -112,7 +112,7 @@ For **Qt 5** you need the following:
 error: #error "You must build your code with position independent code if Qt was built with -reduce-relocations. " "Compile your code with -fPIC (-fPIE is not enough)."
 `
 
-A quick remedy for this problem is to add the flag **-fPIE** on line [163](https://github.com/interzone/interzone/blob/master/configure.ac#L163) in *configure.ac*
+A quick remedy for this problem is to add the flag **-fPIE** on line [163](https://github.com/testinterzone/testinterzone/blob/master/configure.ac#L163) in *configure.ac*
 
 `CPPFLAGS="$CPPFLAGS -DBOOST_SPIRIT_THREADSAFE -DHAVE_BUILD_INFO -D__STDC_FORMAT_MACROS -fPIE"`
 
@@ -145,10 +145,10 @@ Berkeley DB
 It is recommended to use Berkeley DB 4.8. If you have to build it yourself:
 
 ```bash
-ITZ_ROOT=$(pwd)
+tITZ_ROOT=$(pwd)
 
 # Pick some path to install BDB to, here we create a directory within the dash directory
-BDB_PREFIX="${ITZ_ROOT}/db4"
+BDB_PREFIX="${tITZ_ROOT}/db4"
 mkdir -p $BDB_PREFIX
 
 # Fetch the source and verify that it is not tampered with
@@ -163,8 +163,8 @@ cd db-4.8.30.NC/build_unix/
 ../dist/configure --enable-cxx --disable-shared --with-pic --prefix=$BDB_PREFIX
 make install
 
-# Configure Interzone Core to use our own-built instance of BDB
-cd $ITZ_ROOT
+# Configure testInterzone Core to use our own-built instance of BDB
+cd $tITZ_ROOT
 ./configure (other args...) LDFLAGS="-L${BDB_PREFIX}/lib/" CPPFLAGS="-I${BDB_PREFIX}/include/"
 ```
 
@@ -183,7 +183,7 @@ If you need to build Boost yourself:
 
 Security
 --------
-To help make your Interzone installation more secure by making certain attacks impossible to
+To help make your testInterzone installation more secure by making certain attacks impossible to
 exploit even if a vulnerability is found, binaries are hardened by default.
 This can be disabled with:
 

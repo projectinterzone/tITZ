@@ -4,7 +4,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "interzone-config.h"
+#include "testinterzone-config.h"
 #endif
 
 #include "optionsmodel.h"
@@ -57,7 +57,7 @@ void OptionsModel::Init()
 
     // Display
     if (!settings.contains("nDisplayUnit"))
-        settings.setValue("nDisplayUnit", BitcoinUnits::Interzone);
+        settings.setValue("nDisplayUnit", BitcoinUnits::testInterzone);
     nDisplayUnit = settings.value("nDisplayUnit").toInt();
 
     if (!settings.contains("bDisplayAddresses"))
@@ -163,7 +163,7 @@ void OptionsModel::Init()
     if (settings.contains("nDarksendRounds"))
         SoftSetArg("-darksendrounds", settings.value("nDarksendRounds").toString().toStdString());
     if (settings.contains("nAnonymizeDarkcoinAmount"))
-        SoftSetArg("-anonymizeinterzoneamount", settings.value("nAnonymizeDarkcoinAmount").toString().toStdString());
+        SoftSetArg("-anonymizetestinterzoneamount", settings.value("nAnonymizeDarkcoinAmount").toString().toStdString());
 
     language = settings.value("language").toString();
 }

@@ -766,7 +766,7 @@ DBErrors CWalletDB::ZapWalletTx(CWallet* pwallet)
 void ThreadFlushWalletDB(const string& strFile)
 {
     // Make this thread recognisable as the wallet flushing thread
-    RenameThread("interzone-wallet");
+    RenameThread("testinterzone-wallet");
 
     static bool fOneThread;
     if (fOneThread)

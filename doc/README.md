@@ -1,11 +1,11 @@
-Interzone 0.11.x BETA
+testInterzone 0.11.x BETA
 ====================
 
 Copyright (c) 2009-2015 Bitcoin Developers
 
 Copyright (c) 2014-2015 Dash Developers
 
-Copyright (c) 2014-2015 Interzone Developers
+Copyright (c) 2014-2015 testInterzone Developers
 
 
 Setup

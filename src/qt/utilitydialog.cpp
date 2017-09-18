@@ -29,7 +29,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     // Set current copyright year
     ui->copyrightLabel->setText(tr("Copyright") + QString(" &copy; 2009-2015 ") + tr("The Bitcoin Core developers") + QString("<br />")
                               + tr("Copyright") + QString(" &copy; 2014-2015 ").arg(COPYRIGHT_YEAR) + tr("The Dash Core developers") + QString("<br />")
-                              + tr("Copyright") + QString(" &copy; 2014-%1 ").arg(COPYRIGHT_YEAR) + tr("The Interzone Core developers"));
+                              + tr("Copyright") + QString(" &copy; 2014-%1 ").arg(COPYRIGHT_YEAR) + tr("The testInterzone Core developers"));
 }
 
 void AboutDialog::setModel(ClientModel *model)
@@ -67,10 +67,10 @@ HelpMessageDialog::HelpMessageDialog(QWidget *parent) :
     ui->setupUi(this);
     GUIUtil::restoreWindowGeometry("nHelpMessageDialogWindow", this->size(), this);
 
-    header = tr("Interzone Core") + " " + tr("version") + " " +
+    header = tr("testInterzone Core") + " " + tr("version") + " " +
         QString::fromStdString(FormatFullVersion()) + "\n\n" +
         tr("Usage:") + "\n" +
-        "  interzone-qt [" + tr("command-line options") + "]                     " + "\n";
+        "  testinterzone-qt [" + tr("command-line options") + "]                     " + "\n";
 
     coreOptions = QString::fromStdString(HelpMessage(HMM_BITCOIN_QT));
 
@@ -127,7 +127,7 @@ void ShutdownWindow::showShutdownWindow(BitcoinGUI *window)
     QWidget *shutdownWindow = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout();
     layout->addWidget(new QLabel(
-        tr("Interzone Core is shutting down...") + "<br /><br />" +
+        tr("testInterzone Core is shutting down...") + "<br /><br />" +
         tr("Do not shut down the computer until this window disappears.")));
     shutdownWindow->setLayout(layout);
 

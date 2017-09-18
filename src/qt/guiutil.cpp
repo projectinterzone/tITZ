@@ -98,7 +98,7 @@ void setupAddressWidget(QValidatedLineEdit *widget, QWidget *parent)
 
     widget->setFont(bitcoinAddressFont());
 #if QT_VERSION >= 0x040700
-    widget->setPlaceholderText(QObject::tr("Enter a Interzone address (e.g. XwnLY9Tf7Zsef8gMGL2fhWA9ZmMjt4KPwg)"));
+    widget->setPlaceholderText(QObject::tr("Enter a testInterzone address (e.g. XwnLY9Tf7Zsef8gMGL2fhWA9ZmMjt4KPwg)"));
 #endif
     widget->setValidator(new BitcoinAddressEntryValidator(parent));
     widget->setCheckValidator(new BitcoinAddressCheckValidator(parent));
@@ -115,8 +115,8 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
 
 bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    // return if URI is not valid or is no interzone: URI
-    if(!uri.isValid() || uri.scheme() != QString("interzone"))
+    // return if URI is not valid or is no testinterzone: URI
+    if(!uri.isValid() || uri.scheme() != QString("testinterzone"))
         return false;
 
     SendCoinsRecipient rv;
@@ -152,7 +152,7 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!BitcoinUnits::parse(BitcoinUnits::Interzone, i->second, &rv.amount))
+                if(!BitcoinUnits::parse(BitcoinUnits::testInterzone, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -172,13 +172,13 @@ bool parseBitcoinURI(const QUrl &uri, SendCoinsRecipient *out)
 
 bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert interzone:// to interzone:
+    // Convert testinterzone:// to testinterzone:
     //
-    //    Cannot handle this later, because interzone:// will cause Qt to see the part after // as host,
+    //    Cannot handle this later, because testinterzone:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("interzone://", Qt::CaseInsensitive))
+    if(uri.startsWith("testinterzone://", Qt::CaseInsensitive))
     {
-        uri.replace(0, 11, "interzone:");
+        uri.replace(0, 11, "testinterzone:");
     }
     QUrl uriInstance(uri);
     return parseBitcoinURI(uriInstance, out);
@@ -186,12 +186,12 @@ bool parseBitcoinURI(QString uri, SendCoinsRecipient *out)
 
 QString formatBitcoinURI(const SendCoinsRecipient &info)
 {
-    QString ret = QString("interzone:%1").arg(info.address);
+    QString ret = QString("testinterzone:%1").arg(info.address);
     int paramCount = 0;
 
     if (info.amount)
     {
-        ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnits::Interzone, info.amount));
+        ret += QString("?amount=%1").arg(BitcoinUnits::format(BitcoinUnits::testInterzone, info.amount));
         paramCount++;
     }
 
@@ -379,7 +379,7 @@ void openConfigfile()
 {
     boost::filesystem::path pathConfig = GetConfigFile();
 
-    /* Open interzone.conf with the associated application */
+    /* Open testinterzone.conf with the associated application */
     if (boost::filesystem::exists(pathConfig))
         QDesktopServices::openUrl(QUrl::fromLocalFile(boostPathToQString(pathConfig)));
 }
@@ -507,7 +507,7 @@ void TableViewLastColumnResizingFixer::adjustTableColumnsWidth()
 }
 
 // Make column use all the space available, useful during window resizing.
-void TableViewLastColumnResizingFixer::stretITZolumnWidth(int column)
+void TableViewLastColumnResizingFixer::strettITZolumnWidth(int column)
 {
     disconnectViewHeadersSignals();
     resizeColumn(column, getAvailableWidthForColumn(column));
@@ -557,12 +557,12 @@ TableViewLastColumnResizingFixer::TableViewLastColumnResizingFixer(QTableView* t
 #ifdef WIN32
 boost::filesystem::path static StartupShortcutPath()
 {
-    return GetSpecialFolderPath(CSIDL_STARTUP) / "Interzone.lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / "testInterzone.lnk";
 }
 
 bool GetStartOnSystemStartup()
 {
-    // check for Interzone.lnk
+    // check for testInterzone.lnk
     return boost::filesystem::exists(StartupShortcutPath());
 }
 
@@ -639,7 +639,7 @@ boost::filesystem::path static GetAutostartDir()
 
 boost::filesystem::path static GetAutostartFilePath()
 {
-    return GetAutostartDir() / "interzone.desktop";
+    return GetAutostartDir() / "testinterzone.desktop";
 }
 
 bool GetStartOnSystemStartup()
@@ -677,10 +677,10 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         boost::filesystem::ofstream optionFile(GetAutostartFilePath(), std::ios_base::out|std::ios_base::trunc);
         if (!optionFile.good())
             return false;
-        // Write a interzone.desktop file to the autostart directory:
+        // Write a testinterzone.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
-        optionFile << "Name=Interzone\n";
+        optionFile << "Name=testInterzone\n";
         optionFile << "Exec=" << pszExePath << " -min\n";
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -699,7 +699,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
 LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef findUrl);
 LSSharedFileListItemRef findStartupItemInList(LSSharedFileListRef list, CFURLRef findUrl)
 {
-    // loop through the list of startup items and try to find the interzone app
+    // loop through the list of startup items and try to find the testinterzone app
     CFArrayRef listSnapshot = LSSharedFileListCopySnapshot(list, NULL);
     for(int i = 0; i < CFArrayGetCount(listSnapshot); i++) {
         LSSharedFileListItemRef item = (LSSharedFileListItemRef)CFArrayGetValueAtIndex(listSnapshot, i);
@@ -733,7 +733,7 @@ bool SetStartOnSystemStartup(bool fAutoStart)
     LSSharedFileListItemRef foundItem = findStartupItemInList(loginItems, bitcoinAppUrl);
 
     if(fAutoStart && !foundItem) {
-        // add interzone app to startup item list
+        // add testinterzone app to startup item list
         LSSharedFileListInsertItemURL(loginItems, kLSSharedFileListItemBeforeFirst, NULL, NULL, bitcoinAppUrl, NULL, NULL);
     }
     else if(!fAutoStart && foundItem) {
