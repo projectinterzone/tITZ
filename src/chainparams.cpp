@@ -61,11 +61,11 @@ public:
         assert(hashGenesisBlock == uint256("0x0000016920f7856a2a4f342db39b70591c00a699f1fe865ebc687fd9b66aa586"));
         assert(genesis.hashMerkleRoot == uint256("0x11f8d6fdf5460c2308b76da69942dd9fa386f9d337fbc95f669d73bcf02b64a5"));
 
-        vSeeds.push_back(CDNSSeedData("seed1.testinterzone.space", "seed1.testinterzone.space"));
-        vSeeds.push_back(CDNSSeedData("seed2.testinterzone.space", "seed2.testinterzone.space"));
-        vSeeds.push_back(CDNSSeedData("seed3.testinterzone.space", "seed3.testinterzone.space"));
-        vSeeds.push_back(CDNSSeedData("seed4.testinterzone.space", "seed4.testinterzone.space"));
-        vSeeds.push_back(CDNSSeedData("seed5.testinterzone.space", "seed5.testinterzone.space"));
+        vSeeds.push_back(CDNSSeedData("seed1.interzone.space", "seed1.interzone.space"));
+        vSeeds.push_back(CDNSSeedData("seed2.interzone.space", "seed2.interzone.space"));
+        vSeeds.push_back(CDNSSeedData("seed3.interzone.space", "seed3.interzone.space"));
+        vSeeds.push_back(CDNSSeedData("seed4.interzone.space", "seed4.interzone.space"));
+        vSeeds.push_back(CDNSSeedData("seed5.interzone.space", "seed5.interzone.space"));
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,102);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,44);
@@ -130,7 +130,7 @@ public:
 
         vFixedSeeds.clear();
         vSeeds.clear();
-        vSeeds.push_back(CDNSSeedData("seed1.testinterzone.space", "seed1.testinterzone.space"));
+        vSeeds.push_back(CDNSSeedData("", ""));
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,102);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,44);
