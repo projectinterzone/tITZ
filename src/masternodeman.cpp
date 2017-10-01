@@ -281,10 +281,10 @@ void CMasternodeMan::Clear()
 
 int CMasternodeMan::CountEnabled()
 {
+	LOCK(cs);
     int i = 0;
 
     BOOST_FOREACH(CMasternode& mn, vMasternodes) {
-        mn.Check();
         if(mn.IsEnabled()) i++;
     }
 
@@ -293,10 +293,10 @@ int CMasternodeMan::CountEnabled()
 
 int CMasternodeMan::CountMasternodesAboveProtocol(int protocolVersion)
 {
+	LOCK(cs);
     int i = 0;
 
     BOOST_FOREACH(CMasternode& mn, vMasternodes) {
-        mn.Check();
         if(mn.protocolVersion < protocolVersion || !mn.IsEnabled()) continue;
         i++;
     }
@@ -496,10 +496,7 @@ CMasternode* CMasternodeMan::GetMasternodeByRank(int nRank, int64_t nBlockHeight
     BOOST_FOREACH(CMasternode& mn, vMasternodes) {
 
         if(mn.protocolVersion < minProtocol) continue;
-        if(fOnlyActive) {
-            mn.Check();
-            if(!mn.IsEnabled()) continue;
-        }
+		if(fOnlyActive && !mn.IsEnabled()) continue;
 
         uint256 n = mn.CalculateScore(1, nBlockHeight);
         unsigned int n2 = 0;
@@ -873,7 +870,7 @@ void CMasternodeMan::ProcessMessage(CNode* pfrom, std::string& strCommand, CData
 
         BOOST_FOREACH(CMasternode& mn, vMasternodes) {
 
-            if(mn.addr.IsRFC1918()) continue; //local network
+            if(mn.addr.IsRFC1918() || mn.addr.IsLocal()) continue;
 
             if(mn.IsEnabled())
             {

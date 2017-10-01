@@ -4045,15 +4045,18 @@ void static ProcessGetData(CNode* pfrom)
             {
                 // Send stream from relay memory
                 bool pushed = false;
+                map<CInv, CDataStream>::iterator mi;
                 {
                     LOCK(cs_mapRelay);
-                    map<CInv, CDataStream>::iterator mi = mapRelay.find(inv);
+                    mi = mapRelay.find(inv);
                     if (mi != mapRelay.end()) {
-                        pfrom->PushMessage(inv.GetCommand(), (*mi).second);
                         pushed = true;
                     }
                 }
-
+					if (pushed) {
+                      pfrom->PushMessage(inv.GetCommand(), (*mi).second);
+                    }
+                    
                 if (!pushed && inv.type == MSG_TX) {
 
                     if(mapDarksendBroadcastTxes.count(inv.hash)){

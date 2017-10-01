@@ -771,6 +771,7 @@ void CDarksendPool::ChargeFees(){
 
                         CWalletTx wtxCollateral = CWalletTx(pwalletMain, v.collateral);
 
+						LOCK(cs_main);
                         // Broadcast
                         if (!wtxCollateral.AcceptToMemoryPool(false))
                         {
@@ -790,6 +791,9 @@ void CDarksendPool::ChargeFees(){
 //  - Darksend is completely free, to pay miners we randomly pay the collateral of users.
 void CDarksendPool::ChargeRandomFees(){
     if(fMasterNode) {
+    
+    	LOCK(cs_main);
+    	
         int i = 0;
 
         BOOST_FOREACH(const CTransaction& txCollateral, vecSessionCollateral) {
@@ -836,14 +840,19 @@ void CDarksendPool::CheckTimeout(){
         }
     }
 
-    // check Darksend queue objects for timeouts
-    int c = 0;
-    vector<CDarksendQueue>::iterator it;
-    for(it=vecDarksendQueue.begin();it<vecDarksendQueue.end();it++){
-        if((*it).IsExpired()){
-            if(fDebug) LogPrintf("CDarksendPool::CheckTimeout() : Removing expired queue entry - %d\n", c);
-            vecDarksendQueue.erase(it);
-            break;
+{
+         TRY_LOCK(cs_darksend, lockDS);
+         if(!lockDS) return; // it's ok to fail here, we run this quite frequently
+         // check Darksend queue objects for timeouts
+         int c = 0;
+         vector<CDarksendQueue>::iterator it;
+         for(it=vecDarksendQueue.begin();it<vecDarksendQueue.end();it++){
+             if((*it).IsExpired()){
+                 if(fDebug) LogPrintf("CDarksendPool::CheckTimeout() : Removing expired queue entry - %d\n", c);
+                 vecDarksendQueue.erase(it);
+                 break;
+             }
+             c++;
         }
         c++;
     }
@@ -852,7 +861,7 @@ void CDarksendPool::CheckTimeout(){
     if(!fMasterNode) addLagTime = 10000; //if we're the client, give the server a few extra seconds before resetting.
 
     if(state == POOL_STATUS_ACCEPTING_ENTRIES || state == POOL_STATUS_QUEUE){
-        c = 0;
+        int c = 0;
 
         // if it's a Masternode, the entries are stored in "entries", otherwise they're stored in myEntries
         std::vector<CDarkSendEntry> *vec = &myEntries;
@@ -2114,12 +2123,20 @@ bool CDarksendQueue::Sign()
 bool CDarksendQueue::Relay()
 {
 
-    LOCK(cs_vNodes);
-    BOOST_FOREACH(CNode* pnode, vNodes){
-        // always relay to everyone
-        pnode->PushMessage("dsq", (*this));
+	std::vector<CNode*> vNodesCopy;
+     {
+         LOCK(cs_vNodes);
+         vNodesCopy = vNodes;
+         BOOST_FOREACH(CNode* pnode, vNodesCopy)
+             pnode->AddRef();
     }
-
+	BOOST_FOREACH(CNode* pnode, vNodesCopy)
+             pnode->PushMessage("dsq", (*this));
+     {
+         LOCK(cs_vNodes);
+         BOOST_FOREACH(CNode* pnode, vNodesCopy)
+             pnode->Release();
+     }
     return true;
 }
 
