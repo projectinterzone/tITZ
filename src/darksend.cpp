@@ -688,8 +688,7 @@ void CDarksendPool::ChargeFees(){
     if(fMasterNode) {
         //we don't need to charge collateral for every offence.
         int offences = 0;
-        int r = rand()%100;
-        if(r > 33) return;
+        if(GetRandInt(100) > 33) return;
 
         if(state == POOL_STATUS_ACCEPTING_ENTRIES){
             BOOST_FOREACH(const CTransaction& txCollateral, vecSessionCollateral) {
@@ -724,16 +723,13 @@ void CDarksendPool::ChargeFees(){
         int target = 0;
 
         //mostly offending?
-        if(offences >= POOL_MAX_TRANSACTIONS-1 && r > 33) return;
+        if(offences >= POOL_MAX_TRANSACTIONS-1 && GetRandInt(100) > 33) return;
 
         //everyone is an offender? That's not right
         if(offences >= POOL_MAX_TRANSACTIONS) return;
 
         //charge one of the offenders randomly
         if(offences > 1) target = 50;
-
-        //pick random client to charge
-        r = rand()%100;
 
         if(state == POOL_STATUS_ACCEPTING_ENTRIES){
             BOOST_FOREACH(const CTransaction& txCollateral, vecSessionCollateral) {
@@ -745,7 +741,7 @@ void CDarksendPool::ChargeFees(){
                 }
 
                 // This queue entry didn't send us the promised transaction
-                if(!found && r > target){
+                if(!found && GetRandInt(100) > target){
                     LogPrintf("CDarksendPool::ChargeFees -- found uncooperative node (didn't send transaction). charging fees.\n");
 
                     CWalletTx wtxCollateral = CWalletTx(pwalletMain, txCollateral);
@@ -766,7 +762,7 @@ void CDarksendPool::ChargeFees(){
             // who didn't sign?
             BOOST_FOREACH(const CDarkSendEntry v, entries) {
                 BOOST_FOREACH(const CTxDSIn s, v.sev) {
-                    if(!s.fHasSig && r > target){
+                    if(!s.fHasSig && GetRandInt(100) > target){
                         LogPrintf("CDarksendPool::ChargeFees -- found uncooperative node (didn't sign). charging fees.\n");
 
                         CWalletTx wtxCollateral = CWalletTx(pwalletMain, v.collateral);
@@ -797,7 +793,7 @@ void CDarksendPool::ChargeRandomFees(){
         int i = 0;
 
         BOOST_FOREACH(const CTransaction& txCollateral, vecSessionCollateral) {
-            int r = rand()%100;
+            int r = GetRandInt(100);
 
             /*
                 Collateral Fee Charges:
@@ -1484,7 +1480,7 @@ bool CDarksendPool::DoAutomaticDenominating(bool fDryRun, bool ready)
 
     // initial phase, find a Masternode
     if(!sessionFoundMasternode){
-        int nUseQueue = rand()%100;
+        int nUseQueue = GetRandInt(100);
         UpdateState(POOL_STATUS_ACCEPTING_ENTRIES);
 
         sessionTotalValue = pwalletMain->GetTotalValue(vCoins);
@@ -1673,7 +1669,7 @@ bool CDarksendPool::PrepareDarksendDenominate()
 bool CDarksendPool::SendRandomPaymentToSelf()
 {
     int64_t nBalance = pwalletMain->GetBalance();
-    int64_t nPayment = (nBalance*0.35) + (rand() % nBalance);
+    int64_t nPayment = (nBalance*0.35) + (GetRandInt(100) % nBalance);
 
     if(nPayment > nBalance) nPayment = nBalance-(0.1*COIN);
 
@@ -1850,7 +1846,7 @@ bool CDarksendPool::IsCompatibleWithSession(int64_t nDenom, CTransaction txColla
     if(sessionUsers < 0) sessionUsers = 0;
 
     if(sessionUsers == 0) {
-        sessionID = 1 + (rand() % 999999);
+        sessionID = 1 + (GetRandInt(100) % 999999);
         sessionDenom = nDenom;
         sessionUsers++;
         lastTimeChanged = GetTimeMillis();
