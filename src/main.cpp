@@ -3045,7 +3045,7 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CDiskBlockPos* dbp)
                                  REJECT_INVALID, "bad-diffbits");
         } else {
             // Check proof of work (Here for the architecture issues with DGW v1 and v2)
-            if(nHeight <= 68589){
+            if(nHeight <= 5000000){
                 unsigned int nBitsNext = GetNextWorkRequired(pindexPrev, &block);
                 double n1 = ConvertBitsToDouble(block.nBits);
                 double n2 = ConvertBitsToDouble(nBitsNext);

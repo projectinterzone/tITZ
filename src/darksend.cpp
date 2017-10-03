@@ -719,7 +719,7 @@ void CDarksendPool::ChargeFees(){
             }
         }
 
-        r = rand()%100;
+        //r = rand()%100;
         int target = 0;
 
         //mostly offending?

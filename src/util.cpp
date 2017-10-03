@@ -5,7 +5,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "util.h"
-
+#include "random.h"
 #include "chainparams.h"
 #include "netbase.h"
 #include "sync.h"
