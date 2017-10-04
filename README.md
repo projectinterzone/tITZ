@@ -1,4 +1,4 @@
-testInterzone Core staging tree 1.5
+testInterzone Core staging tree 1.5.3.1
 ===============================
 
 http://www.testinterzone.org
@@ -21,13 +21,17 @@ are carried out collectively by the network. testInterzone Core is the name of o
 source software which enables the use of this token.
 
 For more information, as well as an immediately useable, binary version of
-the testInterzone Core software, see http://www.testinterzone.org/
+the testInterzone Core software, see https://test.interzone.space
+
+Interzone is a community based project and there are no "Core Developers" in the traditional
+sense. Anyone is invited to submit code improvements or features. Please see CONTRIBUTING.md
+for more information on how to fork and submit pull requests.
 
 
 License
 -------
 
-testInterzone Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
+testInterzone is released under the terms of the MIT license. See [COPYING](COPYING) for more
 information or see http://opensource.org/licenses/MIT.
 
 
