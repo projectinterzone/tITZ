@@ -466,8 +466,6 @@ public:
     void NewBlock();
     void CompletedTransaction(bool error, std::string lastMessageNew);
     void ClearLastMessage();
-    /// Used for liquidity providers
-    bool SendRandomPaymentToSelf();
 
     /// Split up large inputs or make fee sized inputs
     bool MakeCollateralAmounts();

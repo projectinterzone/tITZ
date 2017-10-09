@@ -1666,7 +1666,7 @@ bool CDarksendPool::PrepareDarksendDenominate()
     return false;
 }
 
-bool CDarksendPool::SendRandomPaymentToSelf()
+/*bool CDarksendPool::SendRandomPaymentToSelf()
 {
     int64_t nBalance = pwalletMain->GetBalance();
     int64_t nPayment = (nBalance*0.35) + (GetRandInt(100) % nBalance);
@@ -1701,7 +1701,7 @@ bool CDarksendPool::SendRandomPaymentToSelf()
     LogPrintf("SendRandomPaymentToSelf Success: tx %s\n", wtx.GetHash().GetHex().c_str());
 
     return true;
-}
+}*/
 
 // Split up large inputs or create fee sized inputs
 bool CDarksendPool::MakeCollateralAmounts()
