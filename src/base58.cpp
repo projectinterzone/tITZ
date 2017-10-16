@@ -24,7 +24,7 @@ bool DecodeBase58(const char *psz, std::vector<unsigned char>& vch) {
         psz++;
     // Skip and count leading '1's.
     int zeroes = 0;
-    int length = 0;
+    int length = i;
     while (*psz == '1') {
         zeroes++;
         psz++;
