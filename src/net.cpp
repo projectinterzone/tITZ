@@ -453,15 +453,15 @@ CNode* ConnectNode(CAddress addrConnect, const char *pszDest, bool darkSendMaste
         if (IsLocal(addrConnect))
             return NULL;
 
+		LOCK(cs_vNodes);
         // Look for an existing connection
         CNode* pnode = FindNode((CService)addrConnect);
         if (pnode)
         {
-            pnode->AddRef();
-
-            if(darkSendMaster)
+            if(darkSendMaster && !pnode->fDarkSendMaster) {
+                pnode->AddRef();
                 pnode->fDarkSendMaster = true;
-
+		}
             return pnode;
         }
     }
@@ -1323,7 +1323,7 @@ void ThreadOpenConnections()
         {
             LOCK(cs_vNodes);
             BOOST_FOREACH(CNode* pnode, vNodes) {
-                if (!pnode->fInbound) {
+                if (!pnode->fInbound && !pnode->fDarkSendMaster) {
                     setConnected.insert(pnode->addr.GetGroup());
                     nOutbound++;
                 }
