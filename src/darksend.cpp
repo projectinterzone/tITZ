@@ -563,9 +563,10 @@ void CDarksendPool::Check()
                     txNew.vin.push_back(s);
             }
 
-            // shuffle the outputs for improved anonymity
-            std::random_shuffle ( txNew.vin.begin(),  txNew.vin.end(),  randomizeList);
-            std::random_shuffle ( txNew.vout.begin(), txNew.vout.end(), randomizeList);
+            // use BIP69 implementation for improved anonymity
+            // https://github.com/bitcoin/bips/blob/master/bip-0069.mediawiki
+            sort(txNew.vin.begin(), txNew.vin.end(),  CompareInputBIP69());
+            sort(txNew.vout.begin(), txNew.vout.end(), CompareOutputBIP69());
 
 
             if(fDebug) LogPrintf("Transaction 1: %s\n", txNew.ToString().c_str());
