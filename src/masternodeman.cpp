@@ -279,10 +279,10 @@ void CMasternodeMan::Clear()
     nDsqCount = 0;
 }
 
-int CMasternodeMan::CountEnabled()
+unsigned int CMasternodeMan::CountEnabled()
 {
 	LOCK(cs);
-    int i = 0;
+    unsigned int i = 0;
 
     BOOST_FOREACH(CMasternode& mn, vMasternodes) {
         if(mn.IsEnabled()) i++;

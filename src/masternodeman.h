@@ -100,7 +100,7 @@ public:
     /// Clear Masternode vector
     void Clear();
 
-    int CountEnabled();
+    unsigned int CountEnabled();
 
     int CountMasternodesAboveProtocol(int protocolVersion);
 
