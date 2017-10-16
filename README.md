@@ -1,4 +1,4 @@
-testInterzone Core staging tree 1.5.3.1
+testInterzone Core staging tree 1.5.4.2
 ===============================
 
 http://www.testinterzone.org
