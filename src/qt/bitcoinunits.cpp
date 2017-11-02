@@ -43,9 +43,9 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case testInterzone: return QString("ttITZ");
-            case mtestInterzone: return QString("mttITZ");
-            case utestInterzone: return QString::fromUtf8("μttITZ");
+            case testInterzone: return QString("tITZ");
+            case mtestInterzone: return QString("mtITZ");
+            case utestInterzone: return QString::fromUtf8("μtITZ");
             case burroughs: return QString::fromUtf8("lees");
             default: return QString("???");
         }
@@ -54,9 +54,9 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case testInterzone: return QString("ttITZ");
-            case mtestInterzone: return QString("mttITZ");
-            case utestInterzone: return QString::fromUtf8("μttITZ");
+            case testInterzone: return QString("tITZ");
+            case mtestInterzone: return QString("mtITZ");
+            case utestInterzone: return QString::fromUtf8("μtITZ");
             case burroughs: return QString::fromUtf8("lees");
             default: return QString("???");
         }

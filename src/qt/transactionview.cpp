@@ -509,5 +509,5 @@ void TransactionView::focusTransaction(const QModelIndex &idx)
 void TransactionView::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
-    columnResizingFixer->strettITZolumnWidth(TransactionTableModel::ToAddress);
+    columnResizingFixer->stretITZolumnWidth(TransactionTableModel::ToAddress);
 }

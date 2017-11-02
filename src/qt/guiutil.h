@@ -148,7 +148,7 @@ namespace GUIUtil
 
         public:
             TableViewLastColumnResizingFixer(QTableView* table, int lastColMinimumWidth, int allColsMinimumWidth);
-            void strettITZolumnWidth(int column);
+            void stretITZolumnWidth(int column);
 
         private:
             QTableView* tableView;

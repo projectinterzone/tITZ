@@ -507,7 +507,7 @@ void TableViewLastColumnResizingFixer::adjustTableColumnsWidth()
 }
 
 // Make column use all the space available, useful during window resizing.
-void TableViewLastColumnResizingFixer::strettITZolumnWidth(int column)
+void TableViewLastColumnResizingFixer::stretITZolumnWidth(int column)
 {
     disconnectViewHeadersSignals();
     resizeColumn(column, getAvailableWidthForColumn(column));
