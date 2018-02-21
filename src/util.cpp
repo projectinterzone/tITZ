@@ -1041,7 +1041,7 @@ boost::filesystem::path GetDefaultDataDir()
     // Unix: ~/.testinterzone
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "testtestInterzone";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "testInterzone";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -1053,10 +1053,10 @@ boost::filesystem::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectory(pathRet);
-    return pathRet / "testtestInterzone";
+    return pathRet / "testInterzone";
 #else
     // Unix
-    return pathRet / ".testtestinterzone";
+    return pathRet / ".testinterzone";
 #endif
 #endif
 }
